@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Dark rounded square background -->
+  <rect width="200" height="200" rx="42" fill="#1C2025"/>
+
+  <!-- Large cyan circle outline -->
+  <circle cx="100" cy="108" r="76" stroke="#22D4EF" stroke-width="5.5" fill="none"/>
+
+  <!-- Sound wave bars (white) — 9 bars, bottom-aligned at y=70 -->
+  <g fill="white">
+    <rect x="66"  y="59" width="4.5" height="11" rx="2.2"/>
+    <rect x="73"  y="55" width="4.5" height="15" rx="2.2"/>
+    <rect x="80"  y="49" width="4.5" height="21" rx="2.2"/>
+    <rect x="87"  y="53" width="4.5" height="17" rx="2.2"/>
+    <rect x="94"  y="44" width="4.5" height="26" rx="2.2"/>
+    <rect x="101" y="47" width="4.5" height="23" rx="2.2"/>
+    <rect x="108" y="51" width="4.5" height="19" rx="2.2"/>
+    <rect x="115" y="56" width="4.5" height="14" rx="2.2"/>
+    <rect x="122" y="60" width="4.5" height="10" rx="2.2"/>
+  </g>
+
+  <!-- Microphone capsule (pill shape) -->
+  <rect x="86" y="74" width="28" height="54" rx="14" fill="#22D4EF"/>
+
+  <!-- Network graph overlay on mic (dark nodes + lines) -->
+  <g stroke="#1C2025" stroke-width="1.8" stroke-linecap="round" fill="none">
+    <!-- Hex mesh edges -->
+    <line x1="100" y1="83" x2="91"  y2="90"/>
+    <line x1="100" y1="83" x2="109" y2="90"/>
+    <line x1="91"  y1="90" x2="109" y2="90"/>
+    <line x1="91"  y1="90" x2="87"  y2="101"/>
+    <line x1="109" y1="90" x2="113" y2="101"/>
+    <line x1="87"  y1="101" x2="100" y2="101"/>
+    <line x1="113" y1="101" x2="100" y2="101"/>
+    <line x1="100" y1="101" x2="91"  y2="112"/>
+    <line x1="100" y1="101" x2="109" y2="112"/>
+    <line x1="91"  y1="90" x2="100" y2="101"/>
+    <line x1="109" y1="90" x2="100" y2="101"/>
+    <line x1="87"  y1="101" x2="91"  y2="112"/>
+    <line x1="113" y1="101" x2="109" y2="112"/>
+    <line x1="91"  y1="112" x2="109" y2="112"/>
+  </g>
+  <!-- Nodes -->
+  <g fill="#1C2025">
+    <circle cx="100" cy="83"  r="2.8"/>
+    <circle cx="91"  cy="90"  r="2.5"/>
+    <circle cx="109" cy="90"  r="2.5"/>
+    <circle cx="87"  cy="101" r="2.2"/>
+    <circle cx="113" cy="101" r="2.2"/>
+    <circle cx="100" cy="101" r="2.8"/>
+    <circle cx="91"  cy="112" r="2.5"/>
+    <circle cx="109" cy="112" r="2.5"/>
+  </g>
+
+  <!-- Mic stand: two curved arms + horizontal base + vertical post -->
+  <g stroke="#22D4EF" stroke-width="4" fill="none" stroke-linecap="round">
+    <!-- Left arm -->
+    <path d="M88 128 Q79 133 81 143"/>
+    <!-- Right arm -->
+    <path d="M112 128 Q121 133 119 143"/>
+    <!-- Horizontal base -->
+    <line x1="81" y1="143" x2="119" y2="143"/>
+    <!-- Vertical post -->
+    <line x1="100" y1="143" x2="100" y2="153"/>
+  </g>
+</svg>
