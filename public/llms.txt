@@ -1,0 +1,132 @@
+# VoxCtr — Intelligent Audio Interface for Linux
+# llms.txt — structured index for AI agent discovery
+# https://llmstxt.org/
+
+> VoxCtr is a programmable voice input broker for Linux. It transcribes speech locally using
+> faster-whisper (NVIDIA CUDA) or whisper.cpp (AMD/Intel Vulkan, CPU), routes the transcript to
+> named output targets (inject, exec, pipe, socket, file, dbus), applies per-target AI post-processing
+> pipelines via local Ollama models, and exposes a built-in MCP server so any MCP-capable AI agent
+> (Claude, Cursor, Zed) can use the microphone and TTS as first-class tools.
+
+## Quick Facts
+
+- License: MIT
+- Platform: Linux (Wayland-native; X11 supported)
+- Language: Python, PyQt6
+- Repository: https://github.com/JRufer/VoxCtr
+- MCP Server: Unix domain socket at /tmp/voxctr-mcp.sock (JSON-RPC 2.0)
+- Config: ~/.config/voxctr/config.json, targets.toml, bindings.toml
+
+## Key Capabilities
+
+1. **Local transcription** — faster-whisper or whisper.cpp; auto-selects backend from GPU
+2. **Programmable routing** — 7 output target types (inject/clipboard/exec/pipe/socket/file/dbus)
+3. **Per-target AI pipelines** — strip_fillers, ollama_prompt, code_mode, snippets, spoken_punct
+4. **MCP server** — transcribe_voice, speak_text, get_status tools over Unix socket
+5. **Code Mode** — IDE-aware voice dictation; camelCase/snake_case spoken identifier formatting
+6. **AT-SPI2 injection** — direct text insertion into focused widgets; reads context before cursor
+7. **Neural TTS** — Piper on-device speech synthesis; 8 curated English voice models
+8. **Visual overlays** — Voice Card (default), Waveform, Pulse Circle; custom Python plugins
+
+## MCP Integration
+
+Server name: voxctr
+Socket: /tmp/voxctr-mcp.sock
+Protocol: JSON-RPC 2.0, newline-delimited
+
+### Tools
+
+| Tool               | Signature                           | Description                                                  |
+|--------------------|-------------------------------------|--------------------------------------------------------------|
+| transcribe_voice   | timeout_seconds?: number → string   | Opens mic, returns transcript after VAD silence or timeout   |
+| speak_text         | text: string → "spoken"             | Queues text for Piper TTS; non-blocking                      |
+| get_status         | → {recording: bool, speaking: bool} | Returns current audio I/O state                              |
+
+### Claude Desktop config
+
+```json
+{
+  "mcpServers": {
+    "voxctr": {
+      "command": "socat",
+      "args": ["STDIO", "UNIX-CONNECT:/tmp/voxctr-mcp.sock"]
+    }
+  }
+}
+```
+
+## Configuration Files
+
+### config.json (global settings)
+
+Key options: whisper_model, tts_enabled, tts_voice, mcp_server_enabled, atspi_injection,
+atspi_auto_code_mode, show_overlay, overlay_style, vad_threshold.
+
+### targets.toml (output destinations)
+
+Each [[target]] entry defines: id, label, delivery, post_processing, and optional [target.ollama].
+Delivery types: inject | clipboard | exec | pipe | socket | file | dbus
+
+Example:
+```toml
+[[target]]
+id              = "hermes"
+label           = "Hermes Agent"
+delivery        = "pipe"
+pipe_path       = "/tmp/hermes.in"
+post_processing = "strip_fillers"
+response_pipe   = "/tmp/hermes.out"
+append_newline  = true
+```
+
+### bindings.toml (hotkey gestures)
+
+Each [[binding]] maps keys + gesture to a target ID.
+Gesture types: hold | toggle | double_tap
+
+Example:
+```toml
+[[binding]]
+keys    = ["KEY_LEFTMETA", "KEY_SPACE"]
+gesture = "hold"
+target  = "focused_window"
+```
+
+## Documentation Sections
+
+- Installation: https://voxctr.dev/docs
+- Quickstart: https://voxctr.dev/docs/quickstart
+- Core Concepts: https://voxctr.dev/docs/concepts
+- Hotkeys & Gestures: https://voxctr.dev/docs/hotkeys
+- Routing & Targets: https://voxctr.dev/docs/routing
+- AT-SPI2 Integration: https://voxctr.dev/docs/atspi
+- Code Mode: https://voxctr.dev/docs/code-mode
+- AI Post-Processing: https://voxctr.dev/docs/ai
+- Voice Output (TTS): https://voxctr.dev/docs/tts
+- Recording Overlays: https://voxctr.dev/docs/overlays
+- MCP Server: https://voxctr.dev/docs/mcp
+- Security: https://voxctr.dev/docs/security
+- Configuration Reference: https://voxctr.dev/docs/configuration
+- Tutorials: https://voxctr.dev/docs/tutorials
+- Architecture: https://voxctr.dev/docs/architecture
+
+## Hardware Backends
+
+| Hardware            | Backend           | Acceleration   |
+|---------------------|-------------------|----------------|
+| NVIDIA GPU (CUDA11+)| faster-whisper    | CUDA           |
+| AMD GPU (RDNA/GCN)  | whisper.cpp       | Vulkan         |
+| Intel Arc / Iris Xe | whisper.cpp       | Vulkan         |
+| CPU only            | faster-whisper    | int8 fallback  |
+
+## AI Pipeline Stages
+
+strip_fillers | spoken_punct | snippets | ollama_prompt | prepend | append_newline | code_mode
+
+## Security Model
+
+- Unix socket only by default (no network exposure)
+- Zero outbound traffic (all processing is local)
+- Optional microphone confirmation (require_confirmation: true)
+- Tool allowlist: disable individual MCP tools via config
+- Target allowlist: restrict which targets MCP clients can route to
