@@ -8,12 +8,14 @@ VoxCtl displays a visual overlay while the microphone is active. The overlay sys
 
 Three styles are included out of the box.
 
-### Waveform *(default)*
+### Waveform
 
 An OpenGL oscilloscope that renders the raw audio signal as a min/max envelope. Fast and lightweight.
 
 - Dark rounded box anchored to the bottom-centre of the screen
 - Updates in real time with each audio chunk
+
+![Waveform Overlay](../src/assets/box_overlay.gif)
 
 ### Pulse Circle
 
@@ -22,7 +24,9 @@ A soft glowing circle that expands and contracts with the RMS amplitude of your 
 - Smooth 30 fps animation with exponential decay
 - Blue glow rings fade out during silence
 
-### Voice Card
+![Pulse Circle Overlay](../src/assets/dot_overlay.gif)
+
+### Voice Card *(default)*
 
 A floating card inspired by terminal-style audio monitors.
 
@@ -30,6 +34,8 @@ A floating card inspired by terminal-style audio monitors.
 - Symmetric bars (mirrored top and bottom from a centre line)
 - Horizontal gradient: dim purple on the left (oldest audio) through magenta to bright pink-white on the right (most recent audio)
 - "Voice Activity" label and a "whisper / Wayland" badge displayed in the card header
+
+![Voice Card Overlay](../src/assets/voice_overlay.gif)
 
 ---
 

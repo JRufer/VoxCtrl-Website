@@ -9,6 +9,10 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import CodeBlock from '../components/CodeBlock';
 
+import voiceOverlay from '../assets/voice_overlay.gif';
+import boxOverlay from '../assets/box_overlay.gif';
+import dotOverlay from '../assets/dot_overlay.gif';
+
 // ─── Sidebar link groups ──────────────────────────────────────────────────────
 
 const linkGroups = [
@@ -1468,13 +1472,20 @@ function OverlayDocs() {
 
       <section className="grid md:grid-cols-3 gap-6">
         {[
-          { name: 'Voice Card',  desc: 'Scrolling bar waveform in a floating card. Gradient from dim purple (oldest) to bright pink-white (newest). Default style.' },
-          { name: 'Waveform',    desc: 'Classic OpenGL oscilloscope rendering the raw audio signal as a min/max envelope.' },
-          { name: 'Pulse Circle',desc: 'Soft glowing circle that expands with RMS amplitude. Smooth 30 fps animation with exponential decay.' },
+          { name: 'Voice Card',  image: voiceOverlay, desc: 'Scrolling bar waveform in a floating card. Gradient from dim purple (oldest) to bright pink-white (newest). Default style.' },
+          { name: 'Waveform',    image: boxOverlay,   desc: 'Classic OpenGL oscilloscope rendering the raw audio signal as a min/max envelope.' },
+          { name: 'Pulse Circle',image: dotOverlay,   desc: 'Soft glowing circle that expands with RMS amplitude. Smooth 30 fps animation with exponential decay.' },
         ].map((overlay) => (
-          <div key={overlay.name} className="p-6 rounded-2xl bg-surface-container-low card-outline">
+          <div key={overlay.name} className="p-6 rounded-2xl bg-surface-container-low card-outline overflow-hidden flex flex-col">
+            <div className="aspect-video mb-6 rounded-xl overflow-hidden bg-black/40 flex items-center justify-center border border-white/5 group">
+              <img 
+                src={overlay.image} 
+                alt={overlay.name} 
+                className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500" 
+              />
+            </div>
             <h3 className="font-bold text-white mb-2">{overlay.name}</h3>
-            <p className="text-sm text-on-surface-variant">{overlay.desc}</p>
+            <p className="text-sm text-on-surface-variant flex-1">{overlay.desc}</p>
           </div>
         ))}
       </section>
