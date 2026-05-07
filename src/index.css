@@ -23,7 +23,7 @@
   .glass-panel::before {
     content: '';
     @apply absolute inset-0 opacity-10 pointer-events-none;
-    background: linear-gradient(45deg, theme('colors.primary.DEFAULT'), theme('colors.primary.light'));
+    background: linear-gradient(45deg, #22D4EF, #7AE8F8);
   }
 
   /* Base Button Style for consistent sizing */
@@ -34,14 +34,14 @@
 
   /* Kinetic Trigger Button */
   .btn-primary {
-    @apply btn-base relative overflow-hidden bg-primary shadow-[0_4px_30px_rgba(6,182,212,0.4)] border border-primary-light/30;
-    background: linear-gradient(135deg, #06B6D4 0%, #4CD7F6 100%);
-    color: #003640; /* on-primary */
+    @apply btn-base relative overflow-hidden bg-primary shadow-[0_4px_30px_rgba(34,212,239,0.4)] border border-primary-light/30;
+    background: linear-gradient(135deg, #22D4EF 0%, #7AE8F8 100%);
+    color: #002E38; /* on-primary */
   }
 
   .btn-primary:hover {
-    @apply shadow-[0_8px_40px_rgba(6,182,212,0.6)] -translate-y-1;
-    background: linear-gradient(135deg, #4CD7F6 0%, #06B6D4 100%);
+    @apply shadow-[0_8px_40px_rgba(34,212,239,0.6)] -translate-y-1;
+    background: linear-gradient(135deg, #7AE8F8 0%, #22D4EF 100%);
   }
 
   /* Ghost/Secondary Button */
@@ -56,6 +56,6 @@
   }
   
   .text-glow {
-    text-shadow: 0 0 30px rgba(6,182,212,0.3);
+    text-shadow: 0 0 30px rgba(34,212,239,0.35);
   }
 }

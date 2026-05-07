@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Mic, Terminal, Shield, Zap, BookOpen, Map as MapIcon, Menu, X, Command } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logoSvg from './assets/logo.svg';
 
 // Pages
 import Landing from './pages/Landing';
@@ -19,10 +20,7 @@ function Navigation() {
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50 glass-panel rounded-full px-6 py-4 flex items-center justify-between">
       <Link to="/" className="flex items-center gap-3 relative z-10">
-        <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-black card-outline overflow-hidden group">
-          <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/30 transition-colors" />
-          <Mic className="w-5 h-5 text-primary relative z-10" />
-        </div>
+        <img src={logoSvg} alt="VoxCtr logo" className="w-10 h-10 rounded-xl" />
         <span className="font-display font-bold text-xl tracking-wide text-white">VoxCtr</span>
       </Link>
 
@@ -119,7 +117,7 @@ function App() {
         <footer className="py-12 border-t border-white/5 mt-auto">
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3 opacity-60">
-              <Mic className="w-5 h-5 text-primary" />
+              <img src={logoSvg} alt="VoxCtr logo" className="w-5 h-5 rounded" />
               <span className="font-display font-medium tracking-wide">VoxCtr</span>
             </div>
             <p className="text-on-surface-variant text-sm">

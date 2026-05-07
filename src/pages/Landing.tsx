@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Shield, Terminal, Cpu, Layout, Code, Zap, ArrowRight, Brain, Sparkles,
-  CheckCircle2, GitBranch, Copy,
+  CheckCircle2, GitBranch,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CodeBlock from '../components/CodeBlock';
@@ -17,7 +17,7 @@ export default function Landing() {
 
       {/* ── Hero ────────────────────────────────────────────────────────────── */}
       <section className="min-h-[85vh] flex flex-col justify-center items-center text-center relative py-20">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(6,182,212,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(34,212,239,0.15),transparent_50%)]" />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}

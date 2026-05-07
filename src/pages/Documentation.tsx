@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import {
   Terminal, Settings, Zap, Code, Shield, Layout, Brain, Command,
-  MousePointer2, Volume2, Cpu, Info, CheckCircle2, BookOpen,
-  FileText, Lock, List, Rocket, Layers, Menu, X, ChevronDown,
+  MousePointer2, Volume2, Info, CheckCircle2, BookOpen,
+  FileText, Lock, List, Rocket, Layers, ChevronDown,
   ChevronLeft, ChevronRight, ArrowUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
