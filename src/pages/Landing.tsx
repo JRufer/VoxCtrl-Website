@@ -107,17 +107,16 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Per-Binding Pipelines Section */}
+      {/* Per-Target Processing Section */}
       <section className="py-24 border-t border-white/5">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative p-8 rounded-3xl bg-surface-container-low card-outline overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-5">
               <Sparkles className="w-48 h-48 text-secondary" />
             </div>
-            <h2 className="text-4xl font-display font-bold text-white mb-6">Per-Binding Pipelines</h2>
+            <h2 className="text-4xl font-display font-bold text-white mb-6">Per-Target Processing</h2>
             <p className="text-xl text-on-surface-variant mb-8 leading-relaxed">
-              Every hotkey gesture can carry its own LLM processing pipeline. 
-              A pipeline is a chain of stages—strip fillers, Ollama prompts, or custom prepends—applied to the raw transcription at the moment of capture.
+              Assign different gestures to different destinations. Each route can have its own post-processing mode—from raw transcription for agents to AI-polished prose for emails.
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-xl bg-surface-container-highest/50 card-outline">
@@ -128,11 +127,11 @@ export default function Landing() {
                 <ArrowRight className="w-5 h-5 text-primary rotate-90" />
               </div>
               <div className="p-4 rounded-xl bg-primary/10 border border-primary/20">
-                <p className="text-sm font-bold text-primary mb-1">Pipeline: dictation_polish</p>
+                <p className="text-sm font-bold text-primary mb-1">Route: Focused Window (Polish Mode)</p>
                 <div className="flex gap-2 text-[10px] uppercase tracking-wider mb-2">
                   <span className="bg-primary/20 px-2 py-0.5 rounded text-primary">strip_fillers</span>
-                  <span className="bg-primary/20 px-2 py-0.5 rounded text-primary">ollama_prompt</span>
-                  <span className="bg-primary/20 px-2 py-0.5 rounded text-primary">prepend</span>
+                  <span className="bg-primary/20 px-2 py-0.5 rounded text-primary">ollama_rewrite</span>
+                  <span className="bg-primary/20 px-2 py-0.5 rounded text-primary">spoken_punct</span>
                 </div>
                 <p className="text-xs text-white">"Schedule a meeting for Friday at 3:00 PM."</p>
               </div>
@@ -142,17 +141,17 @@ export default function Landing() {
           <div>
             <h3 className="text-3xl font-display font-bold text-white mb-6">Local & Private</h3>
             <p className="text-on-surface-variant text-lg mb-8 leading-relaxed">
-              VoxCtr keeps everything on your hardware. The pipelines use local Ollama models like <code className="text-primary">llama3.2:1b</code> for near-zero latency and absolute privacy. 
-              No data leaves your machine—not even the transcription.
+              VoxCtl keeps everything on your hardware. Using local Ollama models and on-device neural TTS (Piper), it delivers near-zero latency and absolute privacy. 
+              No data leaves your machine—not even for voice output.
             </p>
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 rounded-2xl bg-surface-container-low card-outline">
-                <p className="text-sm font-bold text-white mb-1">Zero Latency</p>
-                <p className="text-xs text-on-surface-variant">Small, quantized models for instant feedback.</p>
+                <p className="text-sm font-bold text-white mb-1">AT-SPI2 Injection</p>
+                <p className="text-xs text-on-surface-variant">Direct text insertion without keyboard simulation.</p>
               </div>
               <div className="p-4 rounded-2xl bg-surface-container-low card-outline">
-                <p className="text-sm font-bold text-white mb-1">100% Offline</p>
-                <p className="text-xs text-on-surface-variant">Work in the terminal or airplane without loss of functionality.</p>
+                <p className="text-sm font-bold text-white mb-1">Neural TTS</p>
+                <p className="text-xs text-on-surface-variant">High-quality on-device speech synthesis with Piper.</p>
               </div>
             </div>
           </div>
