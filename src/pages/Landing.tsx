@@ -5,18 +5,12 @@ import {
   CheckCircle2, GitBranch, Copy,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import CodeBlock from '../components/CodeBlock';
 
 type WorkflowTab = 'coding' | 'desktop' | 'agent';
 
 export default function Landing() {
   const [workflowTab, setWorkflowTab] = useState<WorkflowTab>('coding');
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText('pip install voxctr');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -71,38 +65,13 @@ export default function Landing() {
           className="w-full max-w-2xl mx-auto px-4"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <div className="relative p-6 rounded-2xl bg-[#0e0e0e] border border-white/10 font-mono text-sm text-left">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-3 h-3 rounded-full bg-red-500/60" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-              <div className="w-3 h-3 rounded-full bg-green-500/60" />
-              <span className="ml-2 text-xs text-on-surface-variant/50">terminal</span>
-            </div>
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-3">
-                <span className="text-primary/50 select-none">$</span>
-                <code className="text-primary">pip install voxctr</code>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-primary/50 select-none">#</span>
-                <code className="text-on-surface-variant/50">or build from source</code>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-primary/50 select-none mt-0.5">$</span>
-                <code className="text-primary break-all">git clone https://github.com/JRufer/VoxCtr &amp;&amp; cd VoxCtr &amp;&amp; ./install.sh</code>
-              </div>
-            </div>
-            <button
-              onClick={handleCopy}
-              className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors text-on-surface-variant hover:text-white"
-              title="Copy pip install command"
-              aria-label="Copy install command"
-            >
-              {copied
-                ? <CheckCircle2 className="w-4 h-4 text-primary" />
-                : <Copy className="w-4 h-4" />}
-            </button>
-          </div>
+          <CodeBlock lang="terminal" copyValue="pip install voxctr">
+{`# Option A — pip (recommended)
+pip install voxctr
+
+# Option B — build from source
+git clone https://github.com/JRufer/VoxCtr && cd VoxCtr && ./install.sh`}
+          </CodeBlock>
         </motion.div>
       </section>
 
@@ -180,9 +149,8 @@ export default function Landing() {
                 Code Mode Documentation <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="p-6 rounded-2xl bg-[#0e0e0e] border border-white/10 font-mono text-xs">
-              <TerminalBar label="~/.config/voxctr/targets.toml" />
-              <pre className="text-primary leading-relaxed mt-4">{`[[target]]
+            <CodeBlock lang="targets.toml">
+{`[[target]]
 id = "editor"
 label = "Code Editor"
 delivery = "inject"
@@ -193,8 +161,8 @@ camel_case        = true
 snake_case        = false
 auto_punctuate    = false
 context_chars     = 300
-atspi_injection   = true`}</pre>
-            </div>
+atspi_injection   = true`}
+            </CodeBlock>
           </motion.div>
         )}
 
@@ -228,9 +196,8 @@ atspi_injection   = true`}</pre>
                 Hotkeys Documentation <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="p-6 rounded-2xl bg-[#0e0e0e] border border-white/10 font-mono text-xs">
-              <TerminalBar label="~/.config/voxctr/bindings.toml" />
-              <pre className="text-primary leading-relaxed mt-4">{`[[binding]]
+            <CodeBlock lang="bindings.toml">
+{`[[binding]]
 keys    = ["KEY_LEFTMETA", "KEY_SPACE"]
 gesture = "hold"
 target  = "focused_window"
@@ -246,8 +213,8 @@ label   = "Agent Command"
 keys    = ["KEY_LEFTMETA", "KEY_J"]
 gesture = "hold"
 target  = "journal"
-label   = "Meeting Note"`}</pre>
-            </div>
+label   = "Meeting Note"`}
+            </CodeBlock>
           </motion.div>
         )}
 
@@ -282,9 +249,8 @@ label   = "Meeting Note"`}</pre>
                 MCP Server Documentation <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="p-6 rounded-2xl bg-[#0e0e0e] border border-white/10 font-mono text-xs">
-              <TerminalBar label="~/.config/claude/claude_desktop_config.json" />
-              <pre className="text-secondary leading-relaxed mt-4">{`{
+            <CodeBlock lang="claude_desktop_config.json">
+{`{
   "mcpServers": {
     "voxctr": {
       "command": "socat",
@@ -294,8 +260,8 @@ label   = "Meeting Note"`}</pre>
       ]
     }
   }
-}`}</pre>
-            </div>
+}`}
+            </CodeBlock>
           </motion.div>
         )}
       </section>
@@ -547,17 +513,6 @@ label   = "Meeting Note"`}</pre>
           </Link>
         </div>
       </section>
-    </div>
-  );
-}
-
-function TerminalBar({ label }: { label: string }) {
-  return (
-    <div className="flex items-center gap-2">
-      <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-      <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-      <span className="ml-2 text-on-surface-variant/50 text-[11px] truncate">{label}</span>
     </div>
   );
 }

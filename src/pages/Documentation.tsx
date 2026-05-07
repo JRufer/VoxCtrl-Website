@@ -1,10 +1,13 @@
+import { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import {
   Terminal, Settings, Zap, Code, Shield, Layout, Brain, Command,
   MousePointer2, Volume2, Cpu, Info, CheckCircle2, BookOpen,
-  FileText, Lock, List, Rocket, Layers,
+  FileText, Lock, List, Rocket, Layers, Menu, X, ChevronDown,
+  ChevronLeft, ChevronRight, ArrowUp
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import CodeBlock from '../components/CodeBlock';
 
 // ─── Sidebar link groups ──────────────────────────────────────────────────────
 
@@ -55,77 +58,166 @@ const linkGroups = [
 
 export default function Documentation() {
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Scroll to top when route changes and close mobile menu
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  const activeLinkLabel = linkGroups
+    .flatMap(g => g.links)
+    .find(l => l.to === location.pathname || (l.to === '/docs' && location.pathname === '/docs'))?.label || 'Installation';
+
+  const allLinks = linkGroups.flatMap(g => g.links);
+  const currentIndex = allLinks.findIndex(l =>
+    l.to === location.pathname || (l.to === '/docs' && location.pathname === '/docs')
+  );
+
+  const prev = currentIndex > 0 ? allLinks[currentIndex - 1] : null;
+  const next = currentIndex < allLinks.length - 1 ? allLinks[currentIndex + 1] : null;
 
   return (
-    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 py-12">
+    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 py-8 lg:py-12">
       {/* Sidebar */}
-      <aside className="lg:w-64 shrink-0">
-        <nav className="sticky top-32 p-6 rounded-3xl bg-surface-container-low card-outline" aria-label="Documentation navigation">
-          {linkGroups.map((group) => (
-            <div key={group.heading} className="mb-6 last:mb-0">
-              <p className="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant/60 px-4 mb-2">
-                {group.heading}
-              </p>
-              <div className="flex flex-col gap-1">
-                {group.links.map((link) => {
-                  const Icon = link.icon;
-                  const isActive = location.pathname === link.to ||
-                    (link.to === '/docs' && location.pathname === '/docs');
-                  return (
-                    <Link
-                      key={link.to}
-                      to={link.to}
-                      className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
-                        isActive
-                          ? 'bg-primary/10 text-primary font-medium'
-                          : 'text-on-surface-variant hover:bg-white/5 hover:text-white'
-                      }`}
-                    >
-                      <Icon className="w-4 h-4 shrink-0" />
-                      {link.label}
-                    </Link>
-                  );
-                })}
-              </div>
+      <aside className="lg:w-52 shrink-0 px-6 lg:px-0">
+        {/* Mobile Menu Toggle */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="lg:hidden w-full flex items-center justify-between p-4 rounded-2xl bg-surface-container-low card-outline mb-4"
+        >
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10 text-primary">
+              <List className="w-4 h-4" />
             </div>
-          ))}
+            <span className="font-bold text-white">{activeLinkLabel}</span>
+          </div>
+          <ChevronDown className={`w-4 h-4 transition-transform ${isMobileMenuOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {/* Mobile Sidebar (Collapsible) */}
+        <div className="lg:hidden">
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.nav
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden p-6 rounded-3xl bg-surface-container-low card-outline mb-8"
+              >
+                <SidebarContent location={location} />
+              </motion.nav>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Desktop Sidebar (Sticky) */}
+        <nav className="hidden lg:block sticky top-32 p-6 rounded-3xl bg-surface-container-low card-outline">
+          <SidebarContent location={location} />
         </nav>
       </aside>
 
       {/* Content Area */}
-      <main className="flex-1 min-w-0 max-w-4xl">
-        <Routes>
-          <Route path="/"              element={<InstallationDocs />} />
-          <Route path="/quickstart"    element={<QuickstartDocs />} />
-          <Route path="/concepts"      element={<ConceptsDocs />} />
-          <Route path="/hotkeys"       element={<HotkeyDocs />} />
-          <Route path="/routing"       element={<RoutingDocs />} />
-          <Route path="/atspi"         element={<ATSPIDocs />} />
-          <Route path="/code-mode"     element={<CodeModeDocs />} />
-          <Route path="/ai"            element={<AIDocs />} />
-          <Route path="/tts"           element={<TTSDocs />} />
-          <Route path="/overlays"      element={<OverlayDocs />} />
-          <Route path="/mcp"           element={<MCPDocs />} />
-          <Route path="/security"      element={<SecurityDocs />} />
-          <Route path="/configuration" element={<ConfigDocs />} />
-          <Route path="/tutorials"     element={<TutorialsDocs />} />
-          <Route path="/architecture"  element={<ArchitectureDocs />} />
-        </Routes>
+      <main className="flex-1 min-w-0 max-w-4xl px-6 lg:px-0 flex flex-col">
+        <div className="flex-1">
+          <Routes>
+            <Route path="/"              element={<InstallationDocs />} />
+            <Route path="/quickstart"    element={<QuickstartDocs />} />
+            <Route path="/concepts"      element={<ConceptsDocs />} />
+            <Route path="/hotkeys"       element={<HotkeyDocs />} />
+            <Route path="/routing"       element={<RoutingDocs />} />
+            <Route path="/atspi"         element={<ATSPIDocs />} />
+            <Route path="/code-mode"     element={<CodeModeDocs />} />
+            <Route path="/ai"            element={<AIDocs />} />
+            <Route path="/tts"           element={<TTSDocs />} />
+            <Route path="/overlays"      element={<OverlayDocs />} />
+            <Route path="/mcp"           element={<MCPDocs />} />
+            <Route path="/security"      element={<SecurityDocs />} />
+            <Route path="/configuration" element={<ConfigDocs />} />
+            <Route path="/tutorials"     element={<TutorialsDocs />} />
+            <Route path="/architecture"  element={<ArchitectureDocs />} />
+          </Routes>
+        </div>
+        
+        {/* Scroll to Top */}
+        <div className="flex justify-center mt-12">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-white/5 text-on-surface-variant hover:text-primary hover:border-primary/20 transition-all text-xs font-bold uppercase tracking-widest group"
+          >
+            <ArrowUp className="w-3 h-3 group-hover:-translate-y-1 transition-transform" />
+            Back to Top
+          </button>
+        </div>
+
+        {/* Navigation Footer */}
+        <footer className="mt-20 pt-8 border-t border-white/5 flex flex-col sm:flex-row gap-4 items-center justify-between">
+          {prev ? (
+            <Link
+              to={prev.to}
+              className="group flex flex-col items-start gap-2 p-4 rounded-2xl bg-surface-container-low card-outline hover:bg-surface-container transition-all w-full sm:w-auto min-w-[200px]"
+            >
+              <span className="text-[10px] font-bold text-on-surface-variant/40 uppercase tracking-widest flex items-center gap-1 group-hover:text-primary transition-colors">
+                <ChevronLeft className="w-3 h-3" /> Previous
+              </span>
+              <span className="text-sm font-bold text-white group-hover:translate-x-1 transition-transform">{prev.label}</span>
+            </Link>
+          ) : <div className="hidden sm:block" />}
+
+          {next ? (
+            <Link
+              to={next.to}
+              className="group flex flex-col items-end gap-2 p-4 rounded-2xl bg-surface-container-low card-outline hover:bg-surface-container transition-all w-full sm:w-auto min-w-[200px] text-right"
+            >
+              <span className="text-[10px] font-bold text-on-surface-variant/40 uppercase tracking-widest flex items-center gap-1 group-hover:text-primary transition-colors">
+                Next <ChevronRight className="w-3 h-3" />
+              </span>
+              <span className="text-sm font-bold text-white group-hover:-translate-x-1 transition-transform">{next.label}</span>
+            </Link>
+          ) : <div className="hidden sm:block" />}
+        </footer>
       </main>
     </div>
   );
 }
 
-// ─── Shared UI helpers ────────────────────────────────────────────────────────
-
-function CodeBlock({ children, lang = '' }: { children: string; lang?: string }) {
+function SidebarContent({ location }: { location: any }) {
   return (
-    <div className="p-6 rounded-2xl bg-[#0e0e0e] border border-white/10 font-mono text-xs overflow-x-auto">
-      {lang && <p className="text-on-surface-variant/40 text-[10px] uppercase tracking-widest mb-3">{lang}</p>}
-      <pre className="text-primary leading-relaxed">{children}</pre>
-    </div>
+    <>
+      {linkGroups.map((group) => (
+        <div key={group.heading} className="mb-6 last:mb-0">
+          <p className="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant/60 px-4 mb-2">
+            {group.heading}
+          </p>
+          <div className="flex flex-col gap-1">
+            {group.links.map((link) => {
+              const Icon = link.icon;
+              const isActive = location.pathname === link.to ||
+                (link.to === '/docs' && location.pathname === '/docs');
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                    isActive
+                      ? 'bg-primary/10 text-primary font-medium'
+                      : 'text-on-surface-variant hover:bg-white/5 hover:text-white'
+                  }`}
+                >
+                  <Icon className="w-4 h-4 shrink-0" />
+                  <span className="text-sm">{link.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </>
   );
 }
+
+// ─── Shared UI helpers ────────────────────────────────────────────────────────
 
 function InfoBox({ children }: { children: React.ReactNode }) {
   return (
@@ -224,6 +316,8 @@ sudo pacman -S alsa-utils piper-tts socat`}</CodeBlock>
           <p className="text-on-surface-variant mb-4 ml-12">Run the app. A system tray icon appears—right-click it to access Settings.</p>
           <div className="ml-12">
             <CodeBlock lang="bash">{`voxctr
+# or using the launcher script:
+./voxctr.sh
 # or from source:
 python src/main.py`}</CodeBlock>
           </div>
@@ -1687,8 +1781,7 @@ function ArchitectureDocs() {
         desc="A tour of how VoxCtr's components fit together."
       />
 
-      <section className="p-8 rounded-3xl bg-[#0e0e0e] border border-white/10 overflow-x-auto">
-        <pre className="text-xs md:text-sm font-mono text-primary leading-loose">
+      <CodeBlock lang="System Diagram">
 {`Input Engine (evdev)
   ├── Hold / Toggle / Double-Tap gesture detection
   └── TTS stop key interceptor
@@ -1730,8 +1823,7 @@ MCP Server  (Unix socket JSON-RPC 2.0, runs in parallel)
   ├── transcribe_voice
   ├── speak_text
   └── get_status`}
-        </pre>
-      </section>
+      </CodeBlock>
 
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-6">Source Layout</h2>
@@ -1764,7 +1856,9 @@ MCP Server  (Unix socket JSON-RPC 2.0, runs in parallel)
           <h3 className="font-bold text-white">Running the Test Suite</h3>
           <p className="text-sm text-on-surface-variant mt-1">Ensure stability with pytest before contributing</p>
         </div>
-        <code className="bg-black px-4 py-2 rounded text-primary text-xs font-mono shrink-0">python -m pytest tests/</code>
+        <div className="w-full md:w-auto">
+          <CodeBlock lang="test command">python -m pytest tests/</CodeBlock>
+        </div>
       </section>
     </motion.div>
   );
