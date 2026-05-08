@@ -65,12 +65,14 @@ export default function Landing() {
           className="w-full max-w-2xl mx-auto px-4"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <CodeBlock lang="terminal" copyValue="pip install voxctr">
-{`# Option A — pip (recommended)
-pip install voxctr
+          <CodeBlock lang="terminal" copyValue="git clone https://github.com/JRufer/VoxCtr && cd VoxCtr && pip install -r requirements.txt">
+{`# Option A — AppImage (recommended)
+# Download VoxCtl-x86_64.AppImage from GitHub Releases, then:
+bash install.sh
 
-# Option B — build from source
-git clone https://github.com/JRufer/VoxCtr && cd VoxCtr && ./install.sh`}
+# Option B — run from source
+git clone https://github.com/JRufer/VoxCtr && cd VoxCtr
+pip install -r requirements.txt && ./voxctl.sh`}
           </CodeBlock>
         </motion.div>
       </section>
@@ -176,7 +178,7 @@ atspi_injection   = true`}
                 <h3 className="text-2xl font-display font-bold text-white mb-4">Full Desktop Control</h3>
                 <p className="text-on-surface-variant mb-6">
                   Assign different hotkeys to different destinations. Hold Super+Space to dictate.
-                  Double-tap Ctrl to issue agent commands. All without touching the mouse.
+                  Double-tap Alt to issue agent commands. All without touching the mouse.
                 </p>
                 <ul className="space-y-3">
                   {[
@@ -482,7 +484,7 @@ label   = "Meeting Note"`}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto mb-12">
           <div className="p-8 rounded-3xl bg-surface-container-low card-outline text-center">
             <GitBranch className="w-8 h-8 text-primary mx-auto mb-4" />
-            <p className="text-3xl font-display font-bold text-white mb-2">280+</p>
+            <p className="text-3xl font-display font-bold text-white mb-2">247</p>
             <p className="text-on-surface-variant text-sm">Automated Tests</p>
           </div>
           <div className="p-8 rounded-3xl bg-surface-container-low card-outline text-center">
@@ -547,3 +549,4 @@ function MessageCard({ icon, title, desc }: { icon: React.ReactNode; title: stri
     </div>
   );
 }
+
