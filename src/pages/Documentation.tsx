@@ -19,41 +19,41 @@ const linkGroups = [
   {
     heading: 'Getting Started',
     links: [
-      { to: '/docs/quickstart',     label: 'Quickstart',       icon: Rocket },
-      { to: '/docs',                label: 'Installation',     icon: Terminal },
-      { to: '/docs/concepts',       label: 'Core Concepts',    icon: Layers },
+      { to: '/docs/quickstart', label: 'Quickstart', icon: Rocket },
+      { to: '/docs', label: 'Installation', icon: Terminal },
+      { to: '/docs/concepts', label: 'Core Concepts', icon: Layers },
     ],
   },
   {
     heading: 'Input & Routing',
     links: [
-      { to: '/docs/hotkeys',        label: 'Hotkeys',          icon: Command },
-      { to: '/docs/routing',        label: 'Routing & Targets',icon: Settings },
-      { to: '/docs/atspi',          label: 'AT-SPI2',          icon: MousePointer2 },
-      { to: '/docs/code-mode',      label: 'Code Mode',        icon: Code },
+      { to: '/docs/hotkeys', label: 'Hotkeys', icon: Command },
+      { to: '/docs/routing', label: 'Routing & Targets', icon: Settings },
+      { to: '/docs/atspi', label: 'AT-SPI2', icon: MousePointer2 },
+      { to: '/docs/code-mode', label: 'Code Mode', icon: Code },
     ],
   },
   {
     heading: 'AI & Voice',
     links: [
-      { to: '/docs/ai',             label: 'AI Processing',    icon: Brain },
-      { to: '/docs/tts',            label: 'Voice Output',     icon: Volume2 },
-      { to: '/docs/overlays',       label: 'Overlays',         icon: Layout },
+      { to: '/docs/ai', label: 'AI Processing', icon: Brain },
+      { to: '/docs/tts', label: 'Voice Output', icon: Volume2 },
+      { to: '/docs/overlays', label: 'Overlays', icon: Layout },
     ],
   },
   {
     heading: 'Integrations',
     links: [
-      { to: '/docs/mcp',            label: 'MCP Server',       icon: Zap },
-      { to: '/docs/security',       label: 'Security',         icon: Lock },
+      { to: '/docs/mcp', label: 'MCP Server', icon: Zap },
+      { to: '/docs/security', label: 'Security', icon: Lock },
     ],
   },
   {
     heading: 'Reference',
     links: [
-      { to: '/docs/configuration',  label: 'Configuration',    icon: FileText },
-      { to: '/docs/tutorials',      label: 'Tutorials',        icon: BookOpen },
-      { to: '/docs/architecture',   label: 'Architecture',     icon: Shield },
+      { to: '/docs/configuration', label: 'Configuration', icon: FileText },
+      { to: '/docs/tutorials', label: 'Tutorials', icon: BookOpen },
+      { to: '/docs/architecture', label: 'Architecture', icon: Shield },
     ],
   },
 ];
@@ -126,24 +126,24 @@ export default function Documentation() {
       <main className="flex-1 min-w-0 max-w-4xl px-6 lg:px-0 flex flex-col">
         <div className="flex-1">
           <Routes>
-            <Route path="/"              element={<InstallationDocs />} />
-            <Route path="/quickstart"    element={<QuickstartDocs />} />
-            <Route path="/concepts"      element={<ConceptsDocs />} />
-            <Route path="/hotkeys"       element={<HotkeyDocs />} />
-            <Route path="/routing"       element={<RoutingDocs />} />
-            <Route path="/atspi"         element={<ATSPIDocs />} />
-            <Route path="/code-mode"     element={<CodeModeDocs />} />
-            <Route path="/ai"            element={<AIDocs />} />
-            <Route path="/tts"           element={<TTSDocs />} />
-            <Route path="/overlays"      element={<OverlayDocs />} />
-            <Route path="/mcp"           element={<MCPDocs />} />
-            <Route path="/security"      element={<SecurityDocs />} />
+            <Route path="/" element={<InstallationDocs />} />
+            <Route path="/quickstart" element={<QuickstartDocs />} />
+            <Route path="/concepts" element={<ConceptsDocs />} />
+            <Route path="/hotkeys" element={<HotkeyDocs />} />
+            <Route path="/routing" element={<RoutingDocs />} />
+            <Route path="/atspi" element={<ATSPIDocs />} />
+            <Route path="/code-mode" element={<CodeModeDocs />} />
+            <Route path="/ai" element={<AIDocs />} />
+            <Route path="/tts" element={<TTSDocs />} />
+            <Route path="/overlays" element={<OverlayDocs />} />
+            <Route path="/mcp" element={<MCPDocs />} />
+            <Route path="/security" element={<SecurityDocs />} />
             <Route path="/configuration" element={<ConfigDocs />} />
-            <Route path="/tutorials"     element={<TutorialsDocs />} />
-            <Route path="/architecture"  element={<ArchitectureDocs />} />
+            <Route path="/tutorials" element={<TutorialsDocs />} />
+            <Route path="/architecture" element={<ArchitectureDocs />} />
           </Routes>
         </div>
-        
+
         {/* Scroll to Top */}
         <div className="flex justify-center mt-12">
           <button
@@ -203,11 +203,10 @@ function SidebarContent({ location }: { location: any }) {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
-                    isActive
-                      ? 'bg-primary/10 text-primary font-medium'
-                      : 'text-on-surface-variant hover:bg-white/5 hover:text-white'
-                  }`}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${isActive
+                    ? 'bg-primary/10 text-primary font-medium'
+                    : 'text-on-surface-variant hover:bg-white/5 hover:text-white'
+                    }`}
                 >
                   <Icon className="w-4 h-4 shrink-0" />
                   <span className="text-sm">{link.label}</span>
@@ -509,10 +508,10 @@ function InstallationDocs() {
             </thead>
             <tbody>
               {[
-                { gpu: 'NVIDIA (CUDA 11+)',    be: 'faster-whisper',      note: 'Install CUDA libraries — no extra steps' },
-                { gpu: 'AMD (RDNA/GCN)',        be: 'whisper.cpp',         note: 'Vulkan driver required' },
-                { gpu: 'Intel Arc / Iris Xe',  be: 'whisper.cpp',         note: 'Build with GGML_VULKAN=ON' },
-                { gpu: 'No GPU (CPU only)',     be: 'faster-whisper int8', note: 'Slower for large models; reliable fallback' },
+                { gpu: 'NVIDIA (CUDA 11+)', be: 'faster-whisper', note: 'Install CUDA libraries — no extra steps' },
+                { gpu: 'AMD (RDNA/GCN)', be: 'whisper.cpp', note: 'Vulkan driver required' },
+                { gpu: 'Intel Arc / Iris Xe', be: 'whisper.cpp', note: 'Build with GGML_VULKAN=ON' },
+                { gpu: 'No GPU (CPU only)', be: 'faster-whisper int8', note: 'Slower for large models; reliable fallback' },
               ].map((row, i, arr) => (
                 <tr key={row.gpu} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
                   <td className="p-4 text-sm text-on-surface">{row.gpu}</td>
@@ -575,10 +574,10 @@ pip install -r requirements.txt`}</CodeBlock>
             </thead>
             <tbody>
               {[
-                { model: 'tiny.en',   vram: '~1 GB',  speed: 'Fastest',   acc: 'Good for commands' },
-                { model: 'small.en',  vram: '~2 GB',  speed: 'Fast',      acc: 'Recommended default' },
-                { model: 'medium.en', vram: '~5 GB',  speed: 'Moderate',  acc: 'High accuracy prose' },
-                { model: 'large-v3',  vram: '~10 GB', speed: 'Slow',      acc: 'Multilingual, best quality' },
+                { model: 'tiny.en', vram: '~1 GB', speed: 'Fastest', acc: 'Good for commands' },
+                { model: 'small.en', vram: '~2 GB', speed: 'Fast', acc: 'Recommended default' },
+                { model: 'medium.en', vram: '~5 GB', speed: 'Moderate', acc: 'High accuracy prose' },
+                { model: 'large-v3', vram: '~10 GB', speed: 'Slow', acc: 'Multilingual, best quality' },
               ].map((row, i, arr) => (
                 <tr key={row.model} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
                   <td className="p-4 font-mono text-sm text-primary">{row.model}</td>
@@ -609,8 +608,8 @@ function HotkeyDocs() {
         <h2 className="text-2xl font-display font-bold text-white mb-6">Gesture Modes</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: <Command className="w-5 h-5" />, color: 'primary',    name: 'Hold-to-Talk',   desc: 'Hold while speaking, release to transcribe and deliver.' },
-            { icon: <Zap      className="w-5 h-5" />, color: 'secondary',  name: 'Toggle-to-Talk', desc: 'Tap once to start, tap again to stop recording.' },
+            { icon: <Command className="w-5 h-5" />, color: 'primary', name: 'Hold-to-Talk', desc: 'Hold while speaking, release to transcribe and deliver.' },
+            { icon: <Zap className="w-5 h-5" />, color: 'secondary', name: 'Toggle-to-Talk', desc: 'Tap once to start, tap again to stop recording.' },
             { icon: <MousePointer2 className="w-5 h-5" />, color: 'tertiary', name: 'Double-Tap', desc: 'Double-tap a modifier (e.g. Alt) and hold on the second tap.' },
           ].map((g) => (
             <div key={g.name} className="p-6 rounded-2xl bg-surface-container-low card-outline">
@@ -653,10 +652,10 @@ tts_stop_keys = ["KEY_ESCAPE"]`}</CodeBlock>
         <p className="text-on-surface-variant mb-6">The Settings UI automatically validates hotkeys for common collisions:</p>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            { title: 'Exact Duplicate',     desc: 'Two gestures share identical keys.' },
-            { title: 'Subset Collision',    desc: 'One binding is a subset of another.' },
-            { title: 'Double-tap Overlap',  desc: 'A double-tap key appears in a combo.' },
-            { title: 'Bare Single Key',     desc: 'Intercepts every press of a normal key.' },
+            { title: 'Exact Duplicate', desc: 'Two gestures share identical keys.' },
+            { title: 'Subset Collision', desc: 'One binding is a subset of another.' },
+            { title: 'Double-tap Overlap', desc: 'A double-tap key appears in a combo.' },
+            { title: 'Bare Single Key', desc: 'Intercepts every press of a normal key.' },
           ].map((item) => (
             <li key={item.title} className="p-4 rounded-xl bg-white/5 flex gap-4 items-start">
               <Info className="w-4 h-4 text-primary mt-0.5 shrink-0" />
@@ -686,13 +685,13 @@ function RoutingDocs() {
         <h2 className="text-2xl font-display font-bold text-white mb-6">Delivery Types</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            { name: 'inject',    desc: 'Direct text insertion into the focused window via AT-SPI2. Avoids modifier-key conflicts.' },
+            { name: 'inject', desc: 'Direct text insertion into the focused window via AT-SPI2. Avoids modifier-key conflicts.' },
             { name: 'clipboard', desc: 'Copy transcript to the system clipboard (wl-clipboard on Wayland).' },
-            { name: 'exec',      desc: 'Execute a shell command, substituting {TEXT} with the transcript.' },
-            { name: 'pipe',      desc: 'Write directly to a named FIFO. Ideal for agent integrations.' },
-            { name: 'socket',    desc: 'Send over a TCP or Unix domain socket to distributed systems.' },
-            { name: 'file',      desc: 'Append transcript to a voice journal or meeting notes file.' },
-            { name: 'dbus',      desc: 'Emit a custom DBus signal—useful for desktop automation.' },
+            { name: 'exec', desc: 'Execute a shell command, substituting {TEXT} with the transcript.' },
+            { name: 'pipe', desc: 'Write directly to a named FIFO. Ideal for agent integrations.' },
+            { name: 'socket', desc: 'Send over a TCP or Unix domain socket to distributed systems.' },
+            { name: 'file', desc: 'Append transcript to a voice journal or meeting notes file.' },
+            { name: 'dbus', desc: 'Emit a custom DBus signal—useful for desktop automation.' },
           ].map((type) => (
             <div key={type.name} className="p-4 rounded-xl bg-surface-container-low card-outline flex flex-col gap-1">
               <code className="text-primary font-bold">{type.name}</code>
@@ -707,11 +706,11 @@ function RoutingDocs() {
         <p className="text-on-surface-variant mb-6">Configure how text is shaped per-target before delivery:</p>
         <div className="space-y-3">
           {[
-            { name: 'default',       desc: 'Full pipeline: snippets, spoken punctuation, Ollama grammar rewrite.' },
-            { name: 'none',          desc: 'Raw Whisper output — best for agent targets that do their own processing.' },
+            { name: 'default', desc: 'Full pipeline: snippets, spoken punctuation, Ollama grammar rewrite.' },
+            { name: 'none', desc: 'Raw Whisper output — best for agent targets that do their own processing.' },
             { name: 'strip_fillers', desc: 'Remove um/uh/hmm/like only. No AI rewriting.' },
             { name: 'snippets_only', desc: 'Expand text snippets; no AI rewriting.' },
-            { name: 'code_mode',     desc: 'Reformat speech as code identifiers. See Code Mode docs.' },
+            { name: 'code_mode', desc: 'Reformat speech as code identifiers. See Code Mode docs.' },
           ].map((mode) => (
             <div key={mode.name} className="flex gap-4 p-4 rounded-xl bg-[#0e0e0e] border border-white/5">
               <code className="text-secondary font-bold shrink-0 w-36">{mode.name}</code>
@@ -809,8 +808,8 @@ function ATSPIDocs() {
       <section className="grid md:grid-cols-3 gap-6">
         {[
           { title: 'Direct Insertion', desc: 'Inserts text directly via AT-SPI2 without simulating keystrokes, avoiding modifier key conflicts and IME issues.' },
-          { title: 'Context Reading',  desc: 'Reads the 300 characters before the cursor to prime Whisper with document-specific vocabulary for higher accuracy.' },
-          { title: 'Auto Code Mode',   desc: 'Automatically switches to code dictation when a terminal, VS Code, or Neovim window is detected as focused.' },
+          { title: 'Context Reading', desc: 'Reads the 300 characters before the cursor to prime Whisper with document-specific vocabulary for higher accuracy.' },
+          { title: 'Auto Code Mode', desc: 'Automatically switches to code dictation when a terminal, VS Code, or Neovim window is detected as focused.' },
         ].map((f) => (
           <div key={f.title} className="p-6 rounded-2xl bg-surface-container-low card-outline">
             <h3 className="font-bold text-white mb-2">{f.title}</h3>
@@ -870,11 +869,11 @@ function CodeModeDocs() {
             </thead>
             <tbody>
               {[
-                { say: 'function handle user login',    cc: 'handleUserLogin()',   sc: 'handle_user_login()',   ss: '' },
-                { say: 'constant max retries',          cc: '',                    sc: '',                      ss: 'MAX_RETRIES' },
-                { say: 'class user authentication',     cc: 'UserAuthentication',  sc: 'user_authentication',   ss: '' },
-                { say: 'variable total item count',     cc: 'totalItemCount',      sc: 'total_item_count',      ss: '' },
-                { say: 'equals new array open close',   cc: '= []',                sc: '= []',                  ss: '' },
+                { say: 'function handle user login', cc: 'handleUserLogin()', sc: 'handle_user_login()', ss: '' },
+                { say: 'constant max retries', cc: '', sc: '', ss: 'MAX_RETRIES' },
+                { say: 'class user authentication', cc: 'UserAuthentication', sc: 'user_authentication', ss: '' },
+                { say: 'variable total item count', cc: 'totalItemCount', sc: 'total_item_count', ss: '' },
+                { say: 'equals new array open close', cc: '= []', sc: '= []', ss: '' },
               ].map((row, i, arr) => (
                 <tr key={row.say} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
                   <td className="p-4 text-sm text-on-surface-variant italic">"{row.say}"</td>
@@ -919,10 +918,10 @@ function CodeModeDocs() {
         </p>
         <div className="space-y-3">
           {[
-            { app: 'VS Code / Codium',    trigger: 'WM_CLASS contains "code"' },
-            { app: 'Neovim (terminal)',   trigger: 'WM_CLASS contains "nvim" or "alacritty" + active process is nvim' },
-            { app: 'Terminal emulators',  trigger: 'WM_CLASS: alacritty, kitty, wezterm, foot, xterm' },
-            { app: 'JetBrains IDEs',      trigger: 'WM_CLASS contains "jetbrains"' },
+            { app: 'VS Code / Codium', trigger: 'WM_CLASS contains "code"' },
+            { app: 'Neovim (terminal)', trigger: 'WM_CLASS contains "nvim" or "alacritty" + active process is nvim' },
+            { app: 'Terminal emulators', trigger: 'WM_CLASS: alacritty, kitty, wezterm, foot, xterm' },
+            { app: 'JetBrains IDEs', trigger: 'WM_CLASS contains "jetbrains"' },
           ].map((item) => (
             <div key={item.app} className="flex gap-4 p-4 rounded-xl bg-[#0e0e0e] border border-white/5">
               <span className="font-bold text-white text-sm w-48 shrink-0">{item.app}</span>
@@ -962,12 +961,12 @@ function TTSDocs() {
       />
 
       <FeatureGrid items={[
-        { title: '8 Curated Voices',    desc: 'US and GB English models ranging from 5 MB to 130 MB.' },
-        { title: 'One-Click Download',  desc: 'Manage and update models directly from Settings → Voice Output.' },
-        { title: 'TTS Stop Key',        desc: 'Configurable key (default: Escape) to interrupt playback at any time.' },
-        { title: 'Response Overlay',    desc: 'Teal visual indicator shown while the app is speaking.' },
-        { title: 'espeak-ng Fallback',  desc: 'If Piper is unavailable, espeak-ng is used automatically.' },
-        { title: 'Response Loopback',   desc: 'Agents can write to a response_pipe FIFO; VoxCtr speaks each line.' },
+        { title: '8 Curated Voices', desc: 'US and GB English models ranging from 5 MB to 130 MB.' },
+        { title: 'One-Click Download', desc: 'Manage and update models directly from Settings → Voice Output.' },
+        { title: 'TTS Stop Key', desc: 'Configurable key (default: Escape) to interrupt playback at any time.' },
+        { title: 'Response Overlay', desc: 'Teal visual indicator shown while the app is speaking.' },
+        { title: 'espeak-ng Fallback', desc: 'If Piper is unavailable, espeak-ng is used automatically.' },
+        { title: 'Response Loopback', desc: 'Agents can write to a response_pipe FIFO; VoxCtr speaks each line.' },
       ]} />
 
       <section>
@@ -985,13 +984,13 @@ function TTSDocs() {
             <tbody>
               {[
                 { id: 'en-us-lessac-medium', lang: 'US English', q: 'Medium', size: '~55 MB' },
-                { id: 'en-us-ryan-medium',   lang: 'US English', q: 'Medium', size: '~55 MB' },
-                { id: 'en-us-ryan-high',     lang: 'US English', q: 'High',   size: '~130 MB' },
-                { id: 'en-us-amy-low',       lang: 'US English', q: 'Low',    size: '~5 MB' },
-                { id: 'en-us-joe-medium',    lang: 'US English', q: 'Medium', size: '~55 MB' },
-                { id: 'en-us-kusal-medium',  lang: 'US English', q: 'Medium', size: '~55 MB' },
-                { id: 'en-us-danny-low',     lang: 'US English', q: 'Low',    size: '~5 MB' },
-                { id: 'en-gb-alan-low',      lang: 'GB English', q: 'Low',    size: '~5 MB' },
+                { id: 'en-us-ryan-medium', lang: 'US English', q: 'Medium', size: '~55 MB' },
+                { id: 'en-us-ryan-high', lang: 'US English', q: 'High', size: '~130 MB' },
+                { id: 'en-us-amy-low', lang: 'US English', q: 'Low', size: '~5 MB' },
+                { id: 'en-us-joe-medium', lang: 'US English', q: 'Medium', size: '~55 MB' },
+                { id: 'en-us-kusal-medium', lang: 'US English', q: 'Medium', size: '~55 MB' },
+                { id: 'en-us-danny-low', lang: 'US English', q: 'Low', size: '~5 MB' },
+                { id: 'en-gb-alan-low', lang: 'GB English', q: 'Low', size: '~5 MB' },
               ].map((row, i, arr) => (
                 <tr key={row.id} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
                   <td className="p-4 font-mono text-sm text-primary">{row.id}</td>
@@ -1051,8 +1050,8 @@ function MCPDocs() {
         <div className="space-y-4">
           {[
             { name: 'transcribe_voice', sig: 'timeout_seconds?: number → string', desc: 'Opens the microphone and returns the transcript when speech ends or the timeout elapses. The full VoxCtr post-processing pipeline is applied before the text is returned.' },
-            { name: 'speak_text',       sig: 'text: string → "spoken"',           desc: 'Queues text for TTS playback via Piper. Returns immediately (non-blocking). The TTS overlay is shown while playback continues.' },
-            { name: 'get_status',       sig: '→ { recording: bool, speaking: bool }', desc: 'Returns the current audio I/O state. Useful for agents that want to avoid overlapping recordings.' },
+            { name: 'speak_text', sig: 'text: string → "spoken"', desc: 'Queues text for TTS playback via Piper. Returns immediately (non-blocking). The TTS overlay is shown while playback continues.' },
+            { name: 'get_status', sig: '→ { recording: bool, speaking: bool }', desc: 'Returns the current audio I/O state. Useful for agents that want to avoid overlapping recordings.' },
           ].map((tool) => (
             <div key={tool.name} className="p-5 rounded-xl bg-[#0e0e0e] border border-white/5">
               <div className="flex items-start justify-between gap-4 mb-2">
@@ -1232,11 +1231,11 @@ function SecurityDocs() {
         <h2 className="text-2xl font-display font-bold text-white mb-6">Default Security Model</h2>
         <div className="space-y-4">
           {[
-            { title: 'Localhost-only MCP',         desc: 'The MCP server binds to a Unix domain socket at /tmp/voxctr-mcp.sock. It is only accessible to processes on the same machine and same user session. No network port is opened by default.' },
-            { title: 'Zero outbound traffic',       desc: 'All transcription (Whisper), text-to-speech (Piper), and AI post-processing (Ollama) run locally. No audio, transcript, or text is transmitted to any external service.' },
-            { title: 'Microphone confirmation',     desc: 'When require_confirmation = true in config, a system tray notification asks for approval before each MCP-initiated recording opens the mic.' },
-            { title: 'Tool allowlist',              desc: 'Each MCP tool (transcribe_voice, speak_text, get_status) can be individually disabled in config. Operators can restrict which tools are exposed to connected agents.' },
-            { title: 'Target allowlist',            desc: 'The allowed_targets config limits which output targets an MCP client can route to, preventing an agent from sending transcribed text to unexpected destinations.' },
+            { title: 'Localhost-only MCP', desc: 'The MCP server binds to a Unix domain socket at /tmp/voxctr-mcp.sock. It is only accessible to processes on the same machine and same user session. No network port is opened by default.' },
+            { title: 'Zero outbound traffic', desc: 'All transcription (Whisper), text-to-speech (Piper), and AI post-processing (Ollama) run locally. No audio, transcript, or text is transmitted to any external service.' },
+            { title: 'Microphone confirmation', desc: 'When require_confirmation = true in config, a system tray notification asks for approval before each MCP-initiated recording opens the mic.' },
+            { title: 'Tool allowlist', desc: 'Each MCP tool (transcribe_voice, speak_text, get_status) can be individually disabled in config. Operators can restrict which tools are exposed to connected agents.' },
+            { title: 'Target allowlist', desc: 'The allowed_targets config limits which output targets an MCP client can route to, preventing an agent from sending transcribed text to unexpected destinations.' },
           ].map((item) => (
             <div key={item.title} className="p-5 rounded-2xl bg-surface-container-low card-outline">
               <div className="flex items-start gap-3">
@@ -1308,10 +1307,10 @@ function SecurityDocs() {
             </thead>
             <tbody>
               {[
-                { feature: 'Server name',   conv: '{service}-mcp-server',          ex: 'voxctr-mcp-server' },
-                { feature: 'Tool naming',   conv: '{service}_{action}_{resource}', ex: 'voxctr_trigger_microphone' },
-                { feature: 'Tool design',   conv: 'Descriptive and action-oriented', ex: 'start_transcription' },
-                { feature: 'Error handling',conv: 'Detailed JSON schemas',          ex: 'hardware_unavailable error code' },
+                { feature: 'Server name', conv: '{service}-mcp-server', ex: 'voxctr-mcp-server' },
+                { feature: 'Tool naming', conv: '{service}_{action}_{resource}', ex: 'voxctr_trigger_microphone' },
+                { feature: 'Tool design', conv: 'Descriptive and action-oriented', ex: 'start_transcription' },
+                { feature: 'Error handling', conv: 'Detailed JSON schemas', ex: 'hardware_unavailable error code' },
               ].map((row, i, arr) => (
                 <tr key={row.feature} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
                   <td className="p-4 text-sm text-white font-medium">{row.feature}</td>
@@ -1342,8 +1341,8 @@ function AIDocs() {
         <div className="grid md:grid-cols-3 gap-6">
           {[
             { model: 'llama3.2:1b', ram: '~1.3 GB', use: 'Grammar & Bullets' },
-            { model: 'phi3:mini',   ram: '~2 GB',   use: 'Simple Rewrites' },
-            { model: 'mistral',     ram: '~8 GB',   use: 'Complex Rewriting' },
+            { model: 'phi3:mini', ram: '~2 GB', use: 'Simple Rewrites' },
+            { model: 'mistral', ram: '~8 GB', use: 'Complex Rewriting' },
           ].map((m) => (
             <div key={m.model} className="p-4 rounded-2xl bg-surface-container-low card-outline">
               <code className="text-primary font-bold block mb-2">{m.model}</code>
@@ -1359,13 +1358,13 @@ function AIDocs() {
         <p className="text-on-surface-variant mb-4">Each target's pipeline is a sequence of stages applied in order to the raw transcript:</p>
         <div className="space-y-3">
           {[
-            { stage: 'strip_fillers',   desc: 'Remove um, uh, hmm, like, you know.' },
-            { stage: 'spoken_punct',    desc: 'Convert "period", "comma", "question mark" to punctuation.' },
-            { stage: 'snippets',        desc: 'Expand user-defined text abbreviations.' },
-            { stage: 'ollama_prompt',   desc: 'Send text to a local Ollama model for rewriting. Fully configurable prompt, model, temperature, and timeout.' },
-            { stage: 'prepend',         desc: 'Prepend a static string (e.g. "- " for bullet points).' },
-            { stage: 'append_newline',  desc: 'Append a newline character to the output.' },
-            { stage: 'code_mode',       desc: 'Transform spoken identifiers into camelCase / snake_case syntax.' },
+            { stage: 'strip_fillers', desc: 'Remove um, uh, hmm, like, you know.' },
+            { stage: 'spoken_punct', desc: 'Convert "period", "comma", "question mark" to punctuation.' },
+            { stage: 'snippets', desc: 'Expand user-defined text abbreviations.' },
+            { stage: 'ollama_prompt', desc: 'Send text to a local Ollama model for rewriting. Fully configurable prompt, model, temperature, and timeout.' },
+            { stage: 'prepend', desc: 'Prepend a static string (e.g. "- " for bullet points).' },
+            { stage: 'append_newline', desc: 'Append a newline character to the output.' },
+            { stage: 'code_mode', desc: 'Transform spoken identifiers into camelCase / snake_case syntax.' },
           ].map((s) => (
             <div key={s.stage} className="flex gap-4 p-4 rounded-xl bg-[#0e0e0e] border border-white/5">
               <code className="text-secondary font-bold shrink-0 w-40">{s.stage}</code>
@@ -1439,13 +1438,13 @@ text = "- "`}</CodeBlock>
             </thead>
             <tbody>
               {[
-                { uc: 'Command to AI agent',         pl: 'strip_fillers → ollama_prompt (terse command rewriter, low temp)' },
-                { uc: 'Grammar-corrected dictation',  pl: 'strip_fillers → ollama_prompt (grammar editor, medium temp)' },
-                { uc: 'Meeting notes to bullets',     pl: 'strip_fillers → ollama_prompt (bullet formatter) → prepend("- ")' },
-                { uc: 'Code comment dictation',       pl: 'code_mode → ollama_prompt ("Rewrite as a concise code comment")' },
-                { uc: 'Shell command from English',   pl: 'ollama_prompt ("Convert to bash. Return only the command.") → exec' },
-                { uc: 'Email draft from bullets',     pl: 'ollama_prompt ("Expand bullet points into a professional email")' },
-                { uc: 'Translate before delivery',    pl: 'ollama_prompt ("Translate to French, return only the translation")' },
+                { uc: 'Command to AI agent', pl: 'strip_fillers → ollama_prompt (terse command rewriter, low temp)' },
+                { uc: 'Grammar-corrected dictation', pl: 'strip_fillers → ollama_prompt (grammar editor, medium temp)' },
+                { uc: 'Meeting notes to bullets', pl: 'strip_fillers → ollama_prompt (bullet formatter) → prepend("- ")' },
+                { uc: 'Code comment dictation', pl: 'code_mode → ollama_prompt ("Rewrite as a concise code comment")' },
+                { uc: 'Shell command from English', pl: 'ollama_prompt ("Convert to bash. Return only the command.") → exec' },
+                { uc: 'Email draft from bullets', pl: 'ollama_prompt ("Expand bullet points into a professional email")' },
+                { uc: 'Translate before delivery', pl: 'ollama_prompt ("Translate to French, return only the translation")' },
               ].map((row, i, arr) => (
                 <tr key={row.uc} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
                   <td className="p-4 text-sm text-white">{row.uc}</td>
@@ -1472,16 +1471,16 @@ function OverlayDocs() {
 
       <section className="grid md:grid-cols-3 gap-6">
         {[
-          { name: 'Voice Card',  image: voiceOverlay, desc: 'Scrolling bar waveform in a floating card. Gradient from dim purple (oldest) to bright pink-white (newest). Default style.' },
-          { name: 'Waveform',    image: boxOverlay,   desc: 'Classic OpenGL oscilloscope rendering the raw audio signal as a min/max envelope.' },
-          { name: 'Pulse Circle',image: dotOverlay,   desc: 'Soft glowing circle that expands with RMS amplitude. Smooth 30 fps animation with exponential decay.' },
+          { name: 'Voice Card', image: voiceOverlay, desc: 'Scrolling bar waveform in a floating card. Gradient from dim purple (oldest) to bright pink-white (newest). Default style.' },
+          { name: 'Waveform', image: boxOverlay, desc: 'Classic OpenGL oscilloscope rendering the raw audio signal as a min/max envelope.' },
+          { name: 'Pulse Circle', image: dotOverlay, desc: 'Soft glowing circle that expands with RMS amplitude. Smooth 30 fps animation with exponential decay.' },
         ].map((overlay) => (
           <div key={overlay.name} className="p-6 rounded-2xl bg-surface-container-low card-outline overflow-hidden flex flex-col">
-            <div className="aspect-video mb-6 rounded-xl overflow-hidden bg-black/40 flex items-center justify-center border border-white/5 group">
-              <img 
-                src={overlay.image} 
-                alt={overlay.name} 
-                className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500" 
+            <div className=" max-h-[calc(100%-10px)] mb-6 rounded-xl overflow-hidden bg-black/40 flex items-center justify-center border border-white/5 group">
+              <img
+                src={overlay.image}
+                alt={overlay.name}
+                className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500"
               />
             </div>
             <h3 className="font-bold text-white mb-2">{overlay.name}</h3>
@@ -1569,12 +1568,12 @@ function ConfigDocs() {
         <h2 className="text-2xl font-display font-bold text-white mb-4">File Locations</h2>
         <div className="space-y-3">
           {[
-            { path: '~/.config/voxctr/config.json',      desc: 'Global settings (audio device, models, MCP, TTS)' },
-            { path: '~/.config/voxctr/targets.toml',     desc: 'Named output targets and post-processing pipelines' },
-            { path: '~/.config/voxctr/bindings.toml',    desc: 'Hotkey bindings mapped to target IDs' },
-            { path: '~/.config/voxctr/snippets.toml',    desc: 'Text abbreviation expansions' },
-            { path: '~/.config/voxctr/overlays/',        desc: 'Custom overlay Python plugins' },
-            { path: '~/.local/share/voxctr/voices/',     desc: 'Downloaded Piper TTS voice models' },
+            { path: '~/.config/voxctr/config.json', desc: 'Global settings (audio device, models, MCP, TTS)' },
+            { path: '~/.config/voxctr/targets.toml', desc: 'Named output targets and post-processing pipelines' },
+            { path: '~/.config/voxctr/bindings.toml', desc: 'Hotkey bindings mapped to target IDs' },
+            { path: '~/.config/voxctr/snippets.toml', desc: 'Text abbreviation expansions' },
+            { path: '~/.config/voxctr/overlays/', desc: 'Custom overlay Python plugins' },
+            { path: '~/.local/share/voxctr/voices/', desc: 'Downloaded Piper TTS voice models' },
           ].map((item) => (
             <div key={item.path} className="flex gap-4 p-4 rounded-xl bg-[#0e0e0e] border border-white/5">
               <code className="text-primary text-xs font-mono w-72 shrink-0">{item.path}</code>
@@ -1598,23 +1597,23 @@ function ConfigDocs() {
             </thead>
             <tbody className="text-sm">
               {[
-                { key: 'whisper_model',          type: 'string',  def: '"small.en"',    desc: 'Whisper model name (tiny.en, small.en, medium.en, large-v3)' },
-                { key: 'audio_device_index',     type: 'int|null', def: 'null',          desc: 'PortAudio device index. null = system default.' },
-                { key: 'vad_threshold',          type: 'float',   def: '0.5',           desc: 'Voice activity detection sensitivity (0.0–1.0)' },
-                { key: 'tts_enabled',            type: 'bool',    def: 'false',         desc: 'Master TTS on/off switch' },
-                { key: 'tts_engine',             type: 'string',  def: '"piper"',       desc: '"piper" or "espeak"' },
-                { key: 'tts_voice',              type: 'string',  def: '"en-us-lessac-medium"', desc: 'Piper voice ID' },
-                { key: 'tts_stop_key',           type: 'string[]',def: '["KEY_ESCAPE"]', desc: 'evdev key(s) to interrupt TTS playback' },
-                { key: 'tts_response_overlay',   type: 'bool',    def: 'true',          desc: 'Show teal overlay while TTS plays' },
-                { key: 'mcp_server_enabled',     type: 'bool',    def: 'false',         desc: 'Start MCP server on launch' },
-                { key: 'mcp_record_timeout',     type: 'float',   def: '15.0',          desc: 'Default transcribe_voice timeout in seconds' },
-                { key: 'mcp_require_confirmation', type: 'bool',  def: 'false',         desc: 'Show system tray confirm before each MCP recording' },
-                { key: 'atspi_injection',        type: 'bool',    def: 'true',          desc: 'Use AT-SPI2 for text injection' },
-                { key: 'atspi_context_prompt',   type: 'bool',    def: 'true',          desc: 'Read cursor context to prime Whisper' },
-                { key: 'atspi_auto_code_mode',   type: 'bool',    def: 'true',          desc: 'Auto-switch to Code Mode in IDEs/terminals' },
-                { key: 'atspi_context_chars',    type: 'int',     def: '300',           desc: 'Characters to read before the cursor' },
-                { key: 'show_overlay',           type: 'bool',    def: 'true',          desc: 'Show recording overlay while mic is active' },
-                { key: 'overlay_style',          type: 'string',  def: '"voice_card"',  desc: '"voice_card", "waveform", or "pulse_circle"' },
+                { key: 'whisper_model', type: 'string', def: '"small.en"', desc: 'Whisper model name (tiny.en, small.en, medium.en, large-v3)' },
+                { key: 'audio_device_index', type: 'int|null', def: 'null', desc: 'PortAudio device index. null = system default.' },
+                { key: 'vad_threshold', type: 'float', def: '0.5', desc: 'Voice activity detection sensitivity (0.0–1.0)' },
+                { key: 'tts_enabled', type: 'bool', def: 'false', desc: 'Master TTS on/off switch' },
+                { key: 'tts_engine', type: 'string', def: '"piper"', desc: '"piper" or "espeak"' },
+                { key: 'tts_voice', type: 'string', def: '"en-us-lessac-medium"', desc: 'Piper voice ID' },
+                { key: 'tts_stop_key', type: 'string[]', def: '["KEY_ESCAPE"]', desc: 'evdev key(s) to interrupt TTS playback' },
+                { key: 'tts_response_overlay', type: 'bool', def: 'true', desc: 'Show teal overlay while TTS plays' },
+                { key: 'mcp_server_enabled', type: 'bool', def: 'false', desc: 'Start MCP server on launch' },
+                { key: 'mcp_record_timeout', type: 'float', def: '15.0', desc: 'Default transcribe_voice timeout in seconds' },
+                { key: 'mcp_require_confirmation', type: 'bool', def: 'false', desc: 'Show system tray confirm before each MCP recording' },
+                { key: 'atspi_injection', type: 'bool', def: 'true', desc: 'Use AT-SPI2 for text injection' },
+                { key: 'atspi_context_prompt', type: 'bool', def: 'true', desc: 'Read cursor context to prime Whisper' },
+                { key: 'atspi_auto_code_mode', type: 'bool', def: 'true', desc: 'Auto-switch to Code Mode in IDEs/terminals' },
+                { key: 'atspi_context_chars', type: 'int', def: '300', desc: 'Characters to read before the cursor' },
+                { key: 'show_overlay', type: 'bool', def: 'true', desc: 'Show recording overlay while mic is active' },
+                { key: 'overlay_style', type: 'string', def: '"voice_card"', desc: '"voice_card", "waveform", or "pulse_circle"' },
               ].map((row, i, arr) => (
                 <tr key={row.key} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
                   <td className="p-4 font-mono text-xs text-primary">{row.key}</td>
@@ -1793,7 +1792,7 @@ function ArchitectureDocs() {
       />
 
       <CodeBlock lang="System Diagram">
-{`Input Engine (evdev)
+        {`Input Engine (evdev)
   ├── Hold / Toggle / Double-Tap gesture detection
   └── TTS stop key interceptor
         │
