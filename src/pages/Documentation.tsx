@@ -64,7 +64,6 @@ export default function Documentation() {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Scroll to top when route changes and close mobile menu
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setIsMobileMenuOpen(false);
@@ -281,13 +280,12 @@ function QuickstartDocs() {
           </div>
           <p className="text-on-surface-variant mb-4 ml-12">Choose the AppImage for the fastest path, or clone the repository to run from source.</p>
           <div className="ml-12 space-y-4">
-            <CodeBlock lang="bash">{`# Option A — pip (recommended)
-pip install voxctr
+            {/* FIX: Removed non-existent `pip install voxctr`. README only lists AppImage and source. */}
+            <CodeBlock lang="bash">{`# Option A — AppImage (recommended)
+# Download VoxCtr-x86_64.AppImage from Releases, then:
+bash install.sh
 
-# Option B — AppImage
-chmod +x install.sh && ./install.sh
-
-# Option C — from source
+# Option B — build from source
 git clone https://github.com/JRufer/VoxCtr && cd VoxCtr
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt`}</CodeBlock>
@@ -300,13 +298,15 @@ pip install -r requirements.txt`}</CodeBlock>
             <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary font-bold text-sm shrink-0">2</div>
             <h2 className="text-xl font-display font-bold text-white">Install system dependencies</h2>
           </div>
-          <p className="text-on-surface-variant mb-4 ml-12">VoxCtr needs a few system packages for audio input, Wayland clipboard, and the accessibility bus.</p>
+          <p className="text-on-surface-variant mb-4 ml-12">The AppImage installer handles this automatically. For source installs, run the setup script or install manually:</p>
           <div className="ml-12">
-            <CodeBlock lang="bash (Arch/Manjaro)">{`sudo pacman -S portaudio python-pyaudio wl-clipboard dbus \\
-               pkgconf python-gobject ydotool wtype
+            <CodeBlock lang="bash (Arch/Manjaro)">{`sudo pacman -S portaudio wl-clipboard xdotool wtype xclip alsa-utils espeak-ng
 
-# For TTS and MCP bridge
-sudo pacman -S alsa-utils piper-tts socat`}</CodeBlock>
+# Optional: MCP / Claude Desktop bridge
+sudo pacman -S socat
+
+# Optional: AT-SPI2 accessibility
+sudo pacman -S python-atspi`}</CodeBlock>
           </div>
         </li>
 
@@ -314,15 +314,12 @@ sudo pacman -S alsa-utils piper-tts socat`}</CodeBlock>
         <li>
           <div className="flex items-center gap-4 mb-4">
             <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary font-bold text-sm shrink-0">3</div>
-            <h2 className="text-xl font-display font-bold text-white">Launch VoxCtr</h2>
+            <h2 className="text-xl font-display font-bold text-white">Set up permissions</h2>
           </div>
-          <p className="text-on-surface-variant mb-4 ml-12">Run the app. A system tray icon appears—right-click it to access Settings.</p>
+          <p className="text-on-surface-variant mb-4 ml-12">Global hotkeys require evdev access. The installer handles this; for source installs run:</p>
           <div className="ml-12">
-            <CodeBlock lang="bash">{`voxctr
-# or using the launcher script:
-./voxctr.sh
-# or from source:
-python src/main.py`}</CodeBlock>
+            <CodeBlock lang="bash">{`sudo bash scripts/setup-permissions.sh
+# Then log out and back in for group changes to take effect`}</CodeBlock>
           </div>
         </li>
 
@@ -330,11 +327,13 @@ python src/main.py`}</CodeBlock>
         <li>
           <div className="flex items-center gap-4 mb-4">
             <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary font-bold text-sm shrink-0">4</div>
-            <h2 className="text-xl font-display font-bold text-white">Configure a hotkey</h2>
+            <h2 className="text-xl font-display font-bold text-white">Launch VoxCtr</h2>
           </div>
-          <p className="text-on-surface-variant mb-4 ml-12">Open Settings → Hotkeys. The default gesture is <code className="text-primary bg-white/5 px-1 rounded">Hold Super+Space</code>. Hold it, speak, release—text is injected into the focused window.</p>
+          <p className="text-on-surface-variant mb-4 ml-12">Run the app. A system tray icon appears—right-click it to access Settings. On first launch a wizard guides you through choosing a Whisper model and configuring hotkeys.</p>
           <div className="ml-12">
-            <InfoBox>The default target is <strong>inject</strong> (focused window). You can add more targets in Settings → Routing.</InfoBox>
+            <CodeBlock lang="bash">{`voxctr
+# or from source:
+./voxctr.sh`}</CodeBlock>
           </div>
         </li>
 
@@ -344,7 +343,7 @@ python src/main.py`}</CodeBlock>
             <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary font-bold text-sm shrink-0">5</div>
             <h2 className="text-xl font-display font-bold text-white">Speak your first sentence</h2>
           </div>
-          <p className="text-on-surface-variant mb-4 ml-12">Click into any text field. Hold your hotkey, say something, then release. The overlay animates while the mic is active—your text appears when you let go.</p>
+          <p className="text-on-surface-variant mb-4 ml-12">Click into any text field. Hold <code className="text-primary bg-white/5 px-1 rounded">Super+Space</code> (default), say something, then release. The overlay animates while the mic is active—your text appears when you let go.</p>
           <div className="ml-12">
             <div className="p-4 rounded-xl bg-primary/10 border border-primary/20">
               <p className="text-sm font-bold text-primary mb-1">You said:</p>
@@ -522,16 +521,19 @@ function InstallationDocs() {
             </tbody>
           </table>
         </div>
+        <p className="text-sm text-on-surface-variant mt-4">The backend is chosen automatically at startup using GPU detection via <code className="text-primary bg-white/5 px-1 rounded">nvidia-smi</code>, sysfs DRM vendor IDs, and <code className="text-primary bg-white/5 px-1 rounded">vulkaninfo</code>. Override it in <strong className="text-white">Settings → Engine</strong>.</p>
       </section>
 
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4 flex items-center gap-3">
           <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm font-bold">A</span>
-          AppImage (Easiest)
+          AppImage (Recommended)
         </h2>
-        <p className="text-on-surface-variant mb-4">Download the latest AppImage from Releases, then run the installer:</p>
-        <CodeBlock lang="bash">{`chmod +x install.sh
-./install.sh`}</CodeBlock>
+        <p className="text-on-surface-variant mb-4">Download the latest <code className="text-primary bg-white/5 px-1 rounded">VoxCtr-x86_64.AppImage</code> from <a href="https://github.com/JRufer/VoxCtr/releases" className="text-primary hover:underline">Releases</a>, then run the installer:</p>
+        <CodeBlock lang="bash">{`bash install.sh`}</CodeBlock>
+        <p className="text-sm text-on-surface-variant mt-4">The installer detects your package manager, installs system libraries, downloads Piper TTS, creates udev rules, and adds you to the <code className="text-primary bg-white/5 px-1 rounded">input</code>/<code className="text-primary bg-white/5 px-1 rounded">uinput</code> groups. <strong className="text-white">Log out and back in</strong> after it completes.</p>
+        <p className="text-sm text-on-surface-variant mt-2">Or build the AppImage from source first:</p>
+        <CodeBlock lang="bash">{`bash scripts/build_appimage.sh`}</CodeBlock>
       </section>
 
       <section>
@@ -542,26 +544,42 @@ function InstallationDocs() {
         <div className="space-y-8">
           <div>
             <h3 className="text-lg font-bold text-white mb-4">1. System Dependencies</h3>
-            <CodeBlock lang="bash (Arch/Manjaro)">{`sudo pacman -S portaudio python-pyaudio wl-clipboard dbus pkgconf python-gobject ydotool wtype
-# For TTS and MCP
-sudo pacman -S alsa-utils piper-tts socat`}</CodeBlock>
+            <CodeBlock lang="bash (Arch/Manjaro)">{`sudo pacman -S portaudio wl-clipboard xdotool wtype xclip alsa-utils espeak-ng
+# Optional: MCP / Claude Desktop bridge
+sudo pacman -S socat
+# Optional: AT-SPI2 accessibility
+sudo pacman -S python-atspi`}</CodeBlock>
+            <div className="mt-4">
+              <CodeBlock lang="bash (Debian/Ubuntu)">{`sudo apt install libportaudio2 wl-clipboard xdotool wtype xclip alsa-utils espeak-ng
+# Optional
+sudo apt install socat python3-pyatspi`}</CodeBlock>
+            </div>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white mb-4">2. Setup Virtual Environment</h3>
+            <h3 className="text-lg font-bold text-white mb-4">2. Permissions (evdev hotkeys)</h3>
+            <CodeBlock lang="bash">{`sudo bash scripts/setup-permissions.sh
+# Log out and back in after this step`}</CodeBlock>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-white mb-4">3. Clone and Set Up Virtual Environment</h3>
             <CodeBlock lang="bash">{`git clone https://github.com/jrufer/voxctr.git && cd voxctr
-python -m venv venv && source venv/bin/activate
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt`}</CodeBlock>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white mb-4">3. Run</h3>
-            <CodeBlock lang="bash">{`python src/main.py`}</CodeBlock>
+            <h3 className="text-lg font-bold text-white mb-4">4. Optional: NVIDIA GPU Acceleration</h3>
+            <CodeBlock lang="bash">{`pip install nvidia-cublas-cu12 nvidia-cudnn-cu12`}</CodeBlock>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-white mb-4">5. Launch</h3>
+            <CodeBlock lang="bash">{`./voxctr.sh`}</CodeBlock>
           </div>
         </div>
       </section>
 
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4">Whisper Model Download</h2>
-        <p className="text-on-surface-variant mb-4">On first launch VoxCtr downloads the default Whisper model (<code className="text-primary bg-white/5 px-1 rounded">small.en</code>). You can change the model in <strong className="text-white">Settings → Audio</strong>.</p>
+        <p className="text-on-surface-variant mb-4">On first launch a wizard guides you through choosing a model size. The model downloads automatically (~140 MB for <code className="text-primary bg-white/5 px-1 rounded">base</code>, ~2.9 GB for <code className="text-primary bg-white/5 px-1 rounded">large-v3</code>). Change the model anytime in <strong className="text-white">Settings → Engine</strong>.</p>
         <div className="overflow-x-auto rounded-2xl border border-white/10 bg-surface-container-low">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -575,7 +593,7 @@ pip install -r requirements.txt`}</CodeBlock>
             <tbody>
               {[
                 { model: 'tiny.en', vram: '~1 GB', speed: 'Fastest', acc: 'Good for commands' },
-                { model: 'small.en', vram: '~2 GB', speed: 'Fast', acc: 'Recommended default' },
+                { model: 'small.en / base', vram: '~2 GB', speed: 'Fast', acc: 'Recommended default' },
                 { model: 'medium.en', vram: '~5 GB', speed: 'Moderate', acc: 'High accuracy prose' },
                 { model: 'large-v3', vram: '~10 GB', speed: 'Slow', acc: 'Multilingual, best quality' },
               ].map((row, i, arr) => (
@@ -605,12 +623,41 @@ function HotkeyDocs() {
       />
 
       <section>
+        <h2 className="text-2xl font-display font-bold text-white mb-6">Default Hotkeys</h2>
+        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-surface-container-low">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="p-4 font-bold text-white">Gesture</th>
+                <th className="p-4 font-bold text-white">Keys</th>
+                <th className="p-4 font-bold text-white">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { gesture: 'Hold-to-Talk', keys: 'Super + Space', action: 'Hold while speaking, release to transcribe and inject' },
+                { gesture: 'Toggle-to-Talk', keys: 'Ctrl + Super + Space', action: 'Tap to start recording, tap again to stop' },
+                { gesture: 'Double-Tap', keys: 'Alt', action: 'Double-tap and hold Alt to record, release to deliver' },
+              ].map((row, i, arr) => (
+                <tr key={row.gesture} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
+                  <td className="p-4 text-sm font-bold text-white">{row.gesture}</td>
+                  <td className="p-4 font-mono text-sm text-primary">{row.keys}</td>
+                  <td className="p-4 text-sm text-on-surface-variant">{row.action}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-on-surface-variant mt-4">All hotkeys are configurable in <strong className="text-white">Settings → Hotkeys</strong> or directly in <code className="text-primary bg-white/5 px-1 rounded">bindings.toml</code>. Each gesture can be individually disabled without deleting the binding.</p>
+      </section>
+
+      <section>
         <h2 className="text-2xl font-display font-bold text-white mb-6">Gesture Modes</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {[
             { icon: <Command className="w-5 h-5" />, color: 'primary', name: 'Hold-to-Talk', desc: 'Hold while speaking, release to transcribe and deliver.' },
             { icon: <Zap className="w-5 h-5" />, color: 'secondary', name: 'Toggle-to-Talk', desc: 'Tap once to start, tap again to stop recording.' },
-            { icon: <MousePointer2 className="w-5 h-5" />, color: 'tertiary', name: 'Double-Tap', desc: 'Double-tap a modifier (e.g. Alt) and hold on the second tap.' },
+            { icon: <MousePointer2 className="w-5 h-5" />, color: 'tertiary', name: 'Double-Tap', desc: 'Double-tap a modifier (e.g. Alt) and hold on the second tap to record.' },
           ].map((g) => (
             <div key={g.name} className="p-6 rounded-2xl bg-surface-container-low card-outline">
               <div className={`w-10 h-10 rounded-xl bg-${g.color}/10 flex items-center justify-center text-${g.color} mb-4`}>
@@ -621,30 +668,50 @@ function HotkeyDocs() {
             </div>
           ))}
         </div>
+        <div className="mt-6">
+          <InfoBox>Double-tap hotkeys avoid collisions with normal modifier usage—double-tapping <code>Alt</code> never fires when <code>Alt</code> is held as part of a normal chord like <code>Alt+Tab</code>. The tap window defaults to 250 ms.</InfoBox>
+        </div>
       </section>
 
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4">Configuration</h2>
-        <CodeBlock lang="~/.config/voxctr/bindings.toml">{`[[binding]]
+        {/* FIX: `target` → `target_id` to match actual TOML format in examples/bindings-multi.toml */}
+        <CodeBlock lang="~/.config/voxctr/bindings.toml">{`format_version = "1.1"
+
+[[binding]]
+id      = "default_hold"
+label   = "Dictate (Hold)"
 keys    = ["KEY_LEFTMETA", "KEY_SPACE"]
 gesture = "hold"
-target  = "focused_window"
-label   = "Dictate"
+target_id = "default"
+tap_ms  = 250
+hold_threshold_ms = 200
 
 [[binding]]
+id      = "hermes_doubletap"
+label   = "Voice to Hermes (double-tap Ctrl)"
 keys    = ["KEY_LEFTCTRL"]
 gesture = "double_tap"
-target  = "hermes_agent"
-label   = "Agent Command"
+target_id = "hermes"
+tap_ms  = 280
+hold_threshold_ms = 200
 
 [[binding]]
-keys    = ["KEY_LEFTMETA", "KEY_J"]
+id      = "journal_hold"
+label   = "Journal Note"
+keys    = ["KEY_F18"]
 gesture = "hold"
-target  = "journal"
-label   = "Meeting Note"
+target_id = "journal"
+disabled = false   # set true to disable without deleting
 
-# TTS stop key (default)
-tts_stop_keys = ["KEY_ESCAPE"]`}</CodeBlock>
+# TTS stop key (global, in config.json)
+# tts_stop_key = ["KEY_ESCAPE"]`}</CodeBlock>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-display font-bold text-white mb-4">Recording Key Bindings</h2>
+        <p className="text-on-surface-variant mb-4">In the binding editor, press the <strong className="text-white">Bind</strong> button next to a key field. The button turns orange and displays "Recording…". Press your desired keys simultaneously — the display updates live as keys are held. When you release all keys the binding is captured automatically.</p>
+        <p className="text-on-surface-variant">For <strong className="text-white">Chord</strong> bindings the editor shows two separate Bind fields: <strong className="text-white">Hold keys</strong> (modifier keys you hold) and <strong className="text-white">Trigger key</strong> (the additional key pressed while holding). Keys are sorted automatically so modifiers appear before the trigger key.</p>
       </section>
 
       <section>
@@ -652,10 +719,10 @@ tts_stop_keys = ["KEY_ESCAPE"]`}</CodeBlock>
         <p className="text-on-surface-variant mb-6">The Settings UI automatically validates hotkeys for common collisions:</p>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            { title: 'Exact Duplicate', desc: 'Two gestures share identical keys.' },
-            { title: 'Subset Collision', desc: 'One binding is a subset of another.' },
-            { title: 'Double-tap Overlap', desc: 'A double-tap key appears in a combo.' },
-            { title: 'Bare Single Key', desc: 'Intercepts every press of a normal key.' },
+            { title: 'Exact Duplicate', desc: 'Two gestures share identical keys—both fire simultaneously.' },
+            { title: 'Subset Collision', desc: 'One binding\'s keys are a subset of another\'s—the shorter one always fires with the longer.' },
+            { title: 'Double-Tap Overlap', desc: 'A double-tap key appears in a hold or toggle combo—may cause mis-fires.' },
+            { title: 'Bare Single Key', desc: 'A non-modifier key used alone intercepts every press of that key.' },
           ].map((item) => (
             <li key={item.title} className="p-4 rounded-xl bg-white/5 flex gap-4 items-start">
               <Info className="w-4 h-4 text-primary mt-0.5 shrink-0" />
@@ -685,13 +752,13 @@ function RoutingDocs() {
         <h2 className="text-2xl font-display font-bold text-white mb-6">Delivery Types</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            { name: 'inject', desc: 'Direct text insertion into the focused window via AT-SPI2. Avoids modifier-key conflicts.' },
-            { name: 'clipboard', desc: 'Copy transcript to the system clipboard (wl-clipboard on Wayland).' },
-            { name: 'exec', desc: 'Execute a shell command, substituting {TEXT} with the transcript.' },
-            { name: 'pipe', desc: 'Write directly to a named FIFO. Ideal for agent integrations.' },
+            { name: 'inject', desc: 'Direct text insertion into the focused window via AT-SPI2 → wtype → xdotool fallback chain.' },
+            { name: 'clipboard', desc: 'Copy transcript to the system clipboard (wl-copy on Wayland, xclip on X11).' },
+            { name: 'exec', desc: 'Execute a shell command, substituting {TEXT} with the transcript. Uses shell=False to prevent injection attacks.' },
+            { name: 'pipe', desc: 'Write directly to a named FIFO with O_NONBLOCK. Ideal for agent integrations.' },
             { name: 'socket', desc: 'Send over a TCP or Unix domain socket to distributed systems.' },
-            { name: 'file', desc: 'Append transcript to a voice journal or meeting notes file.' },
-            { name: 'dbus', desc: 'Emit a custom DBus signal—useful for desktop automation.' },
+            { name: 'file', desc: 'Append transcript to a voice journal or meeting notes file, with optional timestamp.' },
+            { name: 'dbus', desc: 'Emit a custom DBus signal—useful for Waybar integration and desktop automation.' },
           ].map((type) => (
             <div key={type.name} className="p-4 rounded-xl bg-surface-container-low card-outline flex flex-col gap-1">
               <code className="text-primary font-bold">{type.name}</code>
@@ -703,14 +770,15 @@ function RoutingDocs() {
 
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4">Post-Processing Modes</h2>
-        <p className="text-on-surface-variant mb-6">Configure how text is shaped per-target before delivery:</p>
+        <p className="text-on-surface-variant mb-6">Configure how text is shaped per-target before delivery using the <code className="text-primary bg-white/5 px-1 rounded">post_processing</code> key:</p>
+        {/* FIX: Added ollama_only (real mode from README); removed code_mode (not a post_processing value) */}
         <div className="space-y-3">
           {[
-            { name: 'default', desc: 'Full pipeline: snippets, spoken punctuation, Ollama grammar rewrite.' },
+            { name: 'default', desc: 'Full pipeline: snippets, spoken punctuation, filler removal, Ollama rewrite (if enabled).' },
             { name: 'none', desc: 'Raw Whisper output — best for agent targets that do their own processing.' },
-            { name: 'strip_fillers', desc: 'Remove um/uh/hmm/like only. No AI rewriting.' },
-            { name: 'snippets_only', desc: 'Expand text snippets; no AI rewriting.' },
-            { name: 'code_mode', desc: 'Reformat speech as code identifiers. See Code Mode docs.' },
+            { name: 'strip_fillers', desc: 'Remove um/uh/hmm only. No AI rewriting.' },
+            { name: 'snippets_only', desc: 'Expand text snippets; no AI rewriting or spoken punctuation.' },
+            { name: 'ollama_only', desc: 'Skip snippets and code mode; run Ollama rewrite only.' },
           ].map((mode) => (
             <div key={mode.name} className="flex gap-4 p-4 rounded-xl bg-[#0e0e0e] border border-white/5">
               <code className="text-secondary font-bold shrink-0 w-36">{mode.name}</code>
@@ -718,11 +786,28 @@ function RoutingDocs() {
             </div>
           ))}
         </div>
+        <div className="mt-4">
+          <InfoBox>Agent targets (<code>exec</code>, <code>pipe</code>, <code>socket</code>) should almost always use <code>post_processing = "none"</code> or <code>"strip_fillers"</code> — rewriting alters command semantics.</InfoBox>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-display font-bold text-white mb-4">Quiet Mode</h2>
+        <p className="text-on-surface-variant mb-4">
+          Enable <strong className="text-white">Quiet Mode</strong> per-target for boosted VAD sensitivity during soft-spoken dictation—useful in open-plan offices or when speaking quietly. Combine it with optional noise suppression via <code className="text-primary bg-white/5 px-1 rounded">noisereduce</code>:
+        </p>
+        <CodeBlock lang="targets.toml">{`[[target]]
+id              = "office_quiet"
+label           = "Office (Noise Suppressed)"
+delivery        = "inject"
+post_processing = "default"
+processing = {noise_suppression = true, quiet_mode = true, remove_fillers = true}`}</CodeBlock>
+        <p className="text-sm text-on-surface-variant mt-3">Noise suppression requires the <code className="text-primary bg-white/5 px-1 rounded">noisereduce</code> package, included in <code className="text-primary bg-white/5 px-1 rounded">requirements.txt</code>. The global noise suppression toggle must also be on for target-level overrides to apply.</p>
       </section>
 
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-6">Named Target Gallery</h2>
-        <p className="text-on-surface-variant mb-8">Copy-paste these patterns into <code className="text-primary bg-white/5 px-1 rounded">~/.config/voxctr/targets.toml</code> as a starting point.</p>
+        <p className="text-on-surface-variant mb-8">Copy-paste these patterns into <code className="text-primary bg-white/5 px-1 rounded">~/.config/voxctr/targets.toml</code> as a starting point. Ready-to-use example files are also in the <code className="text-primary bg-white/5 px-1 rounded">examples/</code> directory.</p>
 
         <div className="space-y-8">
           <div>
@@ -742,38 +827,29 @@ response_pipe   = "/tmp/hermes.out"`}</CodeBlock>
 
           <div>
             <h3 className="text-lg font-bold text-white mb-3">Pattern: Voice Journal</h3>
-            <p className="text-sm text-on-surface-variant mb-3">Append timestamped bullet points to a markdown journal. Ollama formats each utterance as a structured note.</p>
+            <p className="text-sm text-on-surface-variant mb-3">Append timestamped entries to a markdown journal. Ollama formats each utterance as a concise note.</p>
             <CodeBlock lang="toml">{`[[target]]
 id              = "journal"
-label           = "Voice Journal"
+label           = "Daily Journal"
 delivery        = "file"
-file_path       = "~/Documents/voice-journal.md"
+file_path       = "~/journal.md"
+file_prefix     = "> "
+file_timestamp  = true
 post_processing = "default"
-append_newline  = true
-timestamp       = true
-
-[target.ollama]
-model         = "llama3.2:1b"
-system_prompt = "Convert the spoken note into a concise bullet point starting with '- '."
-temperature   = 0.3
-on_timeout    = "strip_fillers"`}</CodeBlock>
+append_newline  = true`}</CodeBlock>
           </div>
 
           <div>
             <h3 className="text-lg font-bold text-white mb-3">Pattern: Shell Command Execution</h3>
-            <p className="text-sm text-on-surface-variant mb-3">Speak English commands and let a local LLM convert them to bash before executing.</p>
+            {/* FIX: `exec_command` → `command` to match actual TOML key from examples/targets-multi.toml */}
+            <p className="text-sm text-on-surface-variant mb-3">Execute arbitrary commands. Use <code className="text-primary bg-white/5 px-1 rounded">{'{TEXT}'}</code> as the placeholder—it is substituted as a literal argument with <code className="text-primary bg-white/5 px-1 rounded">shell=False</code> to prevent injection attacks.</p>
             <CodeBlock lang="toml">{`[[target]]
-id              = "shell_voice"
-label           = "Voice Shell"
+id              = "cliphist"
+label           = "Cliphist"
 delivery        = "exec"
-exec_command    = "bash -c '{TEXT}'"
-post_processing = "default"
-
-[target.ollama]
-model         = "llama3.2:1b"
-system_prompt = "Convert the English description to a bash command. Return ONLY the command, no explanation."
-temperature   = 0.1
-on_timeout    = "none"`}</CodeBlock>
+command         = "wl-copy {TEXT}"
+post_processing = "strip_fillers"
+append_newline  = false`}</CodeBlock>
           </div>
 
           <div>
@@ -781,14 +857,43 @@ on_timeout    = "none"`}</CodeBlock>
             <p className="text-sm text-on-surface-variant mb-3">Forward transcripts over TCP for distributed or containerised agent setups.</p>
             <CodeBlock lang="toml">{`[[target]]
 id              = "remote_agent"
-label           = "Remote Agent"
+label           = "Remote Service"
 delivery        = "socket"
-socket_type     = "tcp"
-socket_host     = "127.0.0.1"
+socket_host     = "192.168.1.50"
 socket_port     = 9000
 post_processing = "none"
 append_newline  = true`}</CodeBlock>
           </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-display font-bold text-white mb-4">Agent Example Summary</h2>
+        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-surface-container-low">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="p-4 font-bold text-white">Target</th>
+                <th className="p-4 font-bold text-white">Delivery</th>
+                <th className="p-4 font-bold text-white">Config snippet</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { target: 'Hermes Agent', delivery: 'pipe', conf: 'pipe_path = "/tmp/hermes.in"' },
+                { target: 'Claude Code', delivery: 'exec', conf: 'command = "claude --print {TEXT}"' },
+                { target: 'llm (Simon Willison)', delivery: 'exec', conf: 'command = "llm -m gpt-4o {TEXT}"' },
+                { target: 'Remote GPU server', delivery: 'socket', conf: 'socket_host = "192.168.1.50", socket_port = 9000' },
+                { target: 'Voice journal', delivery: 'file', conf: 'file_path = "~/journal.md", file_prefix = "- "' },
+              ].map((row, i, arr) => (
+                <tr key={row.target} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
+                  <td className="p-4 text-sm text-white">{row.target}</td>
+                  <td className="p-4 font-mono text-xs text-primary">{row.delivery}</td>
+                  <td className="p-4 font-mono text-xs text-on-surface-variant">{row.conf}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
     </motion.div>
@@ -807,9 +912,9 @@ function ATSPIDocs() {
 
       <section className="grid md:grid-cols-3 gap-6">
         {[
-          { title: 'Direct Insertion', desc: 'Inserts text directly via AT-SPI2 without simulating keystrokes, avoiding modifier key conflicts and IME issues.' },
-          { title: 'Context Reading', desc: 'Reads the 300 characters before the cursor to prime Whisper with document-specific vocabulary for higher accuracy.' },
-          { title: 'Auto Code Mode', desc: 'Automatically switches to code dictation when a terminal, VS Code, or Neovim window is detected as focused.' },
+          { title: 'Direct Insertion', desc: 'Inserts text directly via AT-SPI2 Text.insertText without simulating keystrokes, avoiding modifier key conflicts and IME issues.' },
+          { title: 'Context Reading', desc: 'Reads up to 300 characters before the cursor to prime Whisper with document-specific vocabulary for higher accuracy on specialised terms.' },
+          { title: 'Auto Code Mode', desc: 'Automatically switches to code dictation when a terminal or IDE text widget (AT-SPI2 role terminal or text) is focused.' },
         ].map((f) => (
           <div key={f.title} className="p-6 rounded-2xl bg-surface-container-low card-outline">
             <h3 className="font-bold text-white mb-2">{f.title}</h3>
@@ -821,11 +926,14 @@ function ATSPIDocs() {
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4">Why AT-SPI2 over Key Simulation</h2>
         <p className="text-on-surface-variant mb-4">
-          Legacy dictation tools simulate keypresses using <code className="text-primary bg-white/5 px-1 rounded">ydotool</code> or <code className="text-primary bg-white/5 px-1 rounded">wtype</code>.
-          This causes problems when modifier keys are held (e.g. during a hotkey gesture) and breaks in applications that intercept raw input.
-          AT-SPI2 bypasses the input stack entirely—it writes text directly into the widget's text buffer.
+          Legacy dictation tools simulate keypresses using <code className="text-primary bg-white/5 px-1 rounded">wtype</code> or <code className="text-primary bg-white/5 px-1 rounded">xdotool</code>.
+          This causes problems when modifier keys are held during a hotkey gesture and breaks in applications that intercept raw input.
+          AT-SPI2 bypasses the input stack entirely—it writes text directly into the widget's text buffer via <code className="text-primary bg-white/5 px-1 rounded">Text.insertText</code>.
         </p>
-        <InfoBox>AT-SPI2 injection requires the <code>AT_SPI_BUS_ADDRESS</code> environment variable to be set, which is automatic on most GNOME and KDE sessions. If injection fails, VoxCtr falls back to wtype/ydotool automatically.</InfoBox>
+        <p className="text-on-surface-variant mb-4">
+          The app falls back automatically to <code className="text-primary bg-white/5 px-1 rounded">wtype</code> → portal → <code className="text-primary bg-white/5 px-1 rounded">xdotool</code> → clipboard for widgets that don't expose the <code className="text-primary bg-white/5 px-1 rounded">Text</code> interface (e.g. Electron apps, native terminal emulators using raw PTY I/O).
+        </p>
+        <InfoBox>AppImage users: <code>pyatspi</code> is bundled inside the AppImage — no manual steps needed. Source users: it is included in <code>requirements.txt</code>. If the library is absent, AT-SPI2 features are gracefully disabled.</InfoBox>
       </section>
 
       <section>
@@ -833,9 +941,32 @@ function ATSPIDocs() {
         <CodeBlock lang="~/.config/voxctr/config.json">{`{
   "atspi_injection":      true,
   "atspi_context_prompt": true,
-  "atspi_auto_code_mode": true,
-  "atspi_context_chars":  300
+  "atspi_auto_code_mode": true
 }`}</CodeBlock>
+        <div className="mt-6 overflow-x-auto rounded-2xl border border-white/10 bg-surface-container-low">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="p-4 font-bold text-white">Key</th>
+                <th className="p-4 font-bold text-white">Default</th>
+                <th className="p-4 font-bold text-white">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { key: 'atspi_injection', def: 'true', desc: 'Try AT-SPI2 insertText before falling back to wtype/xdotool' },
+                { key: 'atspi_context_prompt', def: 'true', desc: 'Feed surrounding text to Whisper as initial_prompt at recording start' },
+                { key: 'atspi_auto_code_mode', def: 'true', desc: 'Switch to code dictation mode when a terminal/IDE widget is focused' },
+              ].map((row, i, arr) => (
+                <tr key={row.key} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
+                  <td className="p-4 font-mono text-xs text-primary">{row.key}</td>
+                  <td className="p-4 text-sm text-on-surface">{row.def}</td>
+                  <td className="p-4 text-sm text-on-surface-variant">{row.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     </motion.div>
   );
@@ -872,7 +1003,7 @@ function CodeModeDocs() {
                 { say: 'function handle user login', cc: 'handleUserLogin()', sc: 'handle_user_login()', ss: '' },
                 { say: 'constant max retries', cc: '', sc: '', ss: 'MAX_RETRIES' },
                 { say: 'class user authentication', cc: 'UserAuthentication', sc: 'user_authentication', ss: '' },
-                { say: 'variable total item count', cc: 'totalItemCount', sc: 'total_item_count', ss: '' },
+                { say: 'get underscore user dot name', cc: '', sc: 'get_user.name', ss: '' },
                 { say: 'equals new array open close', cc: '= []', sc: '= []', ss: '' },
               ].map((row, i, arr) => (
                 <tr key={row.say} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
@@ -914,14 +1045,14 @@ function CodeModeDocs() {
         <h2 className="text-2xl font-display font-bold text-white mb-4">Auto Code Mode Triggers</h2>
         <p className="text-on-surface-variant mb-4">
           When <code className="text-primary bg-white/5 px-1 rounded">atspi_auto_code_mode</code> is enabled,
-          VoxCtr switches to Code Mode automatically based on the focused application.
+          VoxCtr switches to Code Mode automatically based on the focused widget's AT-SPI2 role. The mode resets to your configured default on the next recording.
         </p>
         <div className="space-y-3">
           {[
-            { app: 'VS Code / Codium', trigger: 'WM_CLASS contains "code"' },
-            { app: 'Neovim (terminal)', trigger: 'WM_CLASS contains "nvim" or "alacritty" + active process is nvim' },
-            { app: 'Terminal emulators', trigger: 'WM_CLASS: alacritty, kitty, wezterm, foot, xterm' },
-            { app: 'JetBrains IDEs', trigger: 'WM_CLASS contains "jetbrains"' },
+            { app: 'VS Code / Codium', trigger: 'AT-SPI2 role: text, WM_CLASS contains "code"' },
+            { app: 'Neovim (terminal)', trigger: 'AT-SPI2 role: terminal, active process is nvim' },
+            { app: 'Terminal emulators', trigger: 'AT-SPI2 role: terminal (alacritty, kitty, wezterm, foot)' },
+            { app: 'JetBrains IDEs', trigger: 'AT-SPI2 role: text, WM_CLASS contains "jetbrains"' },
           ].map((item) => (
             <div key={item.app} className="flex gap-4 p-4 rounded-xl bg-[#0e0e0e] border border-white/5">
               <span className="font-bold text-white text-sm w-48 shrink-0">{item.app}</span>
@@ -934,17 +1065,12 @@ function CodeModeDocs() {
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4">Configuration</h2>
         <CodeBlock lang="~/.config/voxctr/targets.toml">{`[[target]]
-id            = "editor"
-label         = "Code Editor"
-delivery      = "inject"
-post_processing = "code_mode"
-
-[target.code_mode]
-camelCase       = true      # JavaScript / TypeScript default
-snake_case      = false
-screaming_snake = false
-context_chars   = 300       # chars read before cursor for Whisper context
-auto_punctuate  = false     # no sentence-ending periods in code`}</CodeBlock>
+id              = "code"
+label           = "Code Editor"
+delivery        = "inject"
+post_processing = "default"
+initial_prompt  = "Python code. Variables use snake_case. Functions defined with def."
+processing = {code_mode = true, remove_fillers = false, spoken_punctuation = false, apply_snippets = true, ollama_enabled = false, atspi_context = false}`}</CodeBlock>
       </section>
     </motion.div>
   );
@@ -962,11 +1088,11 @@ function TTSDocs() {
 
       <FeatureGrid items={[
         { title: '8 Curated Voices', desc: 'US and GB English models ranging from 5 MB to 130 MB.' },
-        { title: 'One-Click Download', desc: 'Manage and update models directly from Settings → Voice Output.' },
-        { title: 'TTS Stop Key', desc: 'Configurable key (default: Escape) to interrupt playback at any time.' },
-        { title: 'Response Overlay', desc: 'Teal visual indicator shown while the app is speaking.' },
-        { title: 'espeak-ng Fallback', desc: 'If Piper is unavailable, espeak-ng is used automatically.' },
-        { title: 'Response Loopback', desc: 'Agents can write to a response_pipe FIFO; VoxCtr speaks each line.' },
+        { title: 'One-Click Download', desc: 'Manage and update models directly from Settings → Voice Output with an in-app progress bar.' },
+        { title: 'TTS Stop Key', desc: 'Configurable global key (default: Escape) interrupts playback from any window.' },
+        { title: 'Response Overlay', desc: 'Distinct teal overlay shown while the app is speaking—separate from the recording overlay.' },
+        { title: 'espeak-ng Fallback', desc: 'If Piper is unavailable or a model is missing, espeak-ng is used automatically.' },
+        { title: 'Response Loopback', desc: 'Agents write to a response_pipe FIFO; VoxCtr speaks each line. Listener re-opens on EOF so agents can restart.' },
       ]} />
 
       <section>
@@ -1005,13 +1131,14 @@ function TTSDocs() {
         <p className="text-sm text-on-surface-variant mt-4">
           Download voices in <strong className="text-white">Settings → Voice Output → Voice Picker → ⬇ Download</strong>.
           Models are stored in <code className="text-primary bg-white/5 px-1 rounded">~/.local/share/voxctr/voices/</code>.
+          Download once, use offline forever.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4">Response Loopback via FIFO</h2>
-        <p className="text-on-surface-variant mb-4">Agents that generate text responses can write them to a named FIFO; VoxCtr's <code className="text-primary bg-white/5 px-1 rounded">ResponseListener</code> reads each line and speaks it automatically.</p>
-        <CodeBlock lang="bash">{`# Create the FIFOs
+        <p className="text-on-surface-variant mb-4">Agents that generate text responses can write them to a named FIFO; VoxCtr's <code className="text-primary bg-white/5 px-1 rounded">ResponseListener</code> reads each line and speaks it automatically. Empty lines are ignored.</p>
+        <CodeBlock lang="bash">{`# Create the FIFOs once (or in your shell rc)
 mkfifo /tmp/my-agent.in /tmp/my-agent.out
 
 # Simple agent loop
@@ -1022,12 +1149,12 @@ while true; do
 done`}</CodeBlock>
         <div className="mt-4">
           <CodeBlock lang="targets.toml">{`[[target]]
-id            = "my-agent"
-label         = "My Agent"
-delivery      = "pipe"
-pipe_path     = "/tmp/my-agent.in"
-response_pipe = "/tmp/my-agent.out"
-post_processing = "strip_fillers"
+id              = "my-agent"
+label           = "My Agent"
+delivery        = "pipe"
+pipe_path       = "/tmp/my-agent.in"
+response_pipe   = "/tmp/my-agent.out"
+post_processing = "none"
 append_newline  = true`}</CodeBlock>
         </div>
       </section>
@@ -1049,8 +1176,8 @@ function MCPDocs() {
         <h2 className="text-2xl font-display font-bold text-white mb-6">Available Tools</h2>
         <div className="space-y-4">
           {[
-            { name: 'transcribe_voice', sig: 'timeout_seconds?: number → string', desc: 'Opens the microphone and returns the transcript when speech ends or the timeout elapses. The full VoxCtr post-processing pipeline is applied before the text is returned.' },
-            { name: 'speak_text', sig: 'text: string → "spoken"', desc: 'Queues text for TTS playback via Piper. Returns immediately (non-blocking). The TTS overlay is shown while playback continues.' },
+            { name: 'transcribe_voice', sig: 'timeout_seconds?: number → string', desc: 'Opens the microphone and returns the transcript when speech ends or the timeout elapses. The recording overlay is always shown while recording. VoxCtr\'s full post-processing pipeline is applied before the text is returned.' },
+            { name: 'speak_text', sig: 'text: string → "spoken"', desc: 'Queues text for TTS playback via Piper. Returns as soon as the text is queued—does not block until playback finishes. The TTS response overlay is shown while playback continues.' },
             { name: 'get_status', sig: '→ { recording: bool, speaking: bool }', desc: 'Returns the current audio I/O state. Useful for agents that want to avoid overlapping recordings.' },
           ].map((tool) => (
             <div key={tool.name} className="p-5 rounded-xl bg-[#0e0e0e] border border-white/5">
@@ -1075,7 +1202,7 @@ function MCPDocs() {
                 'Scroll to the MCP Server section',
                 'Toggle "Enable MCP Server"',
                 'Note the socket path (default: /tmp/voxctr-mcp.sock)',
-                'Click "Register in Claude Desktop" for auto-setup',
+                'Optionally click "Register in Claude Desktop" for auto-setup',
               ].map((step, i) => (
                 <li key={i} className="flex gap-3">
                   <span className="text-primary font-bold shrink-0">{i + 1}.</span>
@@ -1106,12 +1233,12 @@ function MCPDocs() {
   }
 }`}</CodeBlock>
         <p className="text-sm text-on-surface-variant mt-4">Restart Claude Desktop. The tools <code className="text-primary">transcribe_voice</code>, <code className="text-primary">speak_text</code>, and <code className="text-primary">get_status</code> appear automatically in the tool picker.</p>
-        <WarnBox>VoxCtr must be running before Claude Desktop connects. The socket is created when the app starts.</WarnBox>
+        <WarnBox>VoxCtr must already be running before Claude Desktop connects. The socket is created when the app starts.</WarnBox>
       </section>
 
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4">JSON-RPC 2.0 Protocol</h2>
-        <p className="text-on-surface-variant mb-4">The server listens on a Unix domain socket at <code className="text-primary bg-white/5 px-1 rounded">/tmp/voxctr-mcp.sock</code>. Each connection gets its own thread. The protocol is newline-delimited JSON-RPC 2.0.</p>
+        <p className="text-on-surface-variant mb-4">The server listens on a Unix domain socket at <code className="text-primary bg-white/5 px-1 rounded">/tmp/voxctr-mcp.sock</code>. Each connection gets its own daemon thread. The protocol is newline-delimited JSON-RPC 2.0—one JSON object per line, terminated with <code className="text-primary bg-white/5 px-1 rounded">\n</code>.</p>
 
         <h3 className="font-bold text-white mb-3">Handshake</h3>
         <CodeBlock lang="json">{`→ {"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}
@@ -1120,6 +1247,7 @@ function MCPDocs() {
      "capabilities":{"tools":{}},
      "serverInfo":{"name":"voxctr","version":"1.0.0"}
    }}
+# No response expected:
 → {"jsonrpc":"2.0","method":"notifications/initialized","params":{}}`}</CodeBlock>
 
         <h3 className="font-bold text-white mt-6 mb-3">transcribe_voice request</h3>
@@ -1131,11 +1259,18 @@ function MCPDocs() {
     "arguments": {"timeout_seconds": 10.0}
   }
 }
-// Response:
+// Response — speech detected:
 {
   "jsonrpc": "2.0", "id": 3,
   "result": {
     "content": [{"type": "text", "text": "Schedule a meeting for Thursday at 3 pm"}]
+  }
+}
+// Response — silence / timeout:
+{
+  "jsonrpc": "2.0", "id": 3,
+  "result": {
+    "content": [{"type": "text", "text": "(no speech detected)"}]
   }
 }`}</CodeBlock>
       </section>
@@ -1200,11 +1335,11 @@ with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
         <h2 className="text-2xl font-display font-bold text-white mb-4">Troubleshooting</h2>
         <div className="space-y-4">
           {[
-            { problem: 'Socket does not exist', fix: 'VoxCtr is not running, or MCP server is disabled. Enable it in Settings → Voice Output.' },
+            { problem: 'Socket does not exist', fix: 'VoxCtr is not running, or MCP server is disabled. Enable it in Settings → Voice Output or set "mcp_server_enabled": true in config.json and restart.' },
             { problem: 'socat connection refused', fix: 'The socket exists but the server is not ready yet. Wait a moment after launch, or check console output for errors.' },
-            { problem: 'TTS plays but no audio', fix: 'Check that aplay is installed. Verify the voice model is downloaded under ~/.local/share/voxctr/voices/.' },
-            { problem: 'transcribe_voice returns "(no speech detected)"', fix: 'Confirm your microphone is selected in Settings → Audio. Try raising timeout_seconds or lowering the VAD threshold.' },
-            { problem: 'Claude Desktop does not see the tools', fix: 'Restart Claude Desktop after editing claude_desktop_config.json. Confirm socat is installed and can connect to the socket.' },
+            { problem: 'TTS plays but no audio', fix: 'Check that aplay is installed (which aplay). Verify the voice model is downloaded under ~/.local/share/voxctr/voices/. Try tts_engine = "espeak" as a fallback.' },
+            { problem: 'transcribe_voice returns "(no speech detected)"', fix: 'Confirm your microphone is selected in Settings → Audio. Try raising timeout_seconds or lowering the VAD threshold in Settings → Audio.' },
+            { problem: 'Claude Desktop does not see the tools', fix: 'Restart Claude Desktop after editing claude_desktop_config.json. Confirm socat is installed and the socket path is correct (ls -la /tmp/*.sock).' },
           ].map((item) => (
             <div key={item.problem} className="p-4 rounded-xl bg-surface-container-low card-outline">
               <p className="font-bold text-white text-sm mb-1">{item.problem}</p>
@@ -1236,6 +1371,7 @@ function SecurityDocs() {
             { title: 'Microphone confirmation', desc: 'When require_confirmation = true in config, a system tray notification asks for approval before each MCP-initiated recording opens the mic.' },
             { title: 'Tool allowlist', desc: 'Each MCP tool (transcribe_voice, speak_text, get_status) can be individually disabled in config. Operators can restrict which tools are exposed to connected agents.' },
             { title: 'Target allowlist', desc: 'The allowed_targets config limits which output targets an MCP client can route to, preventing an agent from sending transcribed text to unexpected destinations.' },
+            { title: 'exec injection protection', desc: 'The exec delivery type passes {TEXT} as a literal argument with shell=False—the transcript cannot inject shell metacharacters or escape the command.' },
           ].map((item) => (
             <div key={item.title} className="p-5 rounded-2xl bg-surface-container-low card-outline">
               <div className="flex items-start gap-3">
@@ -1264,63 +1400,11 @@ function SecurityDocs() {
   "mcp_allowed_targets": [
     "focused_window",
     "clipboard"
-  ],
-
-  "mcp_auth": {
-    "enabled":  false,
-    "api_key":  ""
-  }
+  ]
 }`}</CodeBlock>
         <InfoBox>
-          API key authentication (<code>mcp_auth.enabled = true</code>) is only needed if you expose the server over a network. For localhost use, Unix socket permissions are sufficient.
+          API key authentication is only needed if you expose the server over a network. For localhost use, Unix socket permissions are sufficient.
         </InfoBox>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-display font-bold text-white mb-4">Network Exposure (Advanced)</h2>
-        <WarnBox>
-          Binding the MCP server to a network interface is not recommended unless you are in a controlled environment. If you must do this, always enable API key authentication and restrict access with firewall rules.
-        </WarnBox>
-        <div className="mt-4">
-          <CodeBlock lang="config.json">{`{
-  "mcp_bind_address": "127.0.0.1",
-  "mcp_bind_port":    9876,
-  "mcp_auth": {
-    "enabled": true,
-    "api_key": "your-secret-key-here"
-  }
-}`}</CodeBlock>
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-display font-bold text-white mb-4">MCP Naming Conventions</h2>
-        <p className="text-on-surface-variant mb-4">If you extend VoxCtr's MCP server or build additional tools, follow these conventions for compatibility with the broader MCP ecosystem:</p>
-        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-surface-container-low">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-white/10">
-                <th className="p-4 font-bold text-white">Feature</th>
-                <th className="p-4 font-bold text-white">Convention</th>
-                <th className="p-4 font-bold text-white">VoxCtr Example</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { feature: 'Server name', conv: '{service}-mcp-server', ex: 'voxctr-mcp-server' },
-                { feature: 'Tool naming', conv: '{service}_{action}_{resource}', ex: 'voxctr_trigger_microphone' },
-                { feature: 'Tool design', conv: 'Descriptive and action-oriented', ex: 'start_transcription' },
-                { feature: 'Error handling', conv: 'Detailed JSON schemas', ex: 'hardware_unavailable error code' },
-              ].map((row, i, arr) => (
-                <tr key={row.feature} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
-                  <td className="p-4 text-sm text-white font-medium">{row.feature}</td>
-                  <td className="p-4 font-mono text-xs text-on-surface-variant">{row.conv}</td>
-                  <td className="p-4 font-mono text-xs text-primary">{row.ex}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </section>
     </motion.div>
   );
@@ -1340,9 +1424,9 @@ function AIDocs() {
         <h2 className="text-2xl font-display font-bold text-white mb-6">Recommended Models</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { model: 'llama3.2:1b', ram: '~1.3 GB', use: 'Grammar & Bullets' },
+            { model: 'llama3.2:1b', ram: '~1.3 GB', use: 'Grammar & Bullets — fastest' },
             { model: 'phi3:mini', ram: '~2 GB', use: 'Simple Rewrites' },
-            { model: 'mistral', ram: '~8 GB', use: 'Complex Rewriting' },
+            { model: 'mistral', ram: '~8 GB VRAM', use: 'Complex Formal/Casual Rewrites' },
           ].map((m) => (
             <div key={m.model} className="p-4 rounded-2xl bg-surface-container-low card-outline">
               <code className="text-primary font-bold block mb-2">{m.model}</code>
@@ -1351,78 +1435,28 @@ function AIDocs() {
             </div>
           ))}
         </div>
+        <div className="mt-4">
+          <CodeBlock lang="bash">{`# Pull a model
+ollama pull llama3.2:1b`}</CodeBlock>
+        </div>
+        <p className="text-sm text-on-surface-variant mt-3">Enable in <strong className="text-white">Settings → AI</strong>: click <strong className="text-white">Re-check</strong> to detect Ollama, then toggle <strong className="text-white">"Enable AI Post-Processing"</strong>. Set <code className="text-primary bg-white/5 px-1 rounded">post_processing = "none"</code> on agent targets to skip Ollama for those routes even when it is globally enabled.</p>
       </section>
 
       <section>
-        <h2 className="text-2xl font-display font-bold text-white mb-6">Pipeline Stages</h2>
-        <p className="text-on-surface-variant mb-4">Each target's pipeline is a sequence of stages applied in order to the raw transcript:</p>
+        <h2 className="text-2xl font-display font-bold text-white mb-6">Post-Processing Mode Reference</h2>
         <div className="space-y-3">
           {[
+            { stage: 'default', desc: 'Full pipeline: snippets, spoken punctuation, filler removal, Ollama rewrite (if enabled globally).' },
+            { stage: 'none', desc: 'Raw Whisper output — pass through unmodified. Best for agent targets.' },
             { stage: 'strip_fillers', desc: 'Remove um, uh, hmm, like, you know.' },
-            { stage: 'spoken_punct', desc: 'Convert "period", "comma", "question mark" to punctuation.' },
-            { stage: 'snippets', desc: 'Expand user-defined text abbreviations.' },
-            { stage: 'ollama_prompt', desc: 'Send text to a local Ollama model for rewriting. Fully configurable prompt, model, temperature, and timeout.' },
-            { stage: 'prepend', desc: 'Prepend a static string (e.g. "- " for bullet points).' },
-            { stage: 'append_newline', desc: 'Append a newline character to the output.' },
-            { stage: 'code_mode', desc: 'Transform spoken identifiers into camelCase / snake_case syntax.' },
+            { stage: 'snippets_only', desc: 'Expand user-defined text abbreviations; no AI rewriting.' },
+            { stage: 'ollama_only', desc: 'Skip snippets and code mode; run Ollama rewrite only.' },
           ].map((s) => (
             <div key={s.stage} className="flex gap-4 p-4 rounded-xl bg-[#0e0e0e] border border-white/5">
-              <code className="text-secondary font-bold shrink-0 w-40">{s.stage}</code>
+              <code className="text-secondary font-bold shrink-0 w-36">{s.stage}</code>
               <p className="text-sm text-on-surface-variant">{s.desc}</p>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-display font-bold text-white mb-4">pipelines.toml Examples</h2>
-        <div className="space-y-6">
-          <div>
-            <h3 className="font-bold text-white mb-3">Dictation Polish</h3>
-            <CodeBlock lang="toml">{`[[pipeline]]
-id    = "dictation_polish"
-label = "Dictation — Grammar & Polish"
-
-[[pipeline.stage]]
-type = "strip_fillers"
-
-[[pipeline.stage]]
-type          = "ollama_prompt"
-model         = "llama3.2"
-system_prompt = """
-You are a transcription editor. Correct grammar, remove repetition, and
-improve clarity. Preserve the original meaning exactly.
-Return only the corrected text.
-"""
-temperature   = 0.2
-timeout_ms    = 4000
-on_timeout    = "passthrough"`}</CodeBlock>
-          </div>
-          <div>
-            <h3 className="font-bold text-white mb-3">Meeting Note Formatter</h3>
-            <CodeBlock lang="toml">{`[[pipeline]]
-id    = "meeting_note"
-label = "Meeting Note — Structured Bullet"
-
-[[pipeline.stage]]
-type = "strip_fillers"
-
-[[pipeline.stage]]
-type          = "ollama_prompt"
-model         = "llama3.2"
-system_prompt = """
-Convert the spoken note into a structured bullet point.
-Start with an action verb if it's an action item, or a topic noun
-if it's a discussion note. Keep it under 20 words.
-"""
-temperature   = 0.3
-timeout_ms    = 5000
-on_timeout    = "strip_fillers"
-
-[[pipeline.stage]]
-type = "prepend"
-text = "- "`}</CodeBlock>
-          </div>
         </div>
       </section>
 
@@ -1433,18 +1467,18 @@ text = "- "`}</CodeBlock>
             <thead>
               <tr className="border-b border-white/10">
                 <th className="p-4 font-bold text-white">Use Case</th>
-                <th className="p-4 font-bold text-white">Pipeline</th>
+                <th className="p-4 font-bold text-white">Mode / Pipeline</th>
               </tr>
             </thead>
             <tbody>
               {[
-                { uc: 'Command to AI agent', pl: 'strip_fillers → ollama_prompt (terse command rewriter, low temp)' },
-                { uc: 'Grammar-corrected dictation', pl: 'strip_fillers → ollama_prompt (grammar editor, medium temp)' },
-                { uc: 'Meeting notes to bullets', pl: 'strip_fillers → ollama_prompt (bullet formatter) → prepend("- ")' },
-                { uc: 'Code comment dictation', pl: 'code_mode → ollama_prompt ("Rewrite as a concise code comment")' },
-                { uc: 'Shell command from English', pl: 'ollama_prompt ("Convert to bash. Return only the command.") → exec' },
-                { uc: 'Email draft from bullets', pl: 'ollama_prompt ("Expand bullet points into a professional email")' },
-                { uc: 'Translate before delivery', pl: 'ollama_prompt ("Translate to French, return only the translation")' },
+                { uc: 'Command to AI agent', pl: 'none or strip_fillers' },
+                { uc: 'Grammar-corrected dictation', pl: 'default (with Ollama grammar prompt)' },
+                { uc: 'Meeting notes to bullets', pl: 'default (Ollama bullet formatter)' },
+                { uc: 'Ollama-only rewrite (no snippets)', pl: 'ollama_only' },
+                { uc: 'Expand abbreviations only', pl: 'snippets_only' },
+                { uc: 'Raw code injection', pl: 'none + code_mode = true in processing' },
+                { uc: 'Translate before delivery', pl: 'ollama_only with translate prompt' },
               ].map((row, i, arr) => (
                 <tr key={row.uc} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
                   <td className="p-4 text-sm text-white">{row.uc}</td>
@@ -1476,7 +1510,7 @@ function OverlayDocs() {
           { name: 'Pulse Circle', image: dotOverlay, desc: 'Soft glowing circle that expands with RMS amplitude. Smooth 30 fps animation with exponential decay.' },
         ].map((overlay) => (
           <div key={overlay.name} className="p-6 rounded-2xl bg-surface-container-low card-outline overflow-hidden flex flex-col">
-            <div className=" max-h-[calc(100%-10px)] mb-6 rounded-xl overflow-hidden bg-black/40 flex items-center justify-center border border-white/5 group">
+            <div className="max-h-[calc(100%-10px)] mb-6 rounded-xl overflow-hidden bg-black/40 flex items-center justify-center border border-white/5 group">
               <img
                 src={overlay.image}
                 alt={overlay.name}
@@ -1489,15 +1523,71 @@ function OverlayDocs() {
         ))}
       </section>
 
+      {/* FIX: Add Routing Indicator Badge section — missing entirely from previous version */}
+      <section>
+        <h2 className="text-2xl font-display font-bold text-white mb-4">Routing Indicator Badge</h2>
+        <p className="text-on-surface-variant mb-4">
+          Every overlay displays a <strong className="text-white">routing indicator badge</strong> while recording — a small label showing the human-readable name of the active output target (e.g. <code className="text-primary bg-white/5 px-1 rounded">Focused Window</code>, <code className="text-primary bg-white/5 px-1 rounded">Hermes Agent</code>, <code className="text-primary bg-white/5 px-1 rounded">Voice Journal</code>). This gives you an unambiguous, at-a-glance confirmation of where your speech is being sent before you say a word.
+        </p>
+        <div className="grid md:grid-cols-3 gap-4 mb-4">
+          {[
+            { name: 'Voice Card', pos: 'Top-right corner of the card' },
+            { name: 'Waveform', pos: 'Centered above the waveform box' },
+            { name: 'Pulse Circle', pos: 'Centered above the pulse ring' },
+          ].map((item) => (
+            <div key={item.name} className="p-4 rounded-xl bg-surface-container-low card-outline">
+              <p className="font-bold text-white text-sm">{item.name}</p>
+              <p className="text-xs text-on-surface-variant mt-1">{item.pos}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-sm text-on-surface-variant">The badge text comes from the <code className="text-primary bg-white/5 px-1 rounded">label</code> field of the active target in <code className="text-primary bg-white/5 px-1 rounded">targets.toml</code>. Custom overlays receive it through the <code className="text-primary bg-white/5 px-1 rounded">label</code> parameter of <code className="text-primary bg-white/5 px-1 rounded">show_mode(label)</code> and can use it or ignore it.</p>
+      </section>
+
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4">Creating a Custom Overlay</h2>
         <p className="text-on-surface-variant mb-4">
           Drop a single <code className="text-primary bg-white/5 px-1 rounded">.py</code> file into{' '}
           <code className="text-primary bg-white/5 px-1 rounded">~/.config/voxctr/overlays/</code>.
           VoxCtr scans this directory on each settings save and adds your overlay to the dropdown automatically.
+          Click <strong className="text-white">"Open Overlays Folder"</strong> in Settings to go there directly.
         </p>
-        <InfoBox>Files whose names begin with <code>_</code> are ignored—use <code>_template.py</code> for notes or drafts.</InfoBox>
+        <InfoBox>Files whose names begin with <code>_</code> are ignored—a <code>_template.py</code> starter file is created automatically the first time you open the overlays folder.</InfoBox>
+
         <div className="mt-6">
+          <h3 className="font-bold text-white mb-3">Required Interface</h3>
+          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-surface-container-low">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="p-4 font-bold text-white">Item</th>
+                  <th className="p-4 font-bold text-white">Required</th>
+                  <th className="p-4 font-bold text-white">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { item: 'DISPLAY_NAME (str)', req: 'Yes', desc: 'Name shown in the Settings dropdown' },
+                  { item: 'DESCRIPTION (str)', req: 'No', desc: 'One-line description shown below the dropdown' },
+                  { item: 'VERSION (str)', req: 'No', desc: 'Version string (informational only)' },
+                  { item: 'class OverlayUI(QWidget)', req: 'Yes', desc: 'The overlay widget itself' },
+                  { item: 'update_audio(data: np.ndarray)', req: 'Yes', desc: 'Called from audio thread ~every 20–60 ms while recording' },
+                  { item: 'show_mode(label: str = "")', req: 'Yes', desc: 'Called on Qt main thread when recording starts; receives routing label' },
+                  { item: 'hide_mode()', req: 'Yes', desc: 'Called on Qt main thread when recording stops' },
+                ].map((row, i, arr) => (
+                  <tr key={row.item} className={i < arr.length - 1 ? 'border-b border-white/5' : ''}>
+                    <td className="p-4 font-mono text-xs text-primary">{row.item}</td>
+                    <td className="p-4 text-sm text-on-surface">{row.req}</td>
+                    <td className="p-4 text-sm text-on-surface-variant">{row.desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          {/* FIX: show_mode now correctly accepts `label: str = ""` parameter */}
           <CodeBlock lang="python — ~/.config/voxctr/overlays/my_overlay.py">{`DISPLAY_NAME = "My Custom Overlay"
 DESCRIPTION  = "A simple pulsing circle"
 VERSION      = "1.0"
@@ -1515,29 +1605,39 @@ class OverlayUI(QWidget):
             Qt.WindowType.ToolTip |
             Qt.WindowType.FramelessWindowHint |
             Qt.WindowType.WindowStaysOnTopHint |
+            Qt.WindowType.X11BypassWindowManagerHint |
             Qt.WindowType.WindowTransparentForInput
         )
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating)
+        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
         self._amp = 0.0
+        self._routing_label = ""
         self._timer = QTimer(self)
         self._timer.timeout.connect(self.update)
         self._timer.start(30)
         self.hide()
 
     def update_audio(self, data: np.ndarray) -> None:
+        """Called from audio thread ~every 20-60 ms. Never draw directly here."""
         rms = float(np.sqrt(np.mean(data.astype(float) ** 2)))
         self._amp = min(1.0, rms / 8192.0)
         QMetaObject.invokeMethod(self, "update", Qt.ConnectionType.QueuedConnection)
 
-    def show_mode(self) -> None:
+    def show_mode(self, label: str = "") -> None:
+        """Called when recording starts. label is the active target name (routing badge)."""
+        self._routing_label = label   # store for use in paintEvent
         screen = QApplication.primaryScreen()
         if screen:
             g = screen.geometry()
             self.setGeometry(g)
+            self.setFixedSize(g.width(), g.height())
+            self.move(g.x(), g.y())
         self.show()
         self.raise_()
 
     def hide_mode(self) -> None:
+        """Called when recording stops."""
         self.hide()
 
     def paintEvent(self, event):
@@ -1561,23 +1661,51 @@ function ConfigDocs() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-12">
       <SectionHeader
         title="Configuration Reference"
-        desc="VoxCtr uses two configuration files: config.json for global settings and targets.toml for output destinations and pipelines."
+        desc="VoxCtr uses three configuration files: config.json for global settings, targets.toml for output destinations, and bindings.toml for hotkey mappings."
       />
 
       <section>
         <h2 className="text-2xl font-display font-bold text-white mb-4">File Locations</h2>
+        {/* FIX: Added backups/ auto-backup directory (last 20 kept) */}
         <div className="space-y-3">
           {[
             { path: '~/.config/voxctr/config.json', desc: 'Global settings (audio device, models, MCP, TTS)' },
             { path: '~/.config/voxctr/targets.toml', desc: 'Named output targets and post-processing pipelines' },
             { path: '~/.config/voxctr/bindings.toml', desc: 'Hotkey bindings mapped to target IDs' },
-            { path: '~/.config/voxctr/snippets.toml', desc: 'Text abbreviation expansions' },
-            { path: '~/.config/voxctr/overlays/', desc: 'Custom overlay Python plugins' },
+            { path: '~/.config/voxctr/backups/', desc: 'Auto-backups before each config save — last 20 kept automatically' },
             { path: '~/.local/share/voxctr/voices/', desc: 'Downloaded Piper TTS voice models' },
           ].map((item) => (
             <div key={item.path} className="flex gap-4 p-4 rounded-xl bg-[#0e0e0e] border border-white/5">
               <code className="text-primary text-xs font-mono w-72 shrink-0">{item.path}</code>
               <p className="text-sm text-on-surface-variant">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FIX: Added Config Validation section — missing from previous version */}
+      <section>
+        <h2 className="text-2xl font-display font-bold text-white mb-4">Config Validation</h2>
+        <p className="text-on-surface-variant mb-4">
+          VoxCtr validates <code className="text-primary bg-white/5 px-1 rounded">config.json</code>, <code className="text-primary bg-white/5 px-1 rounded">targets.toml</code>, and <code className="text-primary bg-white/5 px-1 rounded">bindings.toml</code> on startup. If any file is malformed, a clear error message is shown identifying the exact problem before the app continues. This prevents silent failures from bad configuration.
+        </p>
+        <InfoBox>The Settings UI also performs live validation—keybind conflicts and unknown target IDs are flagged inline as you edit, before you save.</InfoBox>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-display font-bold text-white mb-4">DBus Control</h2>
+        <p className="text-on-surface-variant mb-4">
+          VoxCtr exposes a DBus interface for external control from Waybar widgets, scripts, or Rofi launchers. Service name: <code className="text-primary bg-white/5 px-1 rounded">ai.voxctl.Dictation</code>.
+        </p>
+        <div className="space-y-3">
+          {[
+            { action: 'Toggle recording', cmd: 'dbus-send --session --type=method_call --dest=ai.voxctl.Dictation /ai/voxctl/Dictation ai.voxctl.Dictation.ToggleRecording' },
+            { action: 'Get status', cmd: 'qdbus ai.voxctl.Dictation /ai/voxctl/Dictation GetStatus' },
+            { action: 'Get word count', cmd: 'qdbus ai.voxctl.Dictation /ai/voxctl/Dictation GetWordCount' },
+          ].map((item) => (
+            <div key={item.action} className="p-4 rounded-xl bg-[#0e0e0e] border border-white/5">
+              <p className="text-xs font-bold text-white mb-2">{item.action}</p>
+              <code className="text-xs text-on-surface-variant break-all">{item.cmd}</code>
             </div>
           ))}
         </div>
@@ -1603,7 +1731,7 @@ function ConfigDocs() {
                 { key: 'tts_enabled', type: 'bool', def: 'false', desc: 'Master TTS on/off switch' },
                 { key: 'tts_engine', type: 'string', def: '"piper"', desc: '"piper" or "espeak"' },
                 { key: 'tts_voice', type: 'string', def: '"en-us-lessac-medium"', desc: 'Piper voice ID' },
-                { key: 'tts_stop_key', type: 'string[]', def: '["KEY_ESCAPE"]', desc: 'evdev key(s) to interrupt TTS playback' },
+                { key: 'tts_stop_key', type: 'string[]', def: '["KEY_ESCAPE"]', desc: 'evdev key(s) to interrupt TTS playback globally' },
                 { key: 'tts_response_overlay', type: 'bool', def: 'true', desc: 'Show teal overlay while TTS plays' },
                 { key: 'mcp_server_enabled', type: 'bool', def: 'false', desc: 'Start MCP server on launch' },
                 { key: 'mcp_record_timeout', type: 'float', def: '15.0', desc: 'Default transcribe_voice timeout in seconds' },
@@ -1611,7 +1739,6 @@ function ConfigDocs() {
                 { key: 'atspi_injection', type: 'bool', def: 'true', desc: 'Use AT-SPI2 for text injection' },
                 { key: 'atspi_context_prompt', type: 'bool', def: 'true', desc: 'Read cursor context to prime Whisper' },
                 { key: 'atspi_auto_code_mode', type: 'bool', def: 'true', desc: 'Auto-switch to Code Mode in IDEs/terminals' },
-                { key: 'atspi_context_chars', type: 'int', def: '300', desc: 'Characters to read before the cursor' },
                 { key: 'show_overlay', type: 'bool', def: 'true', desc: 'Show recording overlay while mic is active' },
                 { key: 'overlay_style', type: 'string', def: '"voice_card"', desc: '"voice_card", "waveform", or "pulse_circle"' },
               ].map((row, i, arr) => (
@@ -1647,7 +1774,6 @@ function ConfigDocs() {
   "atspi_injection":         true,
   "atspi_context_prompt":    true,
   "atspi_auto_code_mode":    true,
-  "atspi_context_chars":     300,
 
   "show_overlay":            true,
   "overlay_style":           "voice_card"
@@ -1705,27 +1831,25 @@ Claude: [receives transcript, drafts email, calls speak_text to read it back]`}<
           <h3 className="font-bold text-white mb-3">1. Add a journal target</h3>
           <CodeBlock lang="~/.config/voxctr/targets.toml">{`[[target]]
 id              = "journal"
-label           = "Voice Journal"
+label           = "Daily Journal"
 delivery        = "file"
-file_path       = "~/Documents/journal.md"
+file_path       = "~/journal.md"
+file_prefix     = "> "
+file_timestamp  = true
 post_processing = "default"
-append_newline  = true
-timestamp       = true
-
-[target.ollama]
-model         = "llama3.2:1b"
-system_prompt = "Convert this spoken note into a concise bullet point starting with '- '."
-temperature   = 0.3`}</CodeBlock>
+append_newline  = true`}</CodeBlock>
         </div>
         <div>
           <h3 className="font-bold text-white mb-3">2. Bind a hotkey</h3>
+          {/* FIX: `target` → `target_id` */}
           <CodeBlock lang="~/.config/voxctr/bindings.toml">{`[[binding]]
-keys    = ["KEY_LEFTMETA", "KEY_J"]
-gesture = "hold"
-target  = "journal"
-label   = "Journal Note"`}</CodeBlock>
+id        = "journal_hold"
+label     = "Journal Note"
+keys      = ["KEY_LEFTMETA", "KEY_J"]
+gesture   = "hold"
+target_id = "journal"`}</CodeBlock>
         </div>
-        <p className="text-sm text-on-surface-variant">Hold <code className="text-primary bg-white/5 px-1 rounded">Super+J</code>, speak your note, release. Each utterance becomes a timestamped bullet in your journal file.</p>
+        <p className="text-sm text-on-surface-variant">Hold <code className="text-primary bg-white/5 px-1 rounded">Super+J</code>, speak your note, release. Each utterance becomes a timestamped entry in your journal file.</p>
       </section>
 
       {/* Tutorial 3 */}
@@ -1735,22 +1859,14 @@ label   = "Journal Note"`}</CodeBlock>
           <h2 className="text-2xl font-display font-bold text-white">Voice Shell Commands</h2>
           <p className="text-on-surface-variant mt-2">Speak English descriptions; a local LLM converts them to bash commands and executes them.</p>
         </div>
+        {/* FIX: exec_command → command */}
         <CodeBlock lang="~/.config/voxctr/targets.toml">{`[[target]]
 id              = "shell_voice"
 label           = "Voice Shell"
 delivery        = "exec"
-exec_command    = "bash -c '{TEXT}'"
-post_processing = "default"
-
-[target.ollama]
-model         = "llama3.2:1b"
-system_prompt = """
-Convert the English description to a single bash command.
-Return ONLY the command with no explanation or preamble.
-"""
-temperature   = 0.1
-on_timeout    = "none"`}</CodeBlock>
-        <WarnBox>The exec delivery type runs commands as your user. Review the Ollama system_prompt carefully to prevent unexpected command execution.</WarnBox>
+command         = "bash -c '{TEXT}'"
+post_processing = "ollama_only"`}</CodeBlock>
+        <WarnBox>The exec delivery type runs commands as your user. Review any Ollama rewriting carefully to prevent unexpected command execution.</WarnBox>
       </section>
 
       {/* Tutorial 4 */}
@@ -1763,9 +1879,9 @@ on_timeout    = "none"`}</CodeBlock>
         <ol className="space-y-3 text-sm text-on-surface-variant">
           {[
             'In config.json, set "atspi_auto_code_mode": true.',
-            'Add an "editor" target in targets.toml with post_processing = "code_mode".',
-            'Bind a hotkey to the "editor" target.',
-            'When VS Code or a terminal is focused and you trigger the hotkey, VoxCtr automatically applies Code Mode formatting.',
+            'Add a "code" target in targets.toml with processing = {code_mode = true, ...}.',
+            'Bind a hotkey to the "code" target_id.',
+            'When VS Code or a terminal is focused, VoxCtr automatically applies Code Mode formatting for that session only.',
           ].map((step, i) => (
             <li key={i} className="flex gap-3">
               <span className="text-primary font-bold shrink-0">{i + 1}.</span>
@@ -1793,46 +1909,53 @@ function ArchitectureDocs() {
 
       <CodeBlock lang="System Diagram">
         {`Input Engine (evdev)
-  ├── Hold / Toggle / Double-Tap gesture detection
-  └── TTS stop key interceptor
-        │
+  ├── Hold / Toggle gesture handlers
+  ├── DoubleTapMachine per double_tap binding
+  └── TTS stop key interceptor → TTSEngine.stop()
+        │ on_press(target_id)
         ▼
-AudioRecorder  ←── VAD (voice activity detection)
-        │
+Recording Controller (AudioRecorder)
+        │ numpy float32 audio
         ▼
-Transcription Engine
-  ├── faster-whisper  (NVIDIA CUDA path)
-  └── whisper.cpp     (AMD/Intel Vulkan + CPU fallback)
-        │
+Transcription (faster-whisper / whisper.cpp + Silero VAD)
+  └── Backend selected via BackendSelector (GPU probe)
+        │ (text, target_id)
         ▼
-Post-Processing Pipeline  [per-target, configurable]
-  ├── strip_fillers / spoken_punct / snippets
-  ├── ollama_prompt  (local LLM — llama3.2, phi3, mistral…)
-  └── code_mode
+Post-Processing (per target_id setting)
+  ├── default: snippets + spoken punct + Ollama
+  ├── none: raw Whisper output
+  ├── strip_fillers: remove um/uh only
+  ├── snippets_only: expand snippets
+  └── ollama_only: Ollama rewrite only
         │
         ▼
 OutputTargetRouter
-  ├── inject    (AT-SPI2 → focused window)
-  ├── clipboard (wl-clipboard)
-  ├── exec      (bash -c '{TEXT}')
-  ├── pipe      (named FIFO)
-  ├── socket    (TCP / Unix domain socket)
-  ├── file      (append)
-  └── dbus      (DBus signal)
+  ├── inject    → AT-SPI2 insertText / wtype / xdotool / clipboard+paste
+  ├── clipboard → wl-copy
+  ├── exec      → subprocess (shell=False)
+  ├── pipe      → O_NONBLOCK write to FIFO
+  ├── socket    → TCP or Unix domain socket
+  ├── file      → append with optional timestamp
+  └── dbus      → DBus signal emission
+        │
+        ▼ (response_pipe per target)
+ResponseListener(s)  ←── agent writes response text to FIFO
+        │ tts_speak(line)
+        ▼
+TTSEngine (queue + worker thread)
+  ├── piper --model … --output_raw | aplay …
+  └── espeak-ng fallback
         │
         ▼
-ResponseListener  (reads agent response_pipe, forwards to TTS)
-        │
-        ▼
-TTSEngine  (Piper neural TTS / espeak-ng fallback)
-        │
-        ▼
-RecordingOverlay  (Qt6 — Voice Card / Waveform / Pulse Circle)
+TTSResponseOverlay (teal floating widget, shown while speaking)
 
-MCP Server  (Unix socket JSON-RPC 2.0, runs in parallel)
-  ├── transcribe_voice
-  ├── speak_text
-  └── get_status`}
+              ┌─────────────────────────┐
+              │    MCP Server           │
+              │  Unix socket JSON-RPC   │
+              │  transcribe_voice ──────┼──→ triggers recording
+              │  speak_text ────────────┼──→ TTSEngine.speak()
+              │  get_status ────────────┼──→ recording/speaking flags
+              └─────────────────────────┘`}
       </CodeBlock>
 
       <section>
@@ -1840,25 +1963,47 @@ MCP Server  (Unix socket JSON-RPC 2.0, runs in parallel)
         <div className="grid md:grid-cols-2 gap-8 text-xs font-mono">
           <div className="space-y-1.5">
             <p className="text-secondary">src/</p>
-            <p className="text-on-surface-variant pl-4">├── main.py              <span className="text-on-surface-variant/40">(entry point)</span></p>
-            <p className="text-on-surface-variant pl-4">├── input_listener.py    <span className="text-on-surface-variant/40">(evdev engine)</span></p>
-            <p className="text-on-surface-variant pl-4">├── inference_engine.py  <span className="text-on-surface-variant/40">(transcription)</span></p>
-            <p className="text-on-surface-variant pl-4">├── output_router.py     <span className="text-on-surface-variant/40">(target routing)</span></p>
-            <p className="text-on-surface-variant pl-4">├── pipeline.py          <span className="text-on-surface-variant/40">(post-processing)</span></p>
-            <p className="text-on-surface-variant pl-4">├── tts_engine.py        <span className="text-on-surface-variant/40">(Piper/espeak)</span></p>
-            <p className="text-on-surface-variant pl-4">├── mcp_server.py        <span className="text-on-surface-variant/40">(JSON-RPC server)</span></p>
-            <p className="text-on-surface-variant pl-4">└── gui/                 <span className="text-on-surface-variant/40">(PyQt6 windows)</span></p>
+            <p className="text-on-surface-variant pl-4">├── main.py                  <span className="text-on-surface-variant/40">(entry point)</span></p>
+            <p className="text-on-surface-variant pl-4">├── config.py                <span className="text-on-surface-variant/40">(JSON config)</span></p>
+            <p className="text-on-surface-variant pl-4">├── config_validator.py      <span className="text-on-surface-variant/40">(startup validation)</span></p>
+            <p className="text-on-surface-variant pl-4">├── input_listener.py        <span className="text-on-surface-variant/40">(evdev engine)</span></p>
+            <p className="text-on-surface-variant pl-4">├── audio_recorder.py        <span className="text-on-surface-variant/40">(PyAudio capture)</span></p>
+            <p className="text-on-surface-variant pl-4">├── inference_engine.py      <span className="text-on-surface-variant/40">(transcription + post-proc)</span></p>
+            <p className="text-on-surface-variant pl-4">├── text_injector.py         <span className="text-on-surface-variant/40">(delivery thread)</span></p>
+            <p className="text-on-surface-variant pl-4">├── tts_engine.py            <span className="text-on-surface-variant/40">(Piper/espeak TTS)</span></p>
+            <p className="text-on-surface-variant pl-4">├── tts_responder.py         <span className="text-on-surface-variant/40">(ResponseListener)</span></p>
+            <p className="text-on-surface-variant pl-4">├── mcp_server.py            <span className="text-on-surface-variant/40">(JSON-RPC server)</span></p>
+            <p className="text-on-surface-variant pl-4">├── atspi_context.py         <span className="text-on-surface-variant/40">(AT-SPI2 integration)</span></p>
+            <p className="text-on-surface-variant pl-4">├── backends/                <span className="text-on-surface-variant/40">(faster-whisper, whisper.cpp)</span></p>
+            <p className="text-on-surface-variant pl-4">├── hotkeys/                 <span className="text-on-surface-variant/40">(DoubleTapMachine)</span></p>
+            <p className="text-on-surface-variant pl-4">├── routing/                 <span className="text-on-surface-variant/40">(models, targets, loader, router)</span></p>
+            <p className="text-on-surface-variant pl-4">└── gui/                     <span className="text-on-surface-variant/40">(PyQt6 windows + overlays)</span></p>
           </div>
           <div className="space-y-1.5">
             <p className="text-secondary">tests/</p>
-            <p className="text-on-surface-variant pl-4">├── test_targets.py      <span className="text-on-surface-variant/40">(16 tests)</span></p>
-            <p className="text-on-surface-variant pl-4">├── test_mcp_server.py   <span className="text-on-surface-variant/40">(16 tests)</span></p>
-            <p className="text-on-surface-variant pl-4">├── test_tts_engine.py   <span className="text-on-surface-variant/40">(30 tests)</span></p>
-            <p className="text-on-surface-variant pl-4">├── test_pipeline.py     <span className="text-on-surface-variant/40">(24 tests)</span></p>
-            <p className="text-on-surface-variant pl-4">├── test_router.py       <span className="text-on-surface-variant/40">(20 tests)</span></p>
-            <p className="text-on-surface-variant pl-4">└── …                   <span className="text-on-surface-variant/40">(280+ total)</span></p>
+            {/* FIX: Corrected test count — README totals 257, not "280+" */}
+            {[
+              { file: 'test_double_tap.py', count: '9', desc: 'DoubleTapMachine timing & state' },
+              { file: 'test_targets.py', count: '16', desc: 'All delivery types' },
+              { file: 'test_routing_loader.py', count: '31', desc: 'TOML round-trips' },
+              { file: 'test_tts_engine.py', count: '30', desc: 'Voice catalog, download, engine' },
+              { file: 'test_tts_responder.py', count: '6', desc: 'ResponseListener FIFO' },
+              { file: 'test_mcp_server.py', count: '16', desc: 'JSON-RPC dispatch & tools' },
+              { file: 'test_backend_protocol.py', count: '40', desc: 'BackendResult contract & selector' },
+              { file: 'test_atspi_context.py', count: '28', desc: 'AT-SPI2 injection & context' },
+              { file: 'test_audio_recorder.py', count: '15', desc: 'Device enumeration' },
+              { file: 'test_config_validator.py', count: '36', desc: 'Config validation rules' },
+              { file: 'test_setup_dialog.py', count: '20', desc: 'Permissions wizard logic' },
+              { file: 'test_populate_audio_devices.py', count: '10', desc: 'Audio device list' },
+            ].map((row) => (
+              <p key={row.file} className="text-on-surface-variant pl-4">
+                ├── <span className="text-primary">{row.file}</span>
+                {' '}<span className="text-on-surface-variant/40">({row.count} — {row.desc})</span>
+              </p>
+            ))}
           </div>
         </div>
+        <p className="text-sm text-on-surface-variant mt-4 text-right">Total: <strong className="text-white">257 tests</strong></p>
       </section>
 
       <section className="p-6 rounded-2xl bg-surface-container-low card-outline flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -1867,7 +2012,7 @@ MCP Server  (Unix socket JSON-RPC 2.0, runs in parallel)
           <p className="text-sm text-on-surface-variant mt-1">Ensure stability with pytest before contributing</p>
         </div>
         <div className="w-full md:w-auto">
-          <CodeBlock lang="test command">python -m pytest tests/</CodeBlock>
+          <CodeBlock lang="test command">python -m pytest tests/ -v</CodeBlock>
         </div>
       </section>
     </motion.div>
