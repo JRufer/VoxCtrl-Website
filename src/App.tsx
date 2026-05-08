@@ -6,7 +6,6 @@ import logoSvg from './assets/logo.svg';
 
 // Pages
 import Landing from './pages/Landing';
-import Roadmap from './pages/Roadmap';
 import Documentation from './pages/Documentation';
 
 function Navigation() {
@@ -27,7 +26,6 @@ function Navigation() {
       {/* Desktop Nav */}
       <div className="hidden md:flex items-center gap-8 relative z-10">
         <NavLink to="/">Overview</NavLink>
-        <NavLink to="/roadmap">Roadmap</NavLink>
         <NavLink to="/docs">Documentation</NavLink>
         <a
           href="https://github.com/JRufer/VoxCtr"
@@ -57,7 +55,6 @@ function Navigation() {
             className="absolute top-full left-0 right-0 mt-4 p-6 rounded-3xl glass-panel flex flex-col gap-4 border border-white/5 md:hidden"
           >
             <MobileNavLink to="/">Overview</MobileNavLink>
-            <MobileNavLink to="/roadmap">Roadmap</MobileNavLink>
             <MobileNavLink to="/docs">Documentation</MobileNavLink>
             <a
               href="https://github.com/JRufer/VoxCtr"
@@ -109,7 +106,6 @@ function App() {
         <main className="flex-1 pt-32 pb-20 px-6">
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/roadmap" element={<Roadmap />} />
             <Route path="/docs/*" element={<Documentation />} />
           </Routes>
         </main>
