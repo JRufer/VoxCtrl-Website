@@ -232,8 +232,23 @@
 .overlay-card.featured .frame::before {
   content: 'DEFAULT'; position: absolute; top: 10px; left: 10px;
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
-  background: rgba(34,212,239,0.15); border: 1px solid rgba(34,212,239,0.4); color: var(--cyan-1);
+  background: rgba(232, 160, 25, 0.15); border: 1px solid rgba(232, 160, 25, 0.5); color: var(--gold-1);
   padding: 3px 8px; border-radius: 4px; z-index: 2;
+  text-shadow: 0 0 12px var(--gold-glow);
+}
+
+/* ── gold accent utility — for heading spans ── */
+.accent-gold {
+  color: var(--gold-1);
+  position: relative;
+}
+.accent-gold::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -0.06em; height: 0.06em;
+  background: linear-gradient(to right, transparent, var(--gold-0), transparent);
+  filter: blur(2px);
+  animation: scanGlow 4s ease-in-out 2s infinite;
 }
 
 /* ───────── hardware table ───────── */
@@ -278,6 +293,15 @@
   content: ''; position: absolute; top: 8px; right: 8px;
   width: 6px; height: 6px; border-radius: 50%; background: var(--cyan-0);
   box-shadow: 0 0 6px var(--cyan-0); animation: pulse 2s infinite;
+}
+
+/* ∞ (first) and 280+ (last) metrics get gold — they represent achievement/scale */
+.metric:first-child .v,
+.metric:last-child .v { color: var(--gold-1); }
+.metric:first-child::before,
+.metric:last-child::before {
+  background: var(--gold-0);
+  box-shadow: 0 0 6px var(--gold-glow);
 }
 
 /* ───────── per-target showcase visual ───────── */
