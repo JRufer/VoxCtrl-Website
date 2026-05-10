@@ -859,6 +859,7 @@ button { font: inherit; }
               <div class="row"><span>NVIDIA</span><code>faster-whisper</code></div>
               <div class="row"><span>AMD/Intel</span><code>whisper.cpp + vulkan</code></div>
               <div class="row"><span>CPU</span><code>faster-whisper int8</code></div>
+              <div class="row"><span>Edge / Pi</span><code>moonshine</code></div>
               <div class="row"><span>Context prime</span><code>at-spi2 → 300ch</code></div>
             </div>
             <div class="pl-block">
@@ -923,11 +924,11 @@ button { font: inherit; }
         <div class="card" style="border-color: rgba(34,212,239,0.35); background: linear-gradient(180deg, rgba(34,212,239,0.04), transparent 60%), var(--bg-1);">
           <span class="corner">02</span>
           <span class="glyph">∇</span>
-          <h3 class="h-card">Dual whisper backend</h3>
-          <p class="desc">faster-whisper for CUDA, whisper.cpp + Vulkan for AMD/Intel. The right backend is selected by GPU probe at startup.</p>
+          <h3 class="h-card">Three transcription backends</h3>
+          <p class="desc">faster-whisper for CUDA, whisper.cpp + Vulkan for AMD/Intel, Moonshine for edge and low-latency streaming. The right backend is selected by GPU probe at startup.</p>
           <ul>
-            <li>fp16 / int8 quantization</li>
-            <li>Pywhispercpp in-process mode</li>
+            <li>fp16 / int8 / ONNX quantization</li>
+            <li>Moonshine: &lt;200ms streaming on CPU</li>
             <li>Override anytime in Settings</li>
           </ul>
         </div>
@@ -1303,6 +1304,140 @@ button { font: inherit; }
               <td><span class="pill pill-low">reliable</span></td>
               <td class="muted" style="font-size:12.5px;">Out of the box, no extra steps</td>
             </tr>
+            <tr>
+              <td><b>Raspberry Pi / Edge</b><div class="muted" style="font-size:11.5px;font-family:var(--mono)">arm · onnxruntime</div></td>
+              <td class="mono">moonshine</td>
+              <td class="mono">int8 ONNX</td>
+              <td><span class="pill pill-good">streaming</span></td>
+              <td class="muted" style="font-size:12.5px;"><code style="font-family:var(--mono);color:var(--cyan-1);background:rgba(34,212,239,0.06);padding:1px 5px;border-radius:3px;">pip install moonshine-voice</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── backend comparison ── -->
+  <section class="section section-bordered" id="backends">
+    <div class="shell">
+      <span class="eyebrow fade-up">// backends</span>
+      <h2 class="h-section fade-up">Three engines. One voice layer.</h2>
+      <p class="lead fade-up" style="margin-bottom: 36px;">
+        Each backend targets a different latency profile and hardware constraint. VoxCtr selects automatically — or you can lock one in Settings.
+      </p>
+
+      <div class="cards cards-3 fade-up">
+        <div class="card">
+          <span class="corner" style="font-family:var(--mono);font-size:11px;">01</span>
+          <span class="glyph" style="font-size:22px;">⚡</span>
+          <h3 class="h-card">faster-whisper</h3>
+          <p class="desc">CTranslate2-based Whisper inference. Best-in-class throughput on NVIDIA CUDA hardware. The default for GPU-accelerated desktops.</p>
+          <ul>
+            <li>fp16 on CUDA, int8 on CPU</li>
+            <li>Whisper large-v3 at near-instant latency</li>
+            <li>Best for high-accuracy offline batch</li>
+            <li>Requires: NVIDIA GPU or x86 CPU</li>
+          </ul>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--txt-2);">WER (Whisper large-v3)</span>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--cyan-1);margin-top:4px;">7.44% · 1.5B params</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="corner" style="font-family:var(--mono);font-size:11px;">02</span>
+          <span class="glyph" style="font-size:22px;">⬡</span>
+          <h3 class="h-card">whisper.cpp</h3>
+          <p class="desc">Pure C++ Whisper port with Vulkan compute backend. Runs on AMD and Intel GPUs where CUDA is unavailable. No Python runtime overhead.</p>
+          <ul>
+            <li>q5_k_m quantization via llama.cpp GGUF</li>
+            <li>Vulkan on AMD RDNA / Intel Arc</li>
+            <li>Pywhispercpp in-process binding</li>
+            <li>Requires: Vulkan-capable GPU</li>
+          </ul>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--txt-2);">WER (Whisper small)</span>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--cyan-1);margin-top:4px;">8.59% · 244M params</div>
+          </div>
+        </div>
+
+        <div class="card" style="border-color: rgba(34,212,239,0.35); background: linear-gradient(180deg, rgba(34,212,239,0.04), transparent 60%), var(--bg-1);">
+          <span class="corner" style="font-family:var(--mono);font-size:11px;">03</span>
+          <span class="glyph" style="font-size:22px;">◎</span>
+          <h3 class="h-card">Moonshine</h3>
+          <p class="desc">Streaming-first ASR from Moonshine AI. Caches encoder state and decoder context during live speech, enabling sub-200ms responses — even on a Raspberry Pi.</p>
+          <ul>
+            <li>Flexible input window — no 30s chunk limit</li>
+            <li>ONNX int8 weights, CPU-native runtime</li>
+            <li>527ms on RPi 5 · 165ms on Linux x86</li>
+            <li>Beats Whisper large-v3 accuracy at 6× fewer params</li>
+          </ul>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--txt-2);">WER (Moonshine Medium Streaming)</span>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--cyan-1);margin-top:4px;">6.65% · 245M params</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tbl-wrap fade-up" style="margin-top: 40px;">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>faster-whisper</th>
+              <th>whisper.cpp</th>
+              <th style="color:var(--cyan-1);">Moonshine ✦</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Inference style</b></td>
+              <td class="mono">batch / offline</td>
+              <td class="mono">batch / offline</td>
+              <td class="mono" style="color:var(--cyan-1);">streaming / live</td>
+            </tr>
+            <tr>
+              <td><b>Audio window</b></td>
+              <td class="mono">fixed 30s</td>
+              <td class="mono">fixed 30s</td>
+              <td class="mono" style="color:var(--cyan-1);">flexible length</td>
+            </tr>
+            <tr>
+              <td><b>CPU latency (x86)</b></td>
+              <td class="mono">3,425ms</td>
+              <td class="mono">~2,000ms</td>
+              <td class="mono" style="color:var(--cyan-1);">165ms</td>
+            </tr>
+            <tr>
+              <td><b>Edge / RPi 5</b></td>
+              <td class="mono muted">impractical</td>
+              <td class="mono muted">impractical</td>
+              <td class="mono" style="color:var(--cyan-1);">527ms ✓</td>
+            </tr>
+            <tr>
+              <td><b>Model format</b></td>
+              <td class="mono">CTranslate2</td>
+              <td class="mono">GGUF</td>
+              <td class="mono" style="color:var(--cyan-1);">ONNX (.ort)</td>
+            </tr>
+            <tr>
+              <td><b>GPU requirement</b></td>
+              <td class="mono">NVIDIA preferred</td>
+              <td class="mono">Vulkan GPU</td>
+              <td class="mono" style="color:var(--cyan-1);">none (CPU-first)</td>
+            </tr>
+            <tr>
+              <td><b>Best WER (English)</b></td>
+              <td class="mono">7.44%</td>
+              <td class="mono">8.59%</td>
+              <td class="mono" style="color:var(--cyan-1);">6.65%</td>
+            </tr>
+            <tr>
+              <td><b>Install</b></td>
+              <td class="mono">pip + cublas</td>
+              <td class="mono">AUR / cmake</td>
+              <td class="mono" style="color:var(--cyan-1);">pip install moonshine-voice</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1388,6 +1523,7 @@ button { font: inherit; }
         <a data-route="docs" data-doc="quickstart">Quickstart</a>
         <a data-route="docs" data-doc="mcp">MCP server</a>
         <a href="#hardware">Hardware</a>
+        <a href="#backends">Backends</a>
       </div>
       <div>
         <h6>Docs</h6>
@@ -1428,7 +1564,7 @@ const DOCS = {
       <h2>2. Permissions</h2>
       <p>Global hotkeys require evdev access. The installer adds you to <code>input</code> and <code>uinput</code> groups. <strong>Log out and back in</strong> for changes to take effect.</p>
       <h2>3. Launch</h2>
-      <p>Run <code>voxctr</code>. A tray icon appears. The first-run wizard walks you through choosing a Whisper model size — base (~140MB) or large-v3 (~2.9GB).</p>
+      <p>Run <code>voxctr</code>. A tray icon appears. The first-run wizard walks you through choosing a transcription backend and model size — Whisper base (~140MB), large-v3 (~2.9GB), or Moonshine Streaming for low-latency and edge use.</p>
       <h2>4. Speak</h2>
       <p>Click into any text field. Hold <code>Super+Space</code>. Speak. Release. Your transcript appears.</p>
       <div class="note"><span class="icon">ⓘ</span> If your compositor lacks system tray support, the Settings window opens directly on launch.</div>
@@ -1454,6 +1590,7 @@ const DOCS = {
           <tr><td>AMD RDNA / GCN</td><td>whisper.cpp + vulkan</td><td><code>whisper-cpp-vulkan</code> from AUR</td></tr>
           <tr><td>Intel Arc / Iris Xe</td><td>whisper.cpp + vulkan</td><td>Build with <code>GGML_VULKAN=ON</code></td></tr>
           <tr><td>CPU only</td><td>faster-whisper int8</td><td>Out of the box; slower for large models</td></tr>
+          <tr><td>Raspberry Pi / Edge (arm)</td><td>moonshine</td><td><code>pip install moonshine-voice</code> — streaming ONNX, no GPU needed</td></tr>
         </tbody>
       </table>
       <h2>Option A: AppImage</h2>
