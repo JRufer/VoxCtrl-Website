@@ -3,7 +3,8 @@
 # https://llmstxt.org/
 
 > VoxCtr is a programmable voice input broker for Linux. It transcribes speech locally using
-> faster-whisper (NVIDIA CUDA) or whisper.cpp (AMD/Intel Vulkan, CPU), routes the transcript to
+> faster-whisper (NVIDIA CUDA), whisper.cpp (AMD/Intel Vulkan), or Moonshine (streaming ONNX, CPU/edge),
+> routes the transcript to
 > named output targets (inject, exec, pipe, socket, file, dbus), applies per-target AI post-processing
 > pipelines via local Ollama models, and exposes a built-in MCP server so any MCP-capable AI agent
 > (Claude, Cursor, Zed) can use the microphone and TTS as first-class tools.
@@ -19,7 +20,7 @@
 
 ## Key Capabilities
 
-1. **Local transcription** — faster-whisper or whisper.cpp; auto-selects backend from GPU
+1. **Local transcription** — faster-whisper, whisper.cpp, or Moonshine; auto-selects backend from GPU/hardware
 2. **Programmable routing** — 7 output target types (inject/clipboard/exec/pipe/socket/file/dbus)
 3. **Per-target AI pipelines** — strip_fillers, ollama_prompt, code_mode, snippets, spoken_punct
 4. **MCP server** — transcribe_voice, speak_text, get_status tools over Unix socket
@@ -112,12 +113,13 @@ target  = "focused_window"
 
 ## Hardware Backends
 
-| Hardware            | Backend           | Acceleration   |
-|---------------------|-------------------|----------------|
-| NVIDIA GPU (CUDA11+)| faster-whisper    | CUDA           |
-| AMD GPU (RDNA/GCN)  | whisper.cpp       | Vulkan         |
-| Intel Arc / Iris Xe | whisper.cpp       | Vulkan         |
-| CPU only            | faster-whisper    | int8 fallback  |
+| Hardware              | Backend           | Acceleration          |
+|-----------------------|-------------------|-----------------------|
+| NVIDIA GPU (CUDA11+)  | faster-whisper    | CUDA                  |
+| AMD GPU (RDNA/GCN)    | whisper.cpp       | Vulkan                |
+| Intel Arc / Iris Xe   | whisper.cpp       | Vulkan                |
+| CPU only              | faster-whisper    | int8 fallback         |
+| Raspberry Pi / Edge   | moonshine         | ONNX int8 (CPU-first) |
 
 ## AI Pipeline Stages
 
