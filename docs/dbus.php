@@ -1,0 +1,57 @@
+<?php
+$page_title     = 'DBus Control — VoxCtr Docs';
+$page_desc      = 'Control VoxCtr from external scripts, Waybar, Rofi, or any DBus-capable program.';
+$active_section = 'docs';
+$active_doc     = 'dbus';
+?>
+<!doctype html>
+<html lang="en">
+<?php include '../includes/head.php'; ?>
+<body>
+
+<div class="bg-stack">
+  <div class="grid-bg"></div>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+  <div class="bg-noise"></div>
+</div>
+
+<?php include '../includes/nav.php'; ?>
+
+<div class="docs-shell">
+  <?php include '../includes/docs-sidebar.php'; ?>
+
+  <main class="docs-content" id="docsContent">
+    <div class="crumbs">INTEGRATIONS <span>/</span> DBUS</div>
+    <h1>DBus control</h1>
+    <p class="lede">Control VoxCtr from external scripts, Waybar, Rofi, or any DBus-capable program.</p>
+
+    <h2>Service</h2>
+    <p>The DBus service name is <code>ai.voxctl.Dictation</code>, with object path <code>/ai/voxctl/Dictation</code> and interface <code>ai.voxctl.Dictation</code>.</p>
+
+    <h2>Methods</h2>
+    <table class="docs-table">
+      <thead><tr><th>Method</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td>ToggleRecording</td><td>Start/stop the default target's recording</td></tr>
+        <tr><td>GetStatus</td><td>Returns the current state string</td></tr>
+        <tr><td>GetWordCount</td><td>Returns total transcribed word count for the session</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Example: Waybar module</h2>
+    <p>Bind the toggle to a click handler on a Waybar status indicator; bind the word count to a tooltip. <code>qdbus</code> and <code>dbus-send</code> both work — use <code>--session</code>.</p>
+
+    <div class="docs-foot">
+      <a href="mcp.php"><small>← previous</small><span>MCP server</span></a>
+      <a href="config.php" style="text-align:right;"><small>next →</small><span>Configuration</span></a>
+    </div>
+  </main>
+
+  <aside class="docs-toc" id="docsToc"></aside>
+</div>
+
+<?php include '../includes/footer.php'; ?>
+<script src="/js/docs.js"></script>
+</body>
+</html>
