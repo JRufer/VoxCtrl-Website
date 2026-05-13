@@ -2,6 +2,7 @@
 $page_title     = 'Routing & Targets — VoxCtr Docs';
 $page_desc      = 'Targets are named output destinations. Bindings tell VoxCtr which target each hotkey should route to.';
 $active_section = 'docs';
+$assets         = '..';
 $active_doc     = 'routing';
 ?>
 <!doctype html>
@@ -78,6 +79,6 @@ $active_doc     = 'routing';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $base ?>/js/docs.js"></script>
+<script src="<?= $assets ?>/js/docs.js"></script>
 </body>
 </html>

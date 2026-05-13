@@ -2,6 +2,7 @@
 $page_title     = 'Installation — VoxCtr Docs';
 $page_desc      = 'VoxCtr runs natively on Linux. Two install paths: AppImage (recommended) or source.';
 $active_section = 'docs';
+$assets         = '..';
 $active_doc     = 'install';
 ?>
 <!doctype html>
@@ -71,6 +72,6 @@ $active_doc     = 'install';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $base ?>/js/docs.js"></script>
+<script src="<?= $assets ?>/js/docs.js"></script>
 </body>
 </html>

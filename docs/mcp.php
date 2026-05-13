@@ -2,6 +2,7 @@
 $page_title     = 'MCP Server — VoxCtr Docs';
 $page_desc      = 'Built-in Model Context Protocol server. Any MCP-capable AI agent can drive your microphone and speak through your speakers.';
 $active_section = 'docs';
+$assets         = '..';
 $active_doc     = 'mcp';
 ?>
 <!doctype html>
@@ -76,6 +77,6 @@ $active_doc     = 'mcp';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $base ?>/js/docs.js"></script>
+<script src="<?= $assets ?>/js/docs.js"></script>
 </body>
 </html>

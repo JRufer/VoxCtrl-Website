@@ -2,6 +2,7 @@
 $page_title     = 'AI Processing — VoxCtr Docs';
 $page_desc      = 'Optional Ollama integration for grammar correction, tone rewriting, and bullet formatting — all local.';
 $active_section = 'docs';
+$assets         = '..';
 $active_doc     = 'ai';
 ?>
 <!doctype html>
@@ -55,6 +56,6 @@ $active_doc     = 'ai';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $base ?>/js/docs.js"></script>
+<script src="<?= $assets ?>/js/docs.js"></script>
 </body>
 </html>
