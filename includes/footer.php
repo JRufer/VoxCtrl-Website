@@ -3,7 +3,7 @@
     <div class="foot-grid">
       <div>
         <div style="display:flex;align-items:center;gap:10px;">
-          <img src="/assets/voxctr.gif" alt="" style="width:32px;height:32px;border-radius:8px;"/>
+          <img src="<?= $base ?>/assets/voxctr.gif" alt="" style="width:32px;height:32px;border-radius:8px;"/>
           <span style="font-weight:700;font-size:18px;">vox<span style="color:var(--cyan-1)">ctr</span></span>
         </div>
         <p style="color: var(--txt-2); font-size: 13px; margin-top: 12px; max-width: 280px; line-height: 1.6;">
@@ -12,18 +12,18 @@
       </div>
       <div>
         <h6>Product</h6>
-        <a href="/">Overview</a>
-        <a href="/docs/quickstart.php">Quickstart</a>
-        <a href="/docs/mcp.php">MCP server</a>
-        <a href="/#hardware">Hardware</a>
-        <a href="/#backends">Backends</a>
+        <a href="<?= $base ?>/">Overview</a>
+        <a href="<?= $base ?>/docs/quickstart.php">Quickstart</a>
+        <a href="<?= $base ?>/docs/mcp.php">MCP server</a>
+        <a href="<?= $base ?>/#hardware">Hardware</a>
+        <a href="<?= $base ?>/#backends">Backends</a>
       </div>
       <div>
         <h6>Docs</h6>
-        <a href="/docs/install.php">Installation</a>
-        <a href="/docs/routing.php">Routing</a>
-        <a href="/docs/atspi.php">AT-SPI2</a>
-        <a href="/docs/overlays.php">Overlays</a>
+        <a href="<?= $base ?>/docs/install.php">Installation</a>
+        <a href="<?= $base ?>/docs/routing.php">Routing</a>
+        <a href="<?= $base ?>/docs/atspi.php">AT-SPI2</a>
+        <a href="<?= $base ?>/docs/overlays.php">Overlays</a>
       </div>
       <div>
         <h6>Open source</h6>
@@ -35,7 +35,7 @@
     </div>
     <div class="foot-bottom">
       <div class="left">
-        <img src="/assets/favicon.png" alt="" />
+        <img src="<?= $base ?>/assets/favicon.png" alt="" />
         <span>voxctr · v1.0 · built for linux</span>
       </div>
       <div>⌬ wayland-native &nbsp;·&nbsp; ◯ x11-compat &nbsp;·&nbsp; ∗ on-device only</div>

@@ -35,7 +35,7 @@ $active_section = 'home';
           VoxCtr is a programmable voice broker for Linux that runs <strong style="color:var(--txt-0)">100% on your device</strong>. Whisper transcribes locally, your own models do the processing, and not a single byte of audio leaves your machine. Your words. Your hardware. Your control.
         </p>
         <div class="hero-cta fade-up">
-          <a class="btn btn-primary" href="/docs/quickstart.php">
+          <a class="btn btn-primary" href="<?= $base ?>/docs/quickstart.php">
             <span style="font-family:var(--mono)">⌃</span> Quickstart
           </a>
           <a class="btn btn-ghost" href="https://github.com/jrufer/voxctr" target="_blank">
@@ -567,7 +567,7 @@ $active_section = 'home';
 
     <div class="overlays-row fade-up">
       <div class="overlay-card featured">
-        <div class="frame"><img src="/assets/voice_overlay.gif" alt="Voice Card overlay" /></div>
+        <div class="frame"><img src="<?= $base ?>/assets/voice_overlay.gif" alt="Voice Card overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Voice Card</div>
@@ -577,7 +577,7 @@ $active_section = 'home';
         </div>
       </div>
       <div class="overlay-card">
-        <div class="frame"><img src="/assets/box_overlay.gif" alt="Waveform overlay" /></div>
+        <div class="frame"><img src="<?= $base ?>/assets/box_overlay.gif" alt="Waveform overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Waveform</div>
@@ -587,7 +587,7 @@ $active_section = 'home';
         </div>
       </div>
       <div class="overlay-card">
-        <div class="frame"><img src="/assets/dot_overlay.gif" alt="Pulse Circle overlay" /></div>
+        <div class="frame"><img src="<?= $base ?>/assets/dot_overlay.gif" alt="Pulse Circle overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Pulse Circle</div>
@@ -799,7 +799,7 @@ $active_section = 'home';
       Install in five minutes. Forks, custom overlays, and contributions welcome.
     </p>
     <div class="hero-cta fade-up" style="justify-content: center;">
-      <a class="btn btn-primary" href="/docs/quickstart.php">
+      <a class="btn btn-primary" href="<?= $base ?>/docs/quickstart.php">
         <span style="font-family:var(--mono)">⌃</span> Read the quickstart
       </a>
       <a class="btn btn-ghost" href="https://github.com/jrufer/voxctr" target="_blank">
@@ -810,6 +810,6 @@ $active_section = 'home';
 </section>
 
 <?php include 'includes/footer.php'; ?>
-<script src="/js/landing.js"></script>
+<script src="<?= $base ?>/js/landing.js"></script>
 </body>
 </html>

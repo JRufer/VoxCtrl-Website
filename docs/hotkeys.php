@@ -71,6 +71,6 @@ $active_doc     = 'hotkeys';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="/js/docs.js"></script>
+<script src="<?= $base ?>/js/docs.js"></script>
 </body>
 </html>
