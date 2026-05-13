@@ -1,8 +1,8 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'Installation — VoxCtr Docs';
 $page_desc      = 'VoxCtr runs natively on Linux. Two install paths: AppImage (recommended) or source.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'install';
 ?>
 <!doctype html>
@@ -72,6 +72,6 @@ $active_doc     = 'install';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

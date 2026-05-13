@@ -1,8 +1,8 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'Configuration — VoxCtr Docs';
 $page_desc      = 'All settings live under ~/.config/voxctr/. The Settings UI is a thin layer over these files — they\'re the source of truth.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'config';
 ?>
 <!doctype html>
@@ -66,6 +66,6 @@ $active_doc     = 'config';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

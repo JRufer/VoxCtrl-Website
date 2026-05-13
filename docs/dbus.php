@@ -2,7 +2,6 @@
 $page_title     = 'DBus Control — VoxCtr Docs';
 $page_desc      = 'Control VoxCtr from external scripts, Waybar, Rofi, or any DBus-capable program.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'dbus';
 ?>
 <!doctype html>
@@ -53,6 +52,6 @@ $active_doc     = 'dbus';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

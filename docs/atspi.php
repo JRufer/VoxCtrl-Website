@@ -1,8 +1,8 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'AT-SPI2 Integration — VoxCtr Docs';
 $page_desc      = 'Optional accessibility integration that gives you direct text insertion, context-aware transcription, and automatic code mode for terminals and IDEs.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'atspi';
 ?>
 <!doctype html>
@@ -56,6 +56,6 @@ $active_doc     = 'atspi';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

@@ -2,7 +2,6 @@
 $page_title     = 'Architecture — VoxCtr Docs';
 $page_desc      = 'What\'s inside the app, and how the parts talk to each other.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'architecture';
 ?>
 <!doctype html>
@@ -74,6 +73,6 @@ $active_doc     = 'architecture';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

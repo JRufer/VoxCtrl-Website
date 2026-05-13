@@ -1,8 +1,8 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'Overlays — VoxCtr Docs';
 $page_desc      = 'Three overlay styles ship by default. Drop a Python file into ~/.config/voxctr/overlays/ and you\'ve made one.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'overlays';
 ?>
 <!doctype html>
@@ -63,6 +63,6 @@ $active_doc     = 'overlays';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

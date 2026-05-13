@@ -1,8 +1,8 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'Voice Output (TTS) — VoxCtr Docs';
 $page_desc      = 'On-device neural TTS via Piper, with espeak-ng as automatic fallback. Eight curated voices, all downloadable in-app.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'tts';
 ?>
 <!doctype html>
@@ -64,6 +64,6 @@ $active_doc     = 'tts';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

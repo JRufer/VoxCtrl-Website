@@ -1,8 +1,8 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'Core Concepts — VoxCtr Docs';
 $page_desc      = 'How VoxCtr models voice input, routing, and processing. Read this once and the rest of the docs make sense.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'concepts';
 ?>
 <!doctype html>
@@ -57,6 +57,6 @@ $active_doc     = 'concepts';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

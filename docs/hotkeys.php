@@ -1,8 +1,8 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'Hotkeys & Gestures — VoxCtr Docs';
 $page_desc      = 'VoxCtr listens at the evdev layer for true global hotkeys — no window focus required, no compositor cooperation needed.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'hotkeys';
 ?>
 <!doctype html>
@@ -72,6 +72,6 @@ $active_doc     = 'hotkeys';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

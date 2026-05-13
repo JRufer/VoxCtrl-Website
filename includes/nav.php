@@ -1,12 +1,12 @@
 <nav class="nav">
-  <a class="nav-brand" href="<?= $assets ?>/">
-    <img src="<?= $assets ?>/assets/voxctr.gif" alt="VoxCtr" />
+  <a class="nav-brand" href="<?= BASE ?>/">
+    <img src="<?= BASE ?>/assets/voxctr.gif" alt="VoxCtr" />
     <span>vox<span class="v">ctr</span></span>
     <span class="nav-version">v1.0</span>
   </a>
   <div class="nav-links">
-    <a class="nav-link <?= ($active_section ?? '') === 'home' ? 'is-active' : '' ?>" href="<?= $assets ?>/">Overview</a>
-    <a class="nav-link <?= ($active_section ?? '') === 'docs' ? 'is-active' : '' ?>" href="<?= $assets ?>/docs/quickstart.php">Documentation</a>
+    <a class="nav-link <?= ($active_section ?? '') === 'home' ? 'is-active' : '' ?>" href="<?= BASE ?>/">Overview</a>
+    <a class="nav-link <?= ($active_section ?? '') === 'docs' ? 'is-active' : '' ?>" href="<?= BASE ?>/docs/quickstart.php">Documentation</a>
   </div>
   <div class="nav-spacer"></div>
   <div class="nav-tools">

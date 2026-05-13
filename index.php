@@ -1,8 +1,8 @@
 <?php
+require_once './includes/config.php';
 $page_title     = 'VoxCtr — the audio control layer for your AI stack';
 $page_desc      = 'VoxCtr is a programmable voice broker for Linux. 100% on-device Whisper transcription, per-target routing, MCP server, and neural TTS. MIT licensed.';
 $active_section = 'home';
-$assets         = '.';
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,7 +36,7 @@ $assets         = '.';
           VoxCtr is a programmable voice broker for Linux that runs <strong style="color:var(--txt-0)">100% on your device</strong>. Whisper transcribes locally, your own models do the processing, and not a single byte of audio leaves your machine. Your words. Your hardware. Your control.
         </p>
         <div class="hero-cta fade-up">
-          <a class="btn btn-primary" href="<?= $assets ?>/docs/quickstart.php">
+          <a class="btn btn-primary" href="<?= BASE ?>/docs/quickstart.php">
             <span style="font-family:var(--mono)">⌃</span> Quickstart
           </a>
           <a class="btn btn-ghost" href="https://github.com/jrufer/voxctr" target="_blank">
@@ -568,7 +568,7 @@ $assets         = '.';
 
     <div class="overlays-row fade-up">
       <div class="overlay-card featured">
-        <div class="frame"><img src="<?= $assets ?>/assets/voice_overlay.gif" alt="Voice Card overlay" /></div>
+        <div class="frame"><img src="<?= BASE ?>/assets/voice_overlay.gif" alt="Voice Card overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Voice Card</div>
@@ -578,7 +578,7 @@ $assets         = '.';
         </div>
       </div>
       <div class="overlay-card">
-        <div class="frame"><img src="<?= $assets ?>/assets/box_overlay.gif" alt="Waveform overlay" /></div>
+        <div class="frame"><img src="<?= BASE ?>/assets/box_overlay.gif" alt="Waveform overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Waveform</div>
@@ -588,7 +588,7 @@ $assets         = '.';
         </div>
       </div>
       <div class="overlay-card">
-        <div class="frame"><img src="<?= $assets ?>/assets/dot_overlay.gif" alt="Pulse Circle overlay" /></div>
+        <div class="frame"><img src="<?= BASE ?>/assets/dot_overlay.gif" alt="Pulse Circle overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Pulse Circle</div>
@@ -800,7 +800,7 @@ $assets         = '.';
       Install in five minutes. Forks, custom overlays, and contributions welcome.
     </p>
     <div class="hero-cta fade-up" style="justify-content: center;">
-      <a class="btn btn-primary" href="<?= $assets ?>/docs/quickstart.php">
+      <a class="btn btn-primary" href="<?= BASE ?>/docs/quickstart.php">
         <span style="font-family:var(--mono)">⌃</span> Read the quickstart
       </a>
       <a class="btn btn-ghost" href="https://github.com/jrufer/voxctr" target="_blank">
@@ -811,6 +811,6 @@ $assets         = '.';
 </section>
 
 <?php include './includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/landing.js"></script>
+<script src="<?= BASE ?>/js/landing.js"></script>
 </body>
 </html>

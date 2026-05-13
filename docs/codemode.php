@@ -1,8 +1,8 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'Code Mode — VoxCtr Docs';
 $page_desc      = 'Spoken constructs converted to syntax. Say it, get valid code.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'codemode';
 ?>
 <!doctype html>
@@ -59,6 +59,6 @@ $active_doc     = 'codemode';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

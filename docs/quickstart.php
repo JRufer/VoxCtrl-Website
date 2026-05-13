@@ -1,8 +1,8 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'Quickstart — VoxCtr Docs';
 $page_desc      = 'From zero to your first voice transcription in under five minutes. Linux only — Wayland and X11 supported.';
 $active_section = 'docs';
-$assets         = '..';
 $active_doc     = 'quickstart';
 ?>
 <!doctype html>
@@ -58,6 +58,6 @@ $active_doc     = 'quickstart';
 </div>
 
 <?php include '../includes/footer.php'; ?>
-<script src="<?= $assets ?>/js/docs.js"></script>
+<script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

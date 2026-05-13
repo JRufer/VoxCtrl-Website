@@ -3,7 +3,7 @@
     <div class="foot-grid">
       <div>
         <div style="display:flex;align-items:center;gap:10px;">
-          <img src="<?= $assets ?>/assets/voxctr.gif" alt="" style="width:32px;height:32px;border-radius:8px;"/>
+          <img src="<?= BASE ?>/assets/voxctr.gif" alt="" style="width:32px;height:32px;border-radius:8px;"/>
           <span style="font-weight:700;font-size:18px;">vox<span style="color:var(--cyan-1)">ctr</span></span>
         </div>
         <p style="color: var(--txt-2); font-size: 13px; margin-top: 12px; max-width: 280px; line-height: 1.6;">
@@ -12,18 +12,18 @@
       </div>
       <div>
         <h6>Product</h6>
-        <a href="<?= $assets ?>/">Overview</a>
-        <a href="<?= $assets ?>/docs/quickstart.php">Quickstart</a>
-        <a href="<?= $assets ?>/docs/mcp.php">MCP server</a>
-        <a href="<?= $assets ?>/#hardware">Hardware</a>
-        <a href="<?= $assets ?>/#backends">Backends</a>
+        <a href="<?= BASE ?>/">Overview</a>
+        <a href="<?= BASE ?>/docs/quickstart.php">Quickstart</a>
+        <a href="<?= BASE ?>/docs/mcp.php">MCP server</a>
+        <a href="<?= BASE ?>/#hardware">Hardware</a>
+        <a href="<?= BASE ?>/#backends">Backends</a>
       </div>
       <div>
         <h6>Docs</h6>
-        <a href="<?= $assets ?>/docs/install.php">Installation</a>
-        <a href="<?= $assets ?>/docs/routing.php">Routing</a>
-        <a href="<?= $assets ?>/docs/atspi.php">AT-SPI2</a>
-        <a href="<?= $assets ?>/docs/overlays.php">Overlays</a>
+        <a href="<?= BASE ?>/docs/install.php">Installation</a>
+        <a href="<?= BASE ?>/docs/routing.php">Routing</a>
+        <a href="<?= BASE ?>/docs/atspi.php">AT-SPI2</a>
+        <a href="<?= BASE ?>/docs/overlays.php">Overlays</a>
       </div>
       <div>
         <h6>Open source</h6>
@@ -35,7 +35,7 @@
     </div>
     <div class="foot-bottom">
       <div class="left">
-        <img src="<?= $assets ?>/assets/favicon.png" alt="" />
+        <img src="<?= BASE ?>/assets/favicon.png" alt="" />
         <span>voxctr · v1.0 · built for linux</span>
       </div>
       <div>⌬ wayland-native &nbsp;·&nbsp; ◯ x11-compat &nbsp;·&nbsp; ∗ on-device only</div>
