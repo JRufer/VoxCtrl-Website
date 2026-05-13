@@ -1,4 +1,5 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'Architecture — VoxCtr Docs';
 $page_desc      = 'What\'s inside the app, and how the parts talk to each other.';
 $active_section = 'docs';

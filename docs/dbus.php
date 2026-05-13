@@ -1,4 +1,5 @@
 <?php
+require_once '../includes/config.php';
 $page_title     = 'DBus Control — VoxCtr Docs';
 $page_desc      = 'Control VoxCtr from external scripts, Waybar, Rofi, or any DBus-capable program.';
 $active_section = 'docs';
