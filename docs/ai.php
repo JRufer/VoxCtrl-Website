@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/config.php';
+require_once __DIR__ . '/../includes/config.php';
 $page_title     = 'AI Processing — VoxCtr Docs';
 $page_desc      = 'Optional Ollama integration for grammar correction, tone rewriting, and bullet formatting — all local.';
 $active_section = 'docs';
@@ -7,7 +7,7 @@ $active_doc     = 'ai';
 ?>
 <!doctype html>
 <html lang="en">
-<?php include '../includes/head.php'; ?>
+<?php include __DIR__ . '/../includes/head.php'; ?>
 <body>
 
 <div class="bg-stack">
@@ -17,10 +17,10 @@ $active_doc     = 'ai';
   <div class="bg-noise"></div>
 </div>
 
-<?php include '../includes/nav.php'; ?>
+<?php include __DIR__ . '/../includes/nav.php'; ?>
 
 <div class="docs-shell">
-  <?php include '../includes/docs-sidebar.php'; ?>
+  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">AI &amp; VOICE <span>/</span> AI PROCESSING</div>
@@ -55,7 +55,7 @@ $active_doc     = 'ai';
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
 <script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

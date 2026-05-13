@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/config.php';
+require_once __DIR__ . '/../includes/config.php';
 $page_title     = 'DBus Control — VoxCtr Docs';
 $page_desc      = 'Control VoxCtr from external scripts, Waybar, Rofi, or any DBus-capable program.';
 $active_section = 'docs';
@@ -7,7 +7,7 @@ $active_doc     = 'dbus';
 ?>
 <!doctype html>
 <html lang="en">
-<?php include '../includes/head.php'; ?>
+<?php include __DIR__ . '/../includes/head.php'; ?>
 <body>
 
 <div class="bg-stack">
@@ -17,10 +17,10 @@ $active_doc     = 'dbus';
   <div class="bg-noise"></div>
 </div>
 
-<?php include '../includes/nav.php'; ?>
+<?php include __DIR__ . '/../includes/nav.php'; ?>
 
 <div class="docs-shell">
-  <?php include '../includes/docs-sidebar.php'; ?>
+  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">INTEGRATIONS <span>/</span> DBUS</div>
@@ -52,7 +52,7 @@ $active_doc     = 'dbus';
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
 <script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

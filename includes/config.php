@@ -1,2 +1,2 @@
 <?php
-define('BASE', '/VoxCtr');
+define('BASE', '/voxctr');

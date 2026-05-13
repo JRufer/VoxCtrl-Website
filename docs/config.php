@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/config.php';
+require_once __DIR__ . '/../includes/config.php';
 $page_title     = 'Configuration — VoxCtr Docs';
 $page_desc      = 'All settings live under ~/.config/voxctr/. The Settings UI is a thin layer over these files — they\'re the source of truth.';
 $active_section = 'docs';
@@ -7,7 +7,7 @@ $active_doc     = 'config';
 ?>
 <!doctype html>
 <html lang="en">
-<?php include '../includes/head.php'; ?>
+<?php include __DIR__ . '/../includes/head.php'; ?>
 <body>
 
 <div class="bg-stack">
@@ -17,10 +17,10 @@ $active_doc     = 'config';
   <div class="bg-noise"></div>
 </div>
 
-<?php include '../includes/nav.php'; ?>
+<?php include __DIR__ . '/../includes/nav.php'; ?>
 
 <div class="docs-shell">
-  <?php include '../includes/docs-sidebar.php'; ?>
+  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">REFERENCE <span>/</span> CONFIGURATION</div>
@@ -65,7 +65,7 @@ $active_doc     = 'config';
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
 <script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/config.php';
+require_once __DIR__ . '/../includes/config.php';
 $page_title     = 'Hotkeys & Gestures — VoxCtr Docs';
 $page_desc      = 'VoxCtr listens at the evdev layer for true global hotkeys — no window focus required, no compositor cooperation needed.';
 $active_section = 'docs';
@@ -7,7 +7,7 @@ $active_doc     = 'hotkeys';
 ?>
 <!doctype html>
 <html lang="en">
-<?php include '../includes/head.php'; ?>
+<?php include __DIR__ . '/../includes/head.php'; ?>
 <body>
 
 <div class="bg-stack">
@@ -17,10 +17,10 @@ $active_doc     = 'hotkeys';
   <div class="bg-noise"></div>
 </div>
 
-<?php include '../includes/nav.php'; ?>
+<?php include __DIR__ . '/../includes/nav.php'; ?>
 
 <div class="docs-shell">
-  <?php include '../includes/docs-sidebar.php'; ?>
+  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">INPUT &amp; ROUTING <span>/</span> HOTKEYS</div>
@@ -71,7 +71,7 @@ $active_doc     = 'hotkeys';
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
 <script src="<?= BASE ?>/js/docs.js"></script>
 </body>
 </html>

@@ -1,12 +1,12 @@
 <?php
-require_once './includes/config.php';
+require_once __DIR__ . '/includes/config.php';
 $page_title     = 'VoxCtr — the audio control layer for your AI stack';
 $page_desc      = 'VoxCtr is a programmable voice broker for Linux. 100% on-device Whisper transcription, per-target routing, MCP server, and neural TTS. MIT licensed.';
 $active_section = 'home';
 ?>
 <!doctype html>
 <html lang="en">
-<?php include './includes/head.php'; ?>
+<?php include __DIR__ . '/includes/head.php'; ?>
 <body>
 
 <div class="bg-stack">
@@ -16,7 +16,7 @@ $active_section = 'home';
   <div class="bg-noise"></div>
 </div>
 
-<?php include './includes/nav.php'; ?>
+<?php include __DIR__ . '/includes/nav.php'; ?>
 
 <!-- ── HERO ── -->
 <section class="section hero">
@@ -810,7 +810,7 @@ $active_section = 'home';
   </div>
 </section>
 
-<?php include './includes/footer.php'; ?>
+<?php include __DIR__ . '/includes/footer.php'; ?>
 <script src="<?= BASE ?>/js/landing.js"></script>
 </body>
 </html>
