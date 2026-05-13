@@ -1,8 +1,15 @@
 <?php
 if (!isset($base)) {
-    $docRoot = rtrim(str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']), '/');
-    $projRoot = rtrim(str_replace('\\', '/', dirname(__DIR__)), '/');
-    $base = substr($projRoot, strlen($docRoot));
+    // Derive base URL from the calling script's URL path and its position
+    // relative to the project root (parent of includes/).
+    // Works regardless of what DOCUMENT_ROOT is set to.
+    $projFs   = realpath(dirname(__DIR__));
+    $scriptFs = realpath($_SERVER['SCRIPT_FILENAME']);
+    $relDir   = ltrim(dirname(str_replace($projFs, '', $scriptFs)), '/');
+    $base     = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
+    if ($relDir !== '') {
+        $base = substr($base, 0, strlen($base) - strlen($relDir) - 1);
+    }
 }
 ?>
 <head>
