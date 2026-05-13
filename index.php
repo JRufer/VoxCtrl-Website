@@ -6,7 +6,7 @@ $assets         = '.';
 ?>
 <!doctype html>
 <html lang="en">
-<?php include 'includes/head.php'; ?>
+<?php include './includes/head.php'; ?>
 <body>
 
 <div class="bg-stack">
@@ -16,7 +16,7 @@ $assets         = '.';
   <div class="bg-noise"></div>
 </div>
 
-<?php include 'includes/nav.php'; ?>
+<?php include './includes/nav.php'; ?>
 
 <!-- ── HERO ── -->
 <section class="section hero">
@@ -810,7 +810,7 @@ $assets         = '.';
   </div>
 </section>
 
-<?php include 'includes/footer.php'; ?>
+<?php include './includes/footer.php'; ?>
 <script src="<?= $assets ?>/js/landing.js"></script>
 </body>
 </html>
