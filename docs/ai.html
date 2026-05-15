@@ -1,13 +1,11 @@
-<?php
-require_once __DIR__ . '/../includes/config.php';
-$page_title     = 'AI Processing — VoxCtr Docs';
-$page_desc      = 'Optional Ollama integration for grammar correction, tone rewriting, and bullet formatting — all local.';
-$active_section = 'docs';
-$active_doc     = 'ai';
-?>
+<!--#set var="page_title" value="AI Processing — VoxCtr Docs" -->
+<!--#set var="page_desc" value="Optional Ollama integration for grammar correction, tone rewriting, and bullet formatting — all local." -->
+<!--#set var="active_section" value="docs" -->
+<!--#set var="active_doc" value="ai" -->
+
 <!doctype html>
 <html lang="en">
-<?php include __DIR__ . '/../includes/head.php'; ?>
+<!--#include virtual="/voxctr/includes/head.html" -->
 <body>
 
 <div class="bg-stack">
@@ -17,10 +15,10 @@ $active_doc     = 'ai';
   <div class="bg-noise"></div>
 </div>
 
-<?php include __DIR__ . '/../includes/nav.php'; ?>
+<!--#include virtual="/voxctr/includes/nav.html" -->
 
 <div class="docs-shell">
-  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
+  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">AI &amp; VOICE <span>/</span> AI PROCESSING</div>
@@ -47,15 +45,15 @@ $active_doc     = 'ai';
     <div class="note"><span class="icon">ⓘ</span> Per-target override: set <code>post_processing = "none"</code> on agent targets to skip Ollama for those routes even when globally enabled.</div>
 
     <div class="docs-foot">
-      <a href="codemode.php"><small>← previous</small><span>Code mode</span></a>
-      <a href="tts.php" style="text-align:right;"><small>next →</small><span>Voice output</span></a>
+      <a href="codemode.html"><small>← previous</small><span>Code mode</span></a>
+      <a href="tts.html" style="text-align:right;"><small>next →</small><span>Voice output</span></a>
     </div>
   </main>
 
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
-<script src="<?= BASE ?>/js/docs.js"></script>
+<!--#include virtual="/voxctr/includes/footer.html" -->
+<script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

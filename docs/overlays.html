@@ -1,13 +1,10 @@
-<?php
-require_once __DIR__ . '/../includes/config.php';
-$page_title     = 'Overlays — VoxCtr Docs';
-$page_desc      = 'Three overlay styles ship by default. Drop a Python file into ~/.config/voxctr/overlays/ and you\'ve made one.';
-$active_section = 'docs';
-$active_doc     = 'overlays';
-?>
+<!--#set var="page_title" value="Overlays — VoxCtr Docs" -->
+<!--#set var="active_section" value="docs" -->
+<!--#set var="active_doc" value="overlays" -->
+
 <!doctype html>
 <html lang="en">
-<?php include __DIR__ . '/../includes/head.php'; ?>
+<!--#include virtual="/voxctr/includes/head.html" -->
 <body>
 
 <div class="bg-stack">
@@ -17,10 +14,10 @@ $active_doc     = 'overlays';
   <div class="bg-noise"></div>
 </div>
 
-<?php include __DIR__ . '/../includes/nav.php'; ?>
+<!--#include virtual="/voxctr/includes/nav.html" -->
 
 <div class="docs-shell">
-  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
+  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">AI &amp; VOICE <span>/</span> OVERLAYS</div>
@@ -54,15 +51,15 @@ $active_doc     = 'overlays';
     <p><code>hide_mode()</code> — called on the Qt main thread when recording stops.</p>
 
     <div class="docs-foot">
-      <a href="tts.php"><small>← previous</small><span>Voice output</span></a>
-      <a href="mcp.php" style="text-align:right;"><small>next →</small><span>MCP server</span></a>
+      <a href="tts.html"><small>← previous</small><span>Voice output</span></a>
+      <a href="mcp.html" style="text-align:right;"><small>next →</small><span>MCP server</span></a>
     </div>
   </main>
 
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
-<script src="<?= BASE ?>/js/docs.js"></script>
+<!--#include virtual="/voxctr/includes/footer.html" -->
+<script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

@@ -1,13 +1,11 @@
-<?php
-require_once __DIR__ . '/../includes/config.php';
-$page_title     = 'Routing & Targets — VoxCtr Docs';
-$page_desc      = 'Targets are named output destinations. Bindings tell VoxCtr which target each hotkey should route to.';
-$active_section = 'docs';
-$active_doc     = 'routing';
-?>
+<!--#set var="page_title" value="Routing & Targets — VoxCtr Docs" -->
+<!--#set var="page_desc" value="Targets are named output destinations. Bindings tell VoxCtr which target each hotkey should route to." -->
+<!--#set var="active_section" value="docs" -->
+<!--#set var="active_doc" value="routing" -->
+
 <!doctype html>
 <html lang="en">
-<?php include __DIR__ . '/../includes/head.php'; ?>
+<!--#include virtual="/voxctr/includes/head.html" -->
 <body>
 
 <div class="bg-stack">
@@ -17,10 +15,10 @@ $active_doc     = 'routing';
   <div class="bg-noise"></div>
 </div>
 
-<?php include __DIR__ . '/../includes/nav.php'; ?>
+<!--#include virtual="/voxctr/includes/nav.html" -->
 
 <div class="docs-shell">
-  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
+  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">INPUT &amp; ROUTING <span>/</span> ROUTING</div>
@@ -70,15 +68,15 @@ $active_doc     = 'routing';
     </ul>
 
     <div class="docs-foot">
-      <a href="hotkeys.php"><small>← previous</small><span>Hotkeys &amp; gestures</span></a>
-      <a href="atspi.php" style="text-align:right;"><small>next →</small><span>AT-SPI2</span></a>
+      <a href="hotkeys.html"><small>← previous</small><span>Hotkeys &amp; gestures</span></a>
+      <a href="atspi.html" style="text-align:right;"><small>next →</small><span>AT-SPI2</span></a>
     </div>
   </main>
 
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
-<script src="<?= BASE ?>/js/docs.js"></script>
+<!--#include virtual="/voxctr/includes/footer.html" -->
+<script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

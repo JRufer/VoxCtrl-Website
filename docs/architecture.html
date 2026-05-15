@@ -1,13 +1,10 @@
-<?php
-require_once __DIR__ . '/../includes/config.php';
-$page_title     = 'Architecture — VoxCtr Docs';
-$page_desc      = 'What\'s inside the app, and how the parts talk to each other.';
-$active_section = 'docs';
-$active_doc     = 'architecture';
-?>
+<!--#set var="page_title" value="Architecture — VoxCtr Docs" -->
+<!--#set var="active_section" value="docs" -->
+<!--#set var="active_doc" value="architecture" -->
+
 <!doctype html>
 <html lang="en">
-<?php include __DIR__ . '/../includes/head.php'; ?>
+<!--#include virtual="/voxctr/includes/head.html" -->
 <body>
 
 <div class="bg-stack">
@@ -17,10 +14,10 @@ $active_doc     = 'architecture';
   <div class="bg-noise"></div>
 </div>
 
-<?php include __DIR__ . '/../includes/nav.php'; ?>
+<!--#include virtual="/voxctr/includes/nav.html" -->
 
 <div class="docs-shell">
-  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
+  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">REFERENCE <span>/</span> ARCHITECTURE</div>
@@ -65,7 +62,7 @@ $active_doc     = 'architecture';
     <p>280+ tests across DoubleTapMachine timing, all delivery types, TOML round-trips, voice catalog, MCP JSON-RPC dispatch, BackendProtocol contract, AT-SPI2 focus tracking, and config validation.</p>
 
     <div class="docs-foot">
-      <a href="config.php"><small>← previous</small><span>Configuration</span></a>
+      <a href="config.html"><small>← previous</small><span>Configuration</span></a>
       <div></div>
     </div>
   </main>
@@ -73,7 +70,7 @@ $active_doc     = 'architecture';
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
-<script src="<?= BASE ?>/js/docs.js"></script>
+<!--#include virtual="/voxctr/includes/footer.html" -->
+<script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

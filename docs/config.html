@@ -1,13 +1,10 @@
-<?php
-require_once __DIR__ . '/../includes/config.php';
-$page_title     = 'Configuration — VoxCtr Docs';
-$page_desc      = 'All settings live under ~/.config/voxctr/. The Settings UI is a thin layer over these files — they\'re the source of truth.';
-$active_section = 'docs';
-$active_doc     = 'config';
-?>
+<!--#set var="page_title" value="Configuration — VoxCtr Docs" -->
+<!--#set var="active_section" value="docs" -->
+<!--#set var="active_doc" value="config" -->
+
 <!doctype html>
 <html lang="en">
-<?php include __DIR__ . '/../includes/head.php'; ?>
+<!--#include virtual="/voxctr/includes/head.html" -->
 <body>
 
 <div class="bg-stack">
@@ -17,10 +14,10 @@ $active_doc     = 'config';
   <div class="bg-noise"></div>
 </div>
 
-<?php include __DIR__ . '/../includes/nav.php'; ?>
+<!--#include virtual="/voxctr/includes/nav.html" -->
 
 <div class="docs-shell">
-  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
+  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">REFERENCE <span>/</span> CONFIGURATION</div>
@@ -57,15 +54,15 @@ $active_doc     = 'config';
     </table>
 
     <div class="docs-foot">
-      <a href="dbus.php"><small>← previous</small><span>DBus control</span></a>
-      <a href="architecture.php" style="text-align:right;"><small>next →</small><span>Architecture</span></a>
+      <a href="dbus.html"><small>← previous</small><span>DBus control</span></a>
+      <a href="architecture.html" style="text-align:right;"><small>next →</small><span>Architecture</span></a>
     </div>
   </main>
 
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
-<script src="<?= BASE ?>/js/docs.js"></script>
+<!--#include virtual="/voxctr/includes/footer.html" -->
+<script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

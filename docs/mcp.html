@@ -1,13 +1,11 @@
-<?php
-require_once __DIR__ . '/../includes/config.php';
-$page_title     = 'MCP Server — VoxCtr Docs';
-$page_desc      = 'Built-in Model Context Protocol server. Any MCP-capable AI agent can drive your microphone and speak through your speakers.';
-$active_section = 'docs';
-$active_doc     = 'mcp';
-?>
+<!--#set var="page_title" value="MCP Server — VoxCtr Docs" -->
+<!--#set var="page_desc" value="Built-in Model Context Protocol server. Any MCP-capable AI agent can drive your microphone and speak through your speakers." -->
+<!--#set var="active_section" value="docs" -->
+<!--#set var="active_doc" value="mcp" -->
+
 <!doctype html>
 <html lang="en">
-<?php include __DIR__ . '/../includes/head.php'; ?>
+<!--#include virtual="/voxctr/includes/head.html" -->
 <body>
 
 <div class="bg-stack">
@@ -17,10 +15,10 @@ $active_doc     = 'mcp';
   <div class="bg-noise"></div>
 </div>
 
-<?php include __DIR__ . '/../includes/nav.php'; ?>
+<!--#include virtual="/voxctr/includes/nav.html" -->
 
 <div class="docs-shell">
-  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
+  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">INTEGRATIONS <span>/</span> MCP</div>
@@ -68,15 +66,15 @@ $active_doc     = 'mcp';
     <p>For agents that generate responses to a named FIFO, set <code>response_pipe</code> on the target. <code>ResponseListener</code> reads each line and passes it to <code>TTSEngine.speak()</code>. Each line in the FIFO becomes a separate utterance; empty lines are ignored. The listener re-opens the FIFO on EOF so the agent can restart without restarting VoxCtr.</p>
 
     <div class="docs-foot">
-      <a href="overlays.php"><small>← previous</small><span>Overlays</span></a>
-      <a href="dbus.php" style="text-align:right;"><small>next →</small><span>DBus control</span></a>
+      <a href="overlays.html"><small>← previous</small><span>Overlays</span></a>
+      <a href="dbus.html" style="text-align:right;"><small>next →</small><span>DBus control</span></a>
     </div>
   </main>
 
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
-<script src="<?= BASE ?>/js/docs.js"></script>
+<!--#include virtual="/voxctr/includes/footer.html" -->
+<script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

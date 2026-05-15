@@ -1,13 +1,11 @@
-<?php
-require_once __DIR__ . '/../includes/config.php';
-$page_title     = 'DBus Control — VoxCtr Docs';
-$page_desc      = 'Control VoxCtr from external scripts, Waybar, Rofi, or any DBus-capable program.';
-$active_section = 'docs';
-$active_doc     = 'dbus';
-?>
+<!--#set var="page_title" value="DBus Control — VoxCtr Docs" -->
+<!--#set var="page_desc" value="Control VoxCtr from external scripts, Waybar, Rofi, or any DBus-capable program." -->
+<!--#set var="active_section" value="docs" -->
+<!--#set var="active_doc" value="dbus" -->
+
 <!doctype html>
 <html lang="en">
-<?php include __DIR__ . '/../includes/head.php'; ?>
+<!--#include virtual="/voxctr/includes/head.html" -->
 <body>
 
 <div class="bg-stack">
@@ -17,10 +15,10 @@ $active_doc     = 'dbus';
   <div class="bg-noise"></div>
 </div>
 
-<?php include __DIR__ . '/../includes/nav.php'; ?>
+<!--#include virtual="/voxctr/includes/nav.html" -->
 
 <div class="docs-shell">
-  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
+  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">INTEGRATIONS <span>/</span> DBUS</div>
@@ -44,15 +42,15 @@ $active_doc     = 'dbus';
     <p>Bind the toggle to a click handler on a Waybar status indicator; bind the word count to a tooltip. <code>qdbus</code> and <code>dbus-send</code> both work — use <code>--session</code>.</p>
 
     <div class="docs-foot">
-      <a href="mcp.php"><small>← previous</small><span>MCP server</span></a>
-      <a href="config.php" style="text-align:right;"><small>next →</small><span>Configuration</span></a>
+      <a href="mcp.html"><small>← previous</small><span>MCP server</span></a>
+      <a href="config.html" style="text-align:right;"><small>next →</small><span>Configuration</span></a>
     </div>
   </main>
 
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
-<script src="<?= BASE ?>/js/docs.js"></script>
+<!--#include virtual="/voxctr/includes/footer.html" -->
+<script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

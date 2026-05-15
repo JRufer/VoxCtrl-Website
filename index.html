@@ -1,12 +1,10 @@
-<?php
-require_once __DIR__ . '/includes/config.php';
-$page_title     = 'VoxCtr — the audio control layer for your AI stack';
-$page_desc      = 'VoxCtr is a programmable voice broker for Linux. 100% on-device Whisper transcription, per-target routing, MCP server, and neural TTS. MIT licensed.';
-$active_section = 'home';
-?>
+<!--#set var="page_title" value="VoxCtr — the audio control layer for your AI stack" -->
+<!--#set var="page_desc" value="VoxCtr is a programmable voice broker for Linux. 100% on-device Whisper transcription, per-target routing, MCP server, and neural TTS. MIT licensed." -->
+<!--#set var="active_section" value="home" -->
+
 <!doctype html>
 <html lang="en">
-<?php include __DIR__ . '/includes/head.php'; ?>
+<!--#include virtual="/voxctr/includes/head.html" -->
 <body>
 
 <div class="bg-stack">
@@ -16,7 +14,7 @@ $active_section = 'home';
   <div class="bg-noise"></div>
 </div>
 
-<?php include __DIR__ . '/includes/nav.php'; ?>
+<!--#include virtual="/voxctr/includes/nav.html" -->
 
 <!-- ── HERO ── -->
 <section class="section hero">
@@ -36,7 +34,7 @@ $active_section = 'home';
           VoxCtr is a programmable voice broker for Linux that runs <strong style="color:var(--txt-0)">100% on your device</strong>. Whisper transcribes locally, your own models do the processing, and not a single byte of audio leaves your machine. Your words. Your hardware. Your control.
         </p>
         <div class="hero-cta fade-up">
-          <a class="btn btn-primary" href="<?= BASE ?>/docs/quickstart.php">
+          <a class="btn btn-primary" href="/voxctr/docs/quickstart.html">
             <span style="font-family:var(--mono)">⌃</span> Quickstart
           </a>
           <a class="btn btn-ghost" href="https://github.com/jrufer/voxctr" target="_blank">
@@ -568,7 +566,7 @@ $active_section = 'home';
 
     <div class="overlays-row fade-up">
       <div class="overlay-card featured">
-        <div class="frame"><img src="<?= BASE ?>/assets/voice_overlay.gif" alt="Voice Card overlay" /></div>
+        <div class="frame"><img src="/voxctr/assets/voice_overlay.gif" alt="Voice Card overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Voice Card</div>
@@ -578,7 +576,7 @@ $active_section = 'home';
         </div>
       </div>
       <div class="overlay-card">
-        <div class="frame"><img src="<?= BASE ?>/assets/box_overlay.gif" alt="Waveform overlay" /></div>
+        <div class="frame"><img src="/voxctr/assets/box_overlay.gif" alt="Waveform overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Waveform</div>
@@ -588,7 +586,7 @@ $active_section = 'home';
         </div>
       </div>
       <div class="overlay-card">
-        <div class="frame"><img src="<?= BASE ?>/assets/dot_overlay.gif" alt="Pulse Circle overlay" /></div>
+        <div class="frame"><img src="/voxctr/assets/dot_overlay.gif" alt="Pulse Circle overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Pulse Circle</div>
@@ -800,7 +798,7 @@ $active_section = 'home';
       Install in five minutes. Forks, custom overlays, and contributions welcome.
     </p>
     <div class="hero-cta fade-up" style="justify-content: center;">
-      <a class="btn btn-primary" href="<?= BASE ?>/docs/quickstart.php">
+      <a class="btn btn-primary" href="/voxctr/docs/quickstart.html">
         <span style="font-family:var(--mono)">⌃</span> Read the quickstart
       </a>
       <a class="btn btn-ghost" href="https://github.com/jrufer/voxctr" target="_blank">
@@ -810,7 +808,7 @@ $active_section = 'home';
   </div>
 </section>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
-<script src="<?= BASE ?>/js/landing.js"></script>
+<!--#include virtual="/voxctr/includes/footer.html" -->
+<script src="/voxctr/js/landing.js"></script>
 </body>
 </html>

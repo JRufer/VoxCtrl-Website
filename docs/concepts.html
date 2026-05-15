@@ -1,13 +1,11 @@
-<?php
-require_once __DIR__ . '/../includes/config.php';
-$page_title     = 'Core Concepts — VoxCtr Docs';
-$page_desc      = 'How VoxCtr models voice input, routing, and processing. Read this once and the rest of the docs make sense.';
-$active_section = 'docs';
-$active_doc     = 'concepts';
-?>
+<!--#set var="page_title" value="Core Concepts — VoxCtr Docs" -->
+<!--#set var="page_desc" value="How VoxCtr models voice input, routing, and processing. Read this once and the rest of the docs make sense." -->
+<!--#set var="active_section" value="docs" -->
+<!--#set var="active_doc" value="concepts" -->
+
 <!doctype html>
 <html lang="en">
-<?php include __DIR__ . '/../includes/head.php'; ?>
+<!--#include virtual="/voxctr/includes/head.html" -->
 <body>
 
 <div class="bg-stack">
@@ -17,10 +15,10 @@ $active_doc     = 'concepts';
   <div class="bg-noise"></div>
 </div>
 
-<?php include __DIR__ . '/../includes/nav.php'; ?>
+<!--#include virtual="/voxctr/includes/nav.html" -->
 
 <div class="docs-shell">
-  <?php include __DIR__ . '/../includes/docs-sidebar.php'; ?>
+  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">GETTING STARTED <span>/</span> CORE CONCEPTS</div>
@@ -48,15 +46,15 @@ $active_doc     = 'concepts';
     </ul>
 
     <div class="docs-foot">
-      <a href="install.php"><small>← previous</small><span>Installation</span></a>
-      <a href="hotkeys.php" style="text-align:right;"><small>next →</small><span>Hotkeys &amp; gestures</span></a>
+      <a href="install.html"><small>← previous</small><span>Installation</span></a>
+      <a href="hotkeys.html" style="text-align:right;"><small>next →</small><span>Hotkeys &amp; gestures</span></a>
     </div>
   </main>
 
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
-<script src="<?= BASE ?>/js/docs.js"></script>
+<!--#include virtual="/voxctr/includes/footer.html" -->
+<script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

@@ -73,7 +73,7 @@ setInterval(() => {
 document.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
-    window.location.href = '/docs/quickstart.php';
+    window.location.href = '/voxctr/docs/quickstart.html';
   }
 });
 
