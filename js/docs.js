@@ -1,3 +1,6 @@
+/* ─────────── activate docs layout ─────────── */
+document.querySelector('.docs-shell')?.classList.add('is-active');
+
 /* ─────────── copy buttons ─────────── */
 document.querySelectorAll('[data-copy]').forEach(b => {
   b.addEventListener('click', () => {
