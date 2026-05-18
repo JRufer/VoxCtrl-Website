@@ -3,8 +3,7 @@
    Sidebar, content, TOC, docs tables, navigation
    ═══════════════════════════════════════════════════════ */
 
-.docs-shell { display: none; }
-.docs-shell.is-active { display: grid; grid-template-columns: 248px 1fr 200px; gap: 32px; padding: 48px 0; }
+.docs-shell { display: grid; grid-template-columns: 248px 1fr 200px; gap: 32px; padding: 48px 0; }
 
 .landing-shell { display: block; }
 .landing-shell.is-hidden { display: none; }
