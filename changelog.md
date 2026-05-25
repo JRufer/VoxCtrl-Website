@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.2] - 2026-05-25
+
+feat: update frontend styles and rebuild application assets
+
+---
+
 ## [v0.1.1] - 2026-05-25
 
 Merge pull request #33 from JRufer/claude/friendly-mccarthy-M5ZUT
