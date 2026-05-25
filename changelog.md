@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.1.1] - 2026-05-25
+
+Merge pull request #33 from JRufer/claude/friendly-mccarthy-M5ZUT
+UI fixes: Routing hotkey layout, History screen styling, and history enable/disable setting
+
+---
+
 ## [v0.1.0] - 2026-05-24
 
 fix: prep the app for appimage release,
