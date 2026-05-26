@@ -1,10 +1,19 @@
-<!--#set var="page_title" value="Overlays — VoxCtr Docs" -->
-<!--#set var="active_section" value="docs" -->
-<!--#set var="active_doc" value="overlays" -->
-
 <!doctype html>
 <html lang="en">
-<!--#include virtual="/voxctr/includes/head.html" -->
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Overlays — VoxCtr Docs</title>
+<meta name="description" content="VoxCtr displays a transparent always-on-top HUD while recording. Four built-in styles." />
+<link rel="icon" href="/voxctr/assets/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/voxctr/css/base.css" />
+<link rel="stylesheet" href="/voxctr/css/components.css" />
+<link rel="stylesheet" href="/voxctr/css/docs.css" />
+<link rel="stylesheet" href="/voxctr/css/responsive.css" />
+</head>
 <body>
 
 <div class="bg-stack">
@@ -14,41 +23,104 @@
   <div class="bg-noise"></div>
 </div>
 
-<!--#include virtual="/voxctr/includes/nav.html" -->
+<nav class="nav">
+  <a class="nav-brand" href="/voxctr/">
+    <img src="/voxctr/assets/voxctr.gif" alt="VoxCtr" />
+    <span>vox<span class="v">ctr</span></span>
+    <span class="nav-version">v0.1.3</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="/voxctr/">Overview</a>
+    <a class="nav-link is-active" href="/voxctr/docs/quickstart.html">Documentation</a>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-tools">
+    <a class="btn-pill" id="gh-star" href="https://github.com/JRufer/VoxCtr" target="_blank" rel="noreferrer">
+      <span class="stars">&#9733;</span> <span id="gh-star-count">&#x2026;</span>
+    </a>
+  </div>
+</nav>
 
 <div class="docs-shell">
-  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
+  <aside class="docs-side">
+  <div class="group">
+    <span class="h">Getting started</span>
+    <a class="item" href="/voxctr/docs/quickstart.html"><span class="glyph">&#x2303;</span> Quickstart</a>
+    <a class="item" href="/voxctr/docs/install.html"><span class="glyph">&#x229E;</span> Installation</a>
+    <a class="item" href="/voxctr/docs/concepts.html"><span class="glyph">&#x25C7;</span> Core concepts</a>
+  </div>
+  <div class="group">
+    <span class="h">Input &amp; routing</span>
+    <a class="item" href="/voxctr/docs/hotkeys.html"><span class="glyph">&#x2341;</span> Hotkeys</a>
+    <a class="item" href="/voxctr/docs/routing.html"><span class="glyph">&#x22B3;</span> Routing &amp; targets</a>
+    <a class="item" href="/voxctr/docs/atspi.html"><span class="glyph">&#x2237;</span> AT-SPI2</a>
+    <a class="item" href="/voxctr/docs/codemode.html"><span class="glyph">&#x27E8;/&#x27E9;</span> Code mode</a>
+  </div>
+  <div class="group">
+    <span class="h">AI &amp; voice</span>
+    <a class="item" href="/voxctr/docs/ai.html"><span class="glyph">&#x2207;</span> AI processing</a>
+    <a class="item" href="/voxctr/docs/tts.html"><span class="glyph">&#x2295;</span> Voice output</a>
+    <a class="item is-active" href="/voxctr/docs/overlays.html"><span class="glyph">&#x2C6C;</span> Overlays</a>
+  </div>
+  <div class="group">
+    <span class="h">Integrations</span>
+    <a class="item" href="/voxctr/docs/mcp.html"><span class="glyph">&#x229E;</span> MCP server</a>
+    <a class="item" href="/voxctr/docs/dbus.html"><span class="glyph">&#x2234;</span> DBus control</a>
+  </div>
+  <div class="group">
+    <span class="h">Reference</span>
+    <a class="item" href="/voxctr/docs/config.html"><span class="glyph">&#x2261;</span> Configuration</a>
+    <a class="item" href="/voxctr/docs/architecture.html"><span class="glyph">&#x25A3;</span> Architecture</a>
+  </div>
+</aside>
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">AI &amp; VOICE <span>/</span> OVERLAYS</div>
     <h1>Overlays</h1>
-    <p class="lede">Three overlay styles ship by default. Drop a Python file into <code>~/.config/voxctr/overlays/</code> and you've made one.</p>
+    <p class="lede">VoxCtr displays a transparent always-on-top HUD while recording. Four built-in styles ship as Svelte 5 components. Switch between them in Settings → Visual tab.</p>
 
     <h2>Built-in styles</h2>
-    <ul>
-      <li><strong>Voice Card</strong> (default) — scrolling bar history with horizontal gradient and routing badge in the header</li>
-      <li><strong>Waveform</strong> — OpenGL oscilloscope rendering raw min/max envelope</li>
-      <li><strong>Pulse Circle</strong> — soft glowing circle that expands with RMS amplitude, 30fps with exponential decay</li>
-    </ul>
+    <table class="docs-table">
+      <thead><tr><th>Style</th><th>config value</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Blue Wave</strong> <em>(default)</em></td><td><code>blue_wave</code></td><td>Animated ocean waves that react to audio level in real time</td></tr>
+        <tr><td><strong>Voice Card</strong></td><td><code>voice_card</code></td><td>Bar-graph spectrum with 45 animated bars and a gradient fill</td></tr>
+        <tr><td><strong>Waveform</strong></td><td><code>waveform</code></td><td>48-bar oscilloscope-style display</td></tr>
+        <tr><td><strong>Pulse</strong></td><td><code>pulse</code></td><td>Pill-shaped overlay with animated concentric rings</td></tr>
+      </tbody>
+    </table>
+
+    <p>To disable the overlay entirely, set <code>ui.overlay_style = "none"</code> in <code>~/.config/voxctl/config.json</code> or toggle it off in Settings → Visual.</p>
+
+    <h2>Selecting a style</h2>
+    <p>Open Settings → Visual tab → Overlay Style dropdown. Changes take effect immediately — no restart required. The setting is written to <code>config.json</code> as <code>ui.overlay_style</code>.</p>
+
+    <pre class="code-inline">// config.json excerpt
+{
+  "ui": {
+    "show_overlay": true,
+    "overlay_style": "blue_wave"
+  }
+}</pre>
+
+    <p>Valid values: <code>"blue_wave"</code>, <code>"voice_card"</code>, <code>"waveform"</code>, <code>"pulse"</code>, <code>"none"</code>.</p>
 
     <h2>Routing indicator badge</h2>
-    <p>Every overlay shows a small label with the active target's human-readable name (Focused Window, Hermes Agent, Voice Journal). When you use multiple hotkeys to route to different destinations, the badge changes with each activation. The label comes from the <code>label</code> field on the active <code>OutputTarget</code>.</p>
+    <p>Every overlay shows a small label with the active target's human-readable name (e.g. "Focused Window", "Hermes Agent", "Voice Journal"). When you use multiple hotkeys to route to different destinations, the badge changes with each activation. The label comes from the <code>label</code> field on the active target definition in <code>targets.toml</code>.</p>
 
-    <h2>Custom overlays</h2>
-    <p>Drop a <code>.py</code> file into <code>~/.config/voxctr/overlays/</code>. Click <strong>Open Overlays Folder</strong> in Settings to go there directly. A <code>_template.py</code> starter is created automatically the first time you open the folder.</p>
+    <h2>How it works</h2>
+    <p>The overlay is a dedicated Tauri window (560×160 px, transparent background, always-on-top, click-through). It renders a Svelte component over whatever application is in focus. Mouse and keyboard events pass through to the underlying window.</p>
+    <p>Audio levels are forwarded from the Rust backend approximately every 50ms as RMS energy (0.0–1.0). Each overlay component uses this to drive its animation.</p>
+    <p>The overlay is shown automatically when recording starts and hidden when transcription completes, provided <code>ui.show_overlay = true</code>.</p>
 
-    <h3>Required structure</h3>
-    <ul>
-      <li><code>DISPLAY_NAME</code> — string shown in the dropdown</li>
-      <li><code>class OverlayUI(QWidget)</code> — the widget itself</li>
-      <li>Three methods: <code>update_audio(data)</code>, <code>show_mode(label)</code>, <code>hide_mode()</code></li>
-    </ul>
-    <div class="note"><span class="icon">ⓘ</span> Files whose names begin with <code>_</code> (e.g. <code>_template.py</code>) are ignored by the loader — use this convention for notes, drafts, or helper modules.</div>
-
-    <h3>The three methods</h3>
-    <p><code>update_audio(data)</code> — called from the audio thread every 20–60ms. <code>data</code> is a numpy float32 ndarray, ~1024 samples, ±32768 amplitude range. Don't draw here; store and call <code>QMetaObject.invokeMethod(self, "update", QueuedConnection)</code>.</p>
-    <p><code>show_mode(label)</code> — called on the Qt main thread when recording starts. <code>label</code> is the active target name (use it for your routing badge or ignore it).</p>
-    <p><code>hide_mode()</code> — called on the Qt main thread when recording stops.</p>
+    <h2>Configuration reference</h2>
+    <table class="docs-table">
+      <thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>ui.show_overlay</code></td><td>bool</td><td><code>true</code></td><td>Show/hide overlay on recording</td></tr>
+        <tr><td><code>ui.overlay_style</code></td><td>string</td><td><code>"blue_wave"</code></td><td>Active overlay style identifier</td></tr>
+      </tbody>
+    </table>
 
     <div class="docs-foot">
       <a href="tts.html"><small>← previous</small><span>Voice output</span></a>
@@ -59,7 +131,50 @@
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<!--#include virtual="/voxctr/includes/footer.html" -->
+<footer class="foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <img src="/voxctr/assets/voxctr.gif" alt="" style="width:32px;height:32px;border-radius:8px;"/>
+          <span style="font-weight:700;font-size:18px;">vox<span style="color:var(--cyan-1)">ctr</span></span>
+        </div>
+        <p style="color: var(--txt-2); font-size: 13px; margin-top: 12px; max-width: 280px; line-height: 1.6;">
+          The audio control layer for your AI and automation stack. Native, on-device, MIT-licensed.
+        </p>
+      </div>
+      <div>
+        <h6>Product</h6>
+        <a href="/voxctr/">Overview</a>
+        <a href="/voxctr/docs/quickstart.html">Quickstart</a>
+        <a href="/voxctr/docs/mcp.html">MCP server</a>
+        <a href="/voxctr/#hardware">Hardware</a>
+        <a href="/voxctr/#backends">Backends</a>
+      </div>
+      <div>
+        <h6>Docs</h6>
+        <a href="/voxctr/docs/install.html">Installation</a>
+        <a href="/voxctr/docs/routing.html">Routing</a>
+        <a href="/voxctr/docs/atspi.html">AT-SPI2</a>
+        <a href="/voxctr/docs/overlays.html">Overlays</a>
+      </div>
+      <div>
+        <h6>Open source</h6>
+        <a href="https://github.com/jrufer/voxctr" target="_blank">GitHub</a>
+        <a href="https://github.com/jrufer/voxctr/releases" target="_blank">Releases</a>
+        <a href="https://github.com/jrufer/voxctr/issues" target="_blank">Issues</a>
+        <a href="https://github.com/jrufer/voxctr/blob/main/LICENSE" target="_blank">MIT License</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="left">
+        <img src="/voxctr/assets/favicon.png" alt="" />
+        <span>voxctr &middot; v0.1.3 &middot; linux &amp; windows</span>
+      </div>
+      <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device only</div>
+    </div>
+  </div>
+</footer>
 <script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

@@ -1,11 +1,19 @@
-<!--#set var="page_title" value="Routing & Targets — VoxCtr Docs" -->
-<!--#set var="page_desc" value="Targets are named output destinations. Bindings tell VoxCtr which target each hotkey should route to." -->
-<!--#set var="active_section" value="docs" -->
-<!--#set var="active_doc" value="routing" -->
-
 <!doctype html>
 <html lang="en">
-<!--#include virtual="/voxctr/includes/head.html" -->
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Routing & Targets — VoxCtr Docs</title>
+<meta name="description" content="Targets are named output destinations. Bindings tell VoxCtr which target each hotkey should route to." />
+<link rel="icon" href="/voxctr/assets/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/voxctr/css/base.css" />
+<link rel="stylesheet" href="/voxctr/css/components.css" />
+<link rel="stylesheet" href="/voxctr/css/docs.css" />
+<link rel="stylesheet" href="/voxctr/css/responsive.css" />
+</head>
 <body>
 
 <div class="bg-stack">
@@ -15,10 +23,56 @@
   <div class="bg-noise"></div>
 </div>
 
-<!--#include virtual="/voxctr/includes/nav.html" -->
+<nav class="nav">
+  <a class="nav-brand" href="/voxctr/">
+    <img src="/voxctr/assets/voxctr.gif" alt="VoxCtr" />
+    <span>vox<span class="v">ctr</span></span>
+    <span class="nav-version">v0.1.3</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="/voxctr/">Overview</a>
+    <a class="nav-link is-active" href="/voxctr/docs/quickstart.html">Documentation</a>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-tools">
+    <a class="btn-pill" id="gh-star" href="https://github.com/JRufer/VoxCtr" target="_blank" rel="noreferrer">
+      <span class="stars">&#9733;</span> <span id="gh-star-count">&#x2026;</span>
+    </a>
+  </div>
+</nav>
 
 <div class="docs-shell">
-  <!--#include virtual="/voxctr/includes/docs-sidebar.html" -->
+  <aside class="docs-side">
+  <div class="group">
+    <span class="h">Getting started</span>
+    <a class="item" href="/voxctr/docs/quickstart.html"><span class="glyph">&#x2303;</span> Quickstart</a>
+    <a class="item" href="/voxctr/docs/install.html"><span class="glyph">&#x229E;</span> Installation</a>
+    <a class="item" href="/voxctr/docs/concepts.html"><span class="glyph">&#x25C7;</span> Core concepts</a>
+  </div>
+  <div class="group">
+    <span class="h">Input &amp; routing</span>
+    <a class="item" href="/voxctr/docs/hotkeys.html"><span class="glyph">&#x2341;</span> Hotkeys</a>
+    <a class="item is-active" href="/voxctr/docs/routing.html"><span class="glyph">&#x22B3;</span> Routing &amp; targets</a>
+    <a class="item" href="/voxctr/docs/atspi.html"><span class="glyph">&#x2237;</span> AT-SPI2</a>
+    <a class="item" href="/voxctr/docs/codemode.html"><span class="glyph">&#x27E8;/&#x27E9;</span> Code mode</a>
+  </div>
+  <div class="group">
+    <span class="h">AI &amp; voice</span>
+    <a class="item" href="/voxctr/docs/ai.html"><span class="glyph">&#x2207;</span> AI processing</a>
+    <a class="item" href="/voxctr/docs/tts.html"><span class="glyph">&#x2295;</span> Voice output</a>
+    <a class="item" href="/voxctr/docs/overlays.html"><span class="glyph">&#x2C6C;</span> Overlays</a>
+  </div>
+  <div class="group">
+    <span class="h">Integrations</span>
+    <a class="item" href="/voxctr/docs/mcp.html"><span class="glyph">&#x229E;</span> MCP server</a>
+    <a class="item" href="/voxctr/docs/dbus.html"><span class="glyph">&#x2234;</span> DBus control</a>
+  </div>
+  <div class="group">
+    <span class="h">Reference</span>
+    <a class="item" href="/voxctr/docs/config.html"><span class="glyph">&#x2261;</span> Configuration</a>
+    <a class="item" href="/voxctr/docs/architecture.html"><span class="glyph">&#x25A3;</span> Architecture</a>
+  </div>
+</aside>
 
   <main class="docs-content" id="docsContent">
     <div class="crumbs">INPUT &amp; ROUTING <span>/</span> ROUTING</div>
@@ -29,43 +83,51 @@
     <table class="docs-table">
       <thead><tr><th>Type</th><th>Mechanism</th><th>Use for</th></tr></thead>
       <tbody>
-        <tr><td>inject</td><td>at-spi2 → wtype → xdotool</td><td>Default dictation</td></tr>
-        <tr><td>clipboard</td><td>wl-copy / xclip</td><td>Copy for manual paste</td></tr>
-        <tr><td>exec</td><td>subprocess shell=False</td><td>CLI agents, llm, claude-cli</td></tr>
+        <tr><td>inject</td><td>AT-SPI2 → wtype → xdotool</td><td>Default dictation into focused window</td></tr>
+        <tr><td>clipboard</td><td>wl-copy / xclip (Linux), Win32 clipboard (Windows)</td><td>Copy for manual paste</td></tr>
+        <tr><td>exec</td><td>subprocess, shell=false</td><td>CLI agents, one-shot commands</td></tr>
         <tr><td>pipe</td><td>FIFO write O_NONBLOCK</td><td>Persistent agent processes</td></tr>
-        <tr><td>socket</td><td>TCP / Unix domain</td><td>Remote / containerised agents</td></tr>
-        <tr><td>file</td><td>append + timestamp</td><td>Voice journal, meeting notes</td></tr>
-        <tr><td>dbus</td><td>signal emission</td><td>Waybar, Rofi, automation</td></tr>
+        <tr><td>socket</td><td>TCP / Unix domain</td><td>Remote or containerised agents</td></tr>
+        <tr><td>file</td><td>append + optional timestamp</td><td>Voice journal, meeting notes</td></tr>
+        <tr><td>dbus</td><td>signal emission</td><td>Waybar, Rofi, desktop automation</td></tr>
+        <tr><td>http</td><td>HTTP POST request</td><td>Webhooks, REST APIs</td></tr>
+        <tr><td>webhook</td><td>HTTP POST with custom headers</td><td>Authenticated webhooks, n8n, Zapier</td></tr>
       </tbody>
     </table>
 
-    <h2>Post-processing modes</h2>
-    <ul>
-      <li><code>default</code> — full pipeline: snippets, spoken punctuation, Ollama rewrite</li>
-      <li><code>none</code> — raw Whisper output (best for agents)</li>
-      <li><code>strip_fillers</code> — remove um/uh/hmm only</li>
-      <li><code>snippets_only</code> — expand snippets, no rewriting</li>
-      <li><code>ollama_only</code> — skip snippets, run Ollama rewrite only</li>
-    </ul>
-    <div class="note warn"><span class="icon">!</span> Agent targets (<code>exec</code>, <code>pipe</code>, <code>socket</code>) should almost always use <code>post_processing = "none"</code> or <code>"strip_fillers"</code>. Rewriting alters command semantics.</div>
+    <h2>Post-processing pipeline</h2>
+    <p>The following steps are applied in order after Whisper transcription, configurable per target:</p>
+    <ol>
+      <li>Filler word removal (um, uh, hmm, er, ah, ugh, mhm)</li>
+      <li>Spoken punctuation ("period" → ., "comma" → ,, 20+ mappings)</li>
+      <li>Auto-format lists (first/second/third ordinals → numbered list)</li>
+      <li>Snippet expansion (custom shorthand → full text)</li>
+      <li>Custom vocabulary fuzzy correction (Levenshtein)</li>
+      <li>Code mode (camelCase, spoken operators)</li>
+      <li>Optional Ollama LLM rewrite (clean/formal/casual/bullet/concise/custom)</li>
+    </ol>
+    <div class="note warn"><span class="icon">!</span> Agent targets (<code>exec</code>, <code>pipe</code>, <code>socket</code>) should almost always use <code>remove_fillers = true</code> and <code>spoken_punctuation = false</code>. Rewriting alters command semantics.</div>
 
     <h2>Common patterns</h2>
     <h3>Agent command pipe</h3>
     <p>Send voice commands to a CLI agent via FIFO. Strip fillers so the agent gets clean input. Use <code>response_pipe</code> to stream replies back as TTS.</p>
     <h3>Voice journal</h3>
-    <p>Append timestamped entries to a markdown file. Use Ollama to format each utterance as a concise note. Set <code>file_prefix = "- "</code> for bullets.</p>
+    <p>Append timestamped entries to a markdown file. Use Ollama to format each utterance as a concise note.</p>
     <h3>Shell command execution</h3>
-    <p>Use <code>delivery = "exec"</code> with <code>command = "claude --print {TEXT}"</code>. The <code>{TEXT}</code> placeholder is substituted as a literal argument with <code>shell=False</code> to prevent injection.</p>
+    <p>Use <code>delivery = "exec"</code> with a command template. The transcript is passed as a literal argument with <code>shell=false</code> to prevent injection.</p>
     <h3>TCP socket to remote agent</h3>
     <p>Forward transcripts over TCP for distributed or containerised setups. Set <code>socket_host</code> and <code>socket_port</code>; VoxCtr opens a connection per utterance.</p>
+    <h3>HTTP / webhook delivery</h3>
+    <p>Use <code>delivery = "http"</code> for a simple POST, or <code>delivery = "webhook"</code> to attach custom headers (e.g. <code>Authorization: Bearer …</code>). The transcript is sent as the request body.</p>
 
     <h2>Config file locations</h2>
     <ul>
-      <li><code>~/.config/voxctr/config.json</code> — global settings (managed by Settings UI)</li>
-      <li><code>~/.config/voxctr/targets.toml</code> — output target definitions</li>
-      <li><code>~/.config/voxctr/bindings.toml</code> — hotkey → target bindings</li>
-      <li><code>~/.config/voxctr/backups/</code> — auto-backups, last 20 kept</li>
+      <li><code>~/.config/voxctl/config.json</code> — global settings (managed by Settings UI)</li>
+      <li><code>~/.config/voxctl/targets.toml</code> — output target definitions</li>
+      <li><code>~/.config/voxctl/bindings.toml</code> — hotkey → target bindings</li>
+      <li><code>~/.config/voxctl/backups/</code> — auto-backups, last 20 kept</li>
     </ul>
+    <div class="note"><span class="icon">ⓘ</span> All three config files are hot-reloaded on save — no restart required.</div>
 
     <div class="docs-foot">
       <a href="hotkeys.html"><small>← previous</small><span>Hotkeys &amp; gestures</span></a>
@@ -76,7 +138,50 @@
   <aside class="docs-toc" id="docsToc"></aside>
 </div>
 
-<!--#include virtual="/voxctr/includes/footer.html" -->
+<footer class="foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <img src="/voxctr/assets/voxctr.gif" alt="" style="width:32px;height:32px;border-radius:8px;"/>
+          <span style="font-weight:700;font-size:18px;">vox<span style="color:var(--cyan-1)">ctr</span></span>
+        </div>
+        <p style="color: var(--txt-2); font-size: 13px; margin-top: 12px; max-width: 280px; line-height: 1.6;">
+          The audio control layer for your AI and automation stack. Native, on-device, MIT-licensed.
+        </p>
+      </div>
+      <div>
+        <h6>Product</h6>
+        <a href="/voxctr/">Overview</a>
+        <a href="/voxctr/docs/quickstart.html">Quickstart</a>
+        <a href="/voxctr/docs/mcp.html">MCP server</a>
+        <a href="/voxctr/#hardware">Hardware</a>
+        <a href="/voxctr/#backends">Backends</a>
+      </div>
+      <div>
+        <h6>Docs</h6>
+        <a href="/voxctr/docs/install.html">Installation</a>
+        <a href="/voxctr/docs/routing.html">Routing</a>
+        <a href="/voxctr/docs/atspi.html">AT-SPI2</a>
+        <a href="/voxctr/docs/overlays.html">Overlays</a>
+      </div>
+      <div>
+        <h6>Open source</h6>
+        <a href="https://github.com/jrufer/voxctr" target="_blank">GitHub</a>
+        <a href="https://github.com/jrufer/voxctr/releases" target="_blank">Releases</a>
+        <a href="https://github.com/jrufer/voxctr/issues" target="_blank">Issues</a>
+        <a href="https://github.com/jrufer/voxctr/blob/main/LICENSE" target="_blank">MIT License</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="left">
+        <img src="/voxctr/assets/favicon.png" alt="" />
+        <span>voxctr &middot; v0.1.3 &middot; linux &amp; windows</span>
+      </div>
+      <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device only</div>
+    </div>
+  </div>
+</footer>
 <script src="/voxctr/js/docs.js"></script>
 </body>
 </html>

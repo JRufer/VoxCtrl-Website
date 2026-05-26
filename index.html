@@ -1,10 +1,19 @@
-<!--#set var="page_title" value="VoxCtr — the audio control layer for your AI stack" -->
-<!--#set var="page_desc" value="VoxCtr is a programmable voice broker for Linux. 100% on-device Whisper transcription, per-target routing, MCP server, and neural TTS. MIT licensed." -->
-<!--#set var="active_section" value="home" -->
-
 <!doctype html>
 <html lang="en">
-<!--#include virtual="/voxctr/includes/head.html" -->
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>VoxCtr — the audio control layer for your AI stack</title>
+<meta name="description" content="VoxCtr is a programmable voice broker for Linux and Windows. 100% on-device Whisper transcription, per-target routing, MCP server, and neural TTS. MIT licensed." />
+<link rel="icon" href="/voxctr/assets/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/voxctr/css/base.css" />
+<link rel="stylesheet" href="/voxctr/css/components.css" />
+<link rel="stylesheet" href="/voxctr/css/docs.css" />
+<link rel="stylesheet" href="/voxctr/css/responsive.css" />
+</head>
 <body>
 
 <div class="bg-stack">
@@ -14,7 +23,23 @@
   <div class="bg-noise"></div>
 </div>
 
-<!--#include virtual="/voxctr/includes/nav.html" -->
+<nav class="nav">
+  <a class="nav-brand" href="/voxctr/">
+    <img src="/voxctr/assets/voxctr.gif" alt="VoxCtr" />
+    <span>vox<span class="v">ctr</span></span>
+    <span class="nav-version">v0.1.3</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link is-active" href="/voxctr/">Overview</a>
+    <a class="nav-link" href="/voxctr/docs/quickstart.html">Documentation</a>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-tools">
+    <a class="btn-pill" id="gh-star" href="https://github.com/JRufer/VoxCtr" target="_blank" rel="noreferrer">
+      <span class="stars">&#9733;</span> <span id="gh-star-count">&#x2026;</span>
+    </a>
+  </div>
+</nav>
 
 <!-- ── HERO ── -->
 <section class="section hero">
@@ -31,7 +56,7 @@
           Speak to <span class="accent-gold">anything</span> on your machine.
         </h1>
         <p class="lead fade-up">
-          VoxCtr is a programmable voice broker for Linux that runs <strong style="color:var(--txt-0)">100% on your device</strong>. Whisper transcribes locally, your own models do the processing, and not a single byte of audio leaves your machine. Your words. Your hardware. Your control.
+          VoxCtr is a programmable voice broker for Linux and Windows that runs <strong style="color:var(--txt-0)">100% on your device</strong>. Whisper transcribes locally, your own models do the processing, and not a single byte of audio leaves your machine. Your words. Your hardware. Your control.
         </p>
         <div class="hero-cta fade-up">
           <a class="btn btn-primary" href="/voxctr/docs/quickstart.html">
@@ -43,8 +68,8 @@
         </div>
         <div class="install-strip fade-up">
           <span class="prompt">$</span>
-          <span class="cmd">curl -fsSL <span class="arg">voxctr.dev/install.sh</span> | bash</span>
-          <button class="copy-btn" data-copy="curl -fsSL voxctr.dev/install.sh | bash">⎘ copy</button>
+          <span class="cmd">chmod +x <span class="arg">VoxCtr.AppImage</span> &amp;&amp; ./VoxCtr.AppImage</span>
+          <button class="copy-btn" data-copy="chmod +x VoxCtr.AppImage && ./VoxCtr.AppImage">⎘ copy</button>
         </div>
       </div>
 
@@ -128,8 +153,8 @@
 
     <div class="metrics fade-up" style="margin-top: 48px;">
       <div class="metric"><div class="v">∞</div><div class="l">Output Targets</div></div>
-      <div class="metric"><div class="v">7</div><div class="l">Delivery Types</div></div>
-      <div class="metric"><div class="v">3</div><div class="l">GPU Backends</div></div>
+      <div class="metric"><div class="v">9</div><div class="l">Delivery Types</div></div>
+      <div class="metric"><div class="v">2</div><div class="l">Inference Backends</div></div>
       <div class="metric"><div class="v">280+</div><div class="l">Tests Passing</div></div>
     </div>
   </div>
@@ -186,8 +211,8 @@
           </div>
           <div class="pl-block">
             <div class="head"><b>↯ CAPTURE</b><span>vad</span></div>
-            <div class="row"><span>PyAudio</span><code>16kHz mono</code></div>
-            <div class="row"><span>Silero VAD</span><code>silence ⟶ stop</code></div>
+            <div class="row"><span>CPAL</span><code>16kHz mono</code></div>
+            <div class="row"><span>RMS gate</span><code>silence ⟶ stop</code></div>
           </div>
         </div>
 
@@ -201,9 +226,9 @@
         <div class="pl-col">
           <div class="pl-block">
             <div class="head"><b>∇ TRANSCRIBE</b><span>auto-select</span></div>
-            <div class="row"><span>NVIDIA</span><code>faster-whisper</code></div>
+            <div class="row"><span>NVIDIA</span><code>whisper.cpp + cuda</code></div>
             <div class="row"><span>AMD/Intel</span><code>whisper.cpp + vulkan</code></div>
-            <div class="row"><span>CPU</span><code>faster-whisper int8</code></div>
+            <div class="row"><span>CPU</span><code>whisper.cpp int8</code></div>
             <div class="row"><span>Edge / Pi</span><code>moonshine</code></div>
             <div class="row"><span>Context prime</span><code>at-spi2 → 300ch</code></div>
           </div>
@@ -225,14 +250,16 @@
 
         <div class="pl-col">
           <div class="pl-block">
-            <div class="head"><b>⊳ ROUTE</b><span>7 types</span></div>
+            <div class="head"><b>⊳ ROUTE</b><span>9 types</span></div>
             <div class="row"><span>inject</span><code>at-spi2</code></div>
             <div class="row"><span>clipboard</span><code>wl-copy</code></div>
-            <div class="row"><span>exec</span><code>shell=False</code></div>
+            <div class="row"><span>exec</span><code>shell=false</code></div>
             <div class="row"><span>pipe</span><code>FIFO</code></div>
             <div class="row"><span>socket</span><code>tcp / unix</code></div>
             <div class="row"><span>file</span><code>append</code></div>
             <div class="row"><span>dbus</span><code>signal</code></div>
+            <div class="row"><span>http</span><code>POST</code></div>
+            <div class="row"><span>webhook</span><code>POST + headers</code></div>
           </div>
           <div class="pl-block" style="background: linear-gradient(180deg, rgba(34,212,239,0.06), transparent);">
             <div class="head"><b>↺ RESPOND</b><span>loop</span></div>
@@ -259,7 +286,7 @@
         <span class="corner">01</span>
         <span class="glyph">⌁</span>
         <h3 class="h-card">Global hotkeys</h3>
-        <p class="desc">evdev-based input listener works under Wayland and X11. Hold, toggle, or double-tap modes — each gesture mapped to a different output.</p>
+        <p class="desc">evdev-based input listener on Linux (Wayland + X11) and Win32 hooks on Windows. Hold, toggle, or double-tap modes — each gesture mapped to a different output.</p>
         <ul>
           <li>Conflict detection at bind time</li>
           <li>Bare-key bindings &amp; modifier chords</li>
@@ -269,12 +296,12 @@
       <div class="card" style="border-color: rgba(34,212,239,0.35); background: linear-gradient(180deg, rgba(34,212,239,0.04), transparent 60%), var(--bg-1);">
         <span class="corner">02</span>
         <span class="glyph">∇</span>
-        <h3 class="h-card">Three transcription backends</h3>
-        <p class="desc">faster-whisper for CUDA, whisper.cpp + Vulkan for AMD/Intel, Moonshine for edge and low-latency streaming. The right backend is selected by GPU probe at startup.</p>
+        <h3 class="h-card">GPU-accelerated Whisper inference</h3>
+        <p class="desc">whisper.cpp runs on CUDA (NVIDIA), Vulkan (AMD/Intel), and CPU. Moonshine (ONNX) is available for streaming and edge devices. The right backend is selected by GPU probe at startup.</p>
         <ul>
-          <li>fp16 / int8 / ONNX quantization</li>
-          <li>Moonshine: &lt;200ms streaming on CPU</li>
-          <li>Override anytime in Settings</li>
+          <li>CUDA fp16 on NVIDIA, Vulkan on AMD/Intel</li>
+          <li>Moonshine: streaming, low-latency on CPU</li>
+          <li>Override anytime in Settings → Engine</li>
         </ul>
       </div>
       <div class="card">
@@ -292,7 +319,7 @@
         <span class="corner">04</span>
         <span class="glyph">⊞</span>
         <h3 class="h-card">MCP server, built-in</h3>
-        <p class="desc">Voxctr ships a Model Context Protocol server. Any MCP-capable agent can drive your mic and speak through your speakers.</p>
+        <p class="desc">VoxCtr ships a Model Context Protocol server. Any MCP-capable agent can drive your mic and speak through your speakers.</p>
         <ul>
           <li><code style="color:var(--cyan-1);font-family:var(--mono)">transcribe_voice</code> · <code style="color:var(--cyan-1);font-family:var(--mono)">speak_text</code> · <code style="color:var(--cyan-1);font-family:var(--mono)">get_status</code></li>
           <li>One-click Claude Desktop registration</li>
@@ -303,9 +330,9 @@
         <span class="corner">05</span>
         <span class="glyph">⊕</span>
         <h3 class="h-card">Neural TTS &amp; loopback</h3>
-        <p class="desc">Piper for high-quality on-device speech. Per-target response_pipe FIFOs let agents stream answers back as audio.</p>
+        <p class="desc">Piper (ONNX neural voices) for high-quality on-device speech, with espeak-ng as fallback. Per-target response_pipe FIFOs let agents stream answers back as audio.</p>
         <ul>
-          <li>8 curated voices, in-app downloads</li>
+          <li>~11 English voices, in-app downloads</li>
           <li>Configurable global stop key</li>
           <li>Teal response overlay</li>
         </ul>
@@ -313,12 +340,12 @@
       <div class="card">
         <span class="corner">06</span>
         <span class="glyph">⌬</span>
-        <h3 class="h-card">Swappable overlays</h3>
-        <p class="desc">Drop a Python file into <code style="color:var(--cyan-1);font-family:var(--mono)">~/.config/voxctl/overlays/</code> and you've made one. Routing badge included.</p>
+        <h3 class="h-card">Four built-in overlay styles</h3>
+        <p class="desc">Blue Wave, Voice Card, Waveform, and Pulse — all Svelte 5 components bundled with the app. Select in Settings → Visual tab. Routing badge included.</p>
         <ul>
-          <li>3 styles ship: Voice Card, Waveform, Pulse</li>
-          <li>30 fps QPainter / OpenGL hosts</li>
-          <li>Hot-reload on save</li>
+          <li>Blue Wave (default) — animated ocean waves, reacts to audio level</li>
+          <li>Voice Card — 45-bar spectrum · Waveform — 48-bar oscilloscope</li>
+          <li>Pulse — pill-shaped with animated rings</li>
         </ul>
       </div>
     </div>
@@ -351,28 +378,23 @@
         <ul style="list-style: none; padding: 0; margin-top: 18px; display: flex; flex-direction: column; gap: 10px;">
           <li style="display:flex;gap:12px;align-items:baseline; font-size: 13.5px;"><span style="color:var(--cyan-1);font-family:var(--mono)">»</span><span>"function handle user login" → <code style="color:var(--cyan-1);font-family:var(--mono);background:rgba(34,212,239,0.06);padding:1px 6px;border-radius:4px;">handleUserLogin()</code></span></li>
           <li style="display:flex;gap:12px;align-items:baseline; font-size: 13.5px;"><span style="color:var(--cyan-1);font-family:var(--mono)">»</span><span>"constant max retries" → <code style="color:var(--cyan-1);font-family:var(--mono);background:rgba(34,212,239,0.06);padding:1px 6px;border-radius:4px;">MAX_RETRIES</code></span></li>
-          <li style="display:flex;gap:12px;align-items:baseline; font-size: 13.5px;"><span style="color:var(--cyan-1);font-family:var(--mono)">»</span><span>Reads 300 chars before cursor as Whisper prompt</span></li>
+          <li style="display:flex;gap:12px;align-items:baseline; font-size: 13.5px;"><span style="color:var(--cyan-1);font-family:var(--mono)">»</span><span>Reads surrounding text as Whisper initial prompt via AT-SPI2</span></li>
           <li style="display:flex;gap:12px;align-items:baseline; font-size: 13.5px;"><span style="color:var(--cyan-1);font-family:var(--mono)">»</span><span>Direct insertion via AT-SPI2 — no keypress simulation</span></li>
         </ul>
       </div>
       <div class="code">
-        <div class="head"><span class="lang">~/.config/voxctr/targets.toml</span><button class="copy" data-copy="">⎘</button></div>
-<pre><span class="c"># IDE target — uses code mode and reads cursor context</span>
+        <div class="head"><span class="lang">~/.config/voxctl/targets.toml</span><button class="copy" data-copy="">⎘</button></div>
+<pre><span class="c"># IDE target — code mode + AT-SPI2 context</span>
 [[<span class="t">target</span>]]
-<span class="k">id</span>              = <span class="s">"editor"</span>
-<span class="k">label</span>           = <span class="s">"Code Editor"</span>
-<span class="k">delivery</span>        = <span class="s">"inject"</span>
-<span class="k">post_processing</span> = <span class="s">"snippets_only"</span>
+<span class="k">id</span>       = <span class="s">"editor"</span>
+<span class="k">label</span>    = <span class="s">"Code Editor"</span>
+<span class="k">delivery</span> = <span class="s">"inject"</span>
 
-[<span class="t">target.code_mode</span>]
-<span class="k">camel_case</span>      = <span class="n">true</span>
-<span class="k">snake_case</span>      = <span class="n">false</span>
-<span class="k">auto_punctuate</span>  = <span class="n">false</span>
-<span class="k">context_chars</span>   = <span class="n">300</span>
-
-[<span class="t">target.atspi</span>]
-<span class="k">injection</span>       = <span class="n">true</span>
-<span class="k">auto_code_mode</span>  = <span class="n">true</span></pre>
+[<span class="t">editor.processing</span>]
+<span class="k">code_mode</span>    = <span class="n">true</span>
+<span class="k">atspi_context</span> = <span class="n">true</span>
+<span class="k">remove_fillers</span> = <span class="n">true</span>
+<span class="k">spoken_punctuation</span> = <span class="n">false</span></pre>
       </div>
     </div>
 
@@ -380,7 +402,7 @@
       <div>
         <h3 class="h-card" style="font-size: 22px; margin-bottom: 14px;">AI agent voice backend</h3>
         <p class="muted" style="font-size:14.5px; line-height:1.65;">
-          Pipe your voice into any CLI agent — Hermes, llm, claude-cli — through a named FIFO.
+          Pipe your voice into any CLI agent through a named FIFO.
           The agent's response can stream back through <code style="color:var(--cyan-1);font-family:var(--mono);background:rgba(34,212,239,0.06);padding:1px 6px;border-radius:4px;">response_pipe</code> and be spoken
           aloud automatically.
         </p>
@@ -392,7 +414,7 @@
         </ul>
       </div>
       <div class="code">
-        <div class="head"><span class="lang">~/.config/voxctr/targets.toml</span><button class="copy" data-copy="">⎘</button></div>
+        <div class="head"><span class="lang">~/.config/voxctl/targets.toml</span><button class="copy" data-copy="">⎘</button></div>
 <pre><span class="c"># bidirectional voice ⇄ agent</span>
 [[<span class="t">target</span>]]
 <span class="k">id</span>              = <span class="s">"hermes"</span>
@@ -400,8 +422,11 @@
 <span class="k">delivery</span>        = <span class="s">"pipe"</span>
 <span class="k">pipe_path</span>       = <span class="s">"/tmp/hermes.in"</span>
 <span class="k">response_pipe</span>   = <span class="s">"/tmp/hermes.out"</span>
-<span class="k">post_processing</span> = <span class="s">"strip_fillers"</span>
 <span class="k">append_newline</span>  = <span class="n">true</span>
+
+[<span class="t">hermes.processing</span>]
+<span class="k">remove_fillers</span>      = <span class="n">true</span>
+<span class="k">spoken_punctuation</span>  = <span class="n">false</span>
 
 <span class="c"># shell-side</span>
 <span class="c"># mkfifo /tmp/hermes.in /tmp/hermes.out</span>
@@ -425,25 +450,28 @@
         </ul>
       </div>
       <div class="code">
-        <div class="head"><span class="lang">~/.config/voxctr/bindings.toml</span><button class="copy" data-copy="">⎘</button></div>
+        <div class="head"><span class="lang">~/.config/voxctl/bindings.toml</span><button class="copy" data-copy="">⎘</button></div>
 <pre>[[<span class="t">binding</span>]]
-<span class="k">id</span>      = <span class="s">"dictate_hold"</span>
-<span class="k">keys</span>    = [<span class="s">"KEY_LEFTMETA"</span>, <span class="s">"KEY_SPACE"</span>]
-<span class="k">gesture</span> = <span class="s">"hold"</span>
-<span class="k">target_id</span> = <span class="s">"default"</span>
+<span class="k">id</span>        = <span class="s">"dictate_hold"</span>
+<span class="k">label</span>     = <span class="s">"Dictate (Hold)"</span>
+<span class="k">keys</span>      = [<span class="s">"KEY_LEFTMETA"</span>, <span class="s">"KEY_SPACE"</span>]
+<span class="k">gesture</span>   = <span class="s">"hold"</span>
+<span class="k">target_ids</span> = [<span class="s">"default"</span>]
 
 [[<span class="t">binding</span>]]
-<span class="k">id</span>      = <span class="s">"agent_command"</span>
-<span class="k">keys</span>    = [<span class="s">"KEY_LEFTCTRL"</span>]
-<span class="k">gesture</span> = <span class="s">"double_tap"</span>
-<span class="k">target_id</span> = <span class="s">"hermes"</span>
-<span class="k">tap_ms</span>  = <span class="n">280</span>
+<span class="k">id</span>        = <span class="s">"agent_command"</span>
+<span class="k">label</span>     = <span class="s">"Agent (Double-tap)"</span>
+<span class="k">keys</span>      = [<span class="s">"KEY_LEFTCTRL"</span>]
+<span class="k">gesture</span>   = <span class="s">"double_tap"</span>
+<span class="k">target_ids</span> = [<span class="s">"hermes"</span>]
+<span class="k">tap_ms</span>    = <span class="n">250</span>
 
 [[<span class="t">binding</span>]]
-<span class="k">id</span>      = <span class="s">"journal_capture"</span>
-<span class="k">keys</span>    = [<span class="s">"KEY_LEFTMETA"</span>, <span class="s">"KEY_J"</span>]
-<span class="k">gesture</span> = <span class="s">"hold"</span>
-<span class="k">target_id</span> = <span class="s">"journal"</span></pre>
+<span class="k">id</span>        = <span class="s">"journal_capture"</span>
+<span class="k">label</span>     = <span class="s">"Journal (Hold)"</span>
+<span class="k">keys</span>      = [<span class="s">"KEY_LEFTMETA"</span>, <span class="s">"KEY_J"</span>]
+<span class="k">gesture</span>   = <span class="s">"hold"</span>
+<span class="k">target_ids</span> = [<span class="s">"journal"</span>]</pre>
       </div>
     </div>
   </div>
@@ -544,7 +572,7 @@
       <span class="k">"command"</span>: <span class="s">"socat"</span>,
       <span class="k">"args"</span>: [
         <span class="s">"STDIO"</span>,
-        <span class="s">"UNIX-CONNECT:/tmp/voxctr-mcp.sock"</span>
+        <span class="s">"UNIX-CONNECT:/tmp/voxctl-mcp.sock"</span>
       ]
     }
   }
@@ -558,7 +586,7 @@
 <section class="section section-bordered">
   <div class="shell">
     <span class="eyebrow fade-up">// overlays</span>
-    <h2 class="h-section fade-up">Three overlays out of the box. Drop in your own in 50 lines.</h2>
+    <h2 class="h-section fade-up">Four overlay styles built-in. Switch instantly from Settings.</h2>
     <p class="lead fade-up" style="margin-bottom: 28px;">
       Every overlay shows the routing indicator badge — so you always know where your speech is going,
       before you say a word.
@@ -566,31 +594,41 @@
 
     <div class="overlays-row fade-up">
       <div class="overlay-card featured">
-        <div class="frame"><img src="/voxctr/assets/voice_overlay.gif" alt="Voice Card overlay" /></div>
+        <div class="frame"><img src="/voxctr/assets/ocean_wave.png" alt="Blue Wave overlay (default)" /></div>
         <div class="body">
           <div>
-            <div class="name">Voice Card</div>
-            <div class="meta">scrolling bars · gradient</div>
+            <div class="name">Blue Wave</div>
+            <div class="meta">default · animated waves</div>
           </div>
           <span style="font-family:var(--mono); color: var(--cyan-1); font-size: 14px;">⊟</span>
         </div>
       </div>
       <div class="overlay-card">
-        <div class="frame"><img src="/voxctr/assets/box_overlay.gif" alt="Waveform overlay" /></div>
+        <div class="frame"><img src="/voxctr/assets/voice_card.png" alt="Voice Card overlay" /></div>
+        <div class="body">
+          <div>
+            <div class="name">Voice Card</div>
+            <div class="meta">bar-graph spectrum</div>
+          </div>
+          <span style="font-family:var(--mono); color: var(--cyan-1); font-size: 14px;">⊟</span>
+        </div>
+      </div>
+      <div class="overlay-card">
+        <div class="frame"><img src="/voxctr/assets/waveform.png" alt="Waveform overlay" /></div>
         <div class="body">
           <div>
             <div class="name">Waveform</div>
-            <div class="meta">opengl oscilloscope</div>
+            <div class="meta">48-bar oscilloscope</div>
           </div>
           <span style="font-family:var(--mono); color: var(--cyan-1); font-size: 14px;">⌇</span>
         </div>
       </div>
       <div class="overlay-card">
-        <div class="frame"><img src="/voxctr/assets/dot_overlay.gif" alt="Pulse Circle overlay" /></div>
+        <div class="frame"><img src="/voxctr/assets/pulse_ring.png" alt="Pulse overlay" /></div>
         <div class="body">
           <div>
-            <div class="name">Pulse Circle</div>
-            <div class="meta">rms-driven · 30fps</div>
+            <div class="name">Pulse</div>
+            <div class="meta">animated rings · pill</div>
           </div>
           <span style="font-family:var(--mono); color: var(--cyan-1); font-size: 14px;">◌</span>
         </div>
@@ -605,8 +643,8 @@
     <span class="eyebrow fade-up">// hardware</span>
     <h2 class="h-section fade-up">Auto-detect your GPU. Pick the right backend.</h2>
     <p class="lead fade-up" style="margin-bottom: 28px;">
-      On startup VoxCtr probes nvidia-smi, sysfs DRM vendor IDs, and vulkaninfo to pick the fastest
-      Whisper engine for your hardware. Override anytime in Settings.
+      On startup VoxCtr probes nvidia-smi, /dev/nvidia0, and vulkaninfo to select the fastest
+      Whisper engine for your hardware. Override anytime in Settings → Engine.
     </p>
 
     <div class="tbl-wrap fade-up">
@@ -615,7 +653,7 @@
           <tr>
             <th>Hardware</th>
             <th>Backend</th>
-            <th>Quantization</th>
+            <th>Compute</th>
             <th>Latency</th>
             <th>Notes</th>
           </tr>
@@ -623,38 +661,38 @@
         <tbody>
           <tr>
             <td><b>NVIDIA</b><div class="muted" style="font-size:11.5px;font-family:var(--mono)">CUDA 11+</div></td>
-            <td class="mono">faster-whisper</td>
-            <td class="mono">fp16</td>
+            <td class="mono">whisper.cpp</td>
+            <td class="mono">CUDA fp16</td>
             <td><span class="pill pill-good">near-instant</span></td>
-            <td class="muted" style="font-size:12.5px;">Install <code style="font-family:var(--mono);color:var(--cyan-1);background:rgba(34,212,239,0.06);padding:1px 5px;border-radius:3px;">nvidia-cublas-cu12</code></td>
+            <td class="muted" style="font-size:12.5px;">Auto-detected via <code style="font-family:var(--mono);color:var(--cyan-1);background:rgba(34,212,239,0.06);padding:1px 5px;border-radius:3px;">nvidia-smi</code></td>
           </tr>
           <tr>
             <td><b>AMD RDNA / GCN</b><div class="muted" style="font-size:11.5px;font-family:var(--mono)">vulkan</div></td>
             <td class="mono">whisper.cpp</td>
-            <td class="mono">q5_k_m</td>
+            <td class="mono">Vulkan</td>
             <td><span class="pill pill-good">high-speed</span></td>
-            <td class="muted" style="font-size:12.5px;"><code style="font-family:var(--mono);color:var(--cyan-1);background:rgba(34,212,239,0.06);padding:1px 5px;border-radius:3px;">whisper-cpp-vulkan</code> (AUR)</td>
+            <td class="muted" style="font-size:12.5px;">Auto-detected via <code style="font-family:var(--mono);color:var(--cyan-1);background:rgba(34,212,239,0.06);padding:1px 5px;border-radius:3px;">vulkaninfo</code></td>
           </tr>
           <tr>
             <td><b>Intel Arc / Iris Xe</b><div class="muted" style="font-size:11.5px;font-family:var(--mono)">vulkan</div></td>
             <td class="mono">whisper.cpp</td>
-            <td class="mono">q5_k_m</td>
+            <td class="mono">Vulkan</td>
             <td><span class="pill pill-mid">fast</span></td>
-            <td class="muted" style="font-size:12.5px;">Build with <code style="font-family:var(--mono);color:var(--cyan-1);background:rgba(34,212,239,0.06);padding:1px 5px;border-radius:3px;">GGML_VULKAN=ON</code></td>
+            <td class="muted" style="font-size:12.5px;">Requires Vulkan ICD drivers</td>
           </tr>
           <tr>
             <td><b>CPU only</b><div class="muted" style="font-size:11.5px;font-family:var(--mono)">x86_64 / arm</div></td>
-            <td class="mono">faster-whisper</td>
-            <td class="mono">int8</td>
+            <td class="mono">whisper.cpp</td>
+            <td class="mono">CPU int8</td>
             <td><span class="pill pill-low">reliable</span></td>
             <td class="muted" style="font-size:12.5px;">Out of the box, no extra steps</td>
           </tr>
           <tr>
             <td><b>Raspberry Pi / Edge</b><div class="muted" style="font-size:11.5px;font-family:var(--mono)">arm · onnxruntime</div></td>
-            <td class="mono">moonshine</td>
-            <td class="mono">int8 ONNX</td>
+            <td class="mono">Moonshine</td>
+            <td class="mono">ONNX int8</td>
             <td><span class="pill pill-good">streaming</span></td>
-            <td class="muted" style="font-size:12.5px;"><code style="font-family:var(--mono);color:var(--cyan-1);background:rgba(34,212,239,0.06);padding:1px 5px;border-radius:3px;">pip install moonshine-voice</code></td>
+            <td class="muted" style="font-size:12.5px;">Select in <code style="font-family:var(--mono);color:var(--cyan-1);background:rgba(34,212,239,0.06);padding:1px 5px;border-radius:3px;">Settings → Engine</code></td>
           </tr>
         </tbody>
       </table>
@@ -666,60 +704,43 @@
 <section class="section section-bordered" id="backends">
   <div class="shell">
     <span class="eyebrow fade-up">// backends</span>
-    <h2 class="h-section fade-up">Three engines. One voice layer.</h2>
+    <h2 class="h-section fade-up">Two engines. One voice layer.</h2>
     <p class="lead fade-up" style="margin-bottom: 36px;">
-      Each backend targets a different latency profile and hardware constraint. VoxCtr selects automatically — or you can lock one in Settings.
+      whisper.cpp handles most hardware. Moonshine shines on edge devices and streaming. VoxCtr selects automatically — or you can lock one in Settings → Engine.
     </p>
 
-    <div class="cards cards-3 fade-up">
-      <div class="card">
+    <div class="cards cards-3 fade-up" style="grid-template-columns: 1fr 1fr;">
+      <div class="card" style="border-color: rgba(34,212,239,0.35); background: linear-gradient(180deg, rgba(34,212,239,0.04), transparent 60%), var(--bg-1);">
         <span class="corner" style="font-family:var(--mono);font-size:11px;">01</span>
-        <span class="glyph" style="font-size:22px;">⚡</span>
-        <h3 class="h-card">faster-whisper</h3>
-        <p class="desc">CTranslate2-based Whisper inference. Best-in-class throughput on NVIDIA CUDA hardware. The default for GPU-accelerated desktops.</p>
-        <ul>
-          <li>fp16 on CUDA, int8 on CPU</li>
-          <li>Whisper large-v3 at near-instant latency</li>
-          <li>Best for high-accuracy offline batch</li>
-          <li>Requires: NVIDIA GPU or x86 CPU</li>
-        </ul>
-        <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
-          <span style="font-family:var(--mono);font-size:11px;color:var(--txt-2);">WER (Whisper large-v3)</span>
-          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan-1);margin-top:4px;">7.44% · 1.5B params</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="corner" style="font-family:var(--mono);font-size:11px;">02</span>
         <span class="glyph" style="font-size:22px;">⬡</span>
         <h3 class="h-card">whisper.cpp</h3>
-        <p class="desc">Pure C++ Whisper port with Vulkan compute backend. Runs on AMD and Intel GPUs where CUDA is unavailable. No Python runtime overhead.</p>
+        <p class="desc">C++ Whisper port with GGUF model support. Runs on CUDA (NVIDIA), Vulkan (AMD/Intel), and CPU. The default engine — selected automatically at startup by GPU probe.</p>
         <ul>
-          <li>q5_k_m quantization via llama.cpp GGUF</li>
-          <li>Vulkan on AMD RDNA / Intel Arc</li>
-          <li>Pywhispercpp in-process binding</li>
-          <li>Requires: Vulkan-capable GPU</li>
+          <li>CUDA fp16 on NVIDIA, Vulkan on AMD/Intel</li>
+          <li>CPU int8 fallback, no extra setup</li>
+          <li>Models: tiny → large-v3-turbo (GGUF)</li>
+          <li>Default model: large-v3</li>
         </ul>
         <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
-          <span style="font-family:var(--mono);font-size:11px;color:var(--txt-2);">WER (Whisper small)</span>
-          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan-1);margin-top:4px;">8.59% · 244M params</div>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--txt-2);">Best accuracy (large-v3)</span>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan-1);margin-top:4px;">~3.1 GB model · 1.5B params</div>
         </div>
       </div>
 
       <div class="card" style="border-color: rgba(232,160,25,0.45); background: linear-gradient(180deg, rgba(232,160,25,0.05), transparent 60%), var(--bg-1);">
-        <span class="corner" style="font-family:var(--mono);font-size:11px;">03</span>
+        <span class="corner" style="font-family:var(--mono);font-size:11px;">02</span>
         <span class="glyph" style="font-size:22px;">◎</span>
         <h3 class="h-card">Moonshine</h3>
-        <p class="desc">Streaming-first ASR from Moonshine AI. Caches encoder state and decoder context during live speech, enabling sub-200ms responses — even on a Raspberry Pi.</p>
+        <p class="desc">Streaming-first ASR using ONNX runtime. Designed for edge and low-latency use cases. Caches encoder state during live speech for near-instant responses.</p>
         <ul>
-          <li>Flexible input window — no 30s chunk limit</li>
           <li>ONNX int8 weights, CPU-native runtime</li>
-          <li>527ms on RPi 5 · 165ms on Linux x86</li>
-          <li>Beats Whisper large-v3 accuracy at 6× fewer params</li>
+          <li>Streaming mode — flexible input window</li>
+          <li>Best for edge devices and RPi</li>
+          <li>Enable: <code style="color:var(--cyan-1);font-family:var(--mono)">engine.backend = "moonshine"</code></li>
         </ul>
         <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
-          <span style="font-family:var(--mono);font-size:11px;color:var(--txt-2);">WER (Moonshine Medium Streaming)</span>
-          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan-1);margin-top:4px;">6.65% · 245M params</div>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--txt-2);">Streaming · low-latency</span>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan-1);margin-top:4px;">base · tiny models available</div>
         </div>
       </div>
     </div>
@@ -729,7 +750,6 @@
         <thead>
           <tr>
             <th>Feature</th>
-            <th>faster-whisper</th>
             <th>whisper.cpp</th>
             <th style="color:var(--gold-1);">Moonshine ✦</th>
           </tr>
@@ -738,50 +758,32 @@
           <tr>
             <td><b>Inference style</b></td>
             <td class="mono">batch / offline</td>
-            <td class="mono">batch / offline</td>
             <td class="mono" style="color:var(--gold-1);">streaming / live</td>
           </tr>
           <tr>
-            <td><b>Audio window</b></td>
-            <td class="mono">fixed 30s</td>
-            <td class="mono">fixed 30s</td>
-            <td class="mono" style="color:var(--gold-1);">flexible length</td>
-          </tr>
-          <tr>
-            <td><b>CPU latency (x86)</b></td>
-            <td class="mono">3,425ms</td>
-            <td class="mono">~2,000ms</td>
-            <td class="mono" style="color:var(--gold-1);">165ms</td>
-          </tr>
-          <tr>
-            <td><b>Edge / RPi 5</b></td>
-            <td class="mono muted">impractical</td>
-            <td class="mono muted">impractical</td>
-            <td class="mono" style="color:var(--gold-1);">527ms ✓</td>
+            <td><b>GPU acceleration</b></td>
+            <td class="mono">CUDA + Vulkan</td>
+            <td class="mono" style="color:var(--gold-1);">none (CPU-first)</td>
           </tr>
           <tr>
             <td><b>Model format</b></td>
-            <td class="mono">CTranslate2</td>
             <td class="mono">GGUF</td>
             <td class="mono" style="color:var(--gold-1);">ONNX (.ort)</td>
           </tr>
           <tr>
-            <td><b>GPU requirement</b></td>
-            <td class="mono">NVIDIA preferred</td>
-            <td class="mono">Vulkan GPU</td>
-            <td class="mono" style="color:var(--gold-1);">none (CPU-first)</td>
+            <td><b>Edge / RPi</b></td>
+            <td class="mono muted">impractical</td>
+            <td class="mono" style="color:var(--gold-1);">excellent ✓</td>
           </tr>
           <tr>
-            <td><b>Best WER (English)</b></td>
-            <td class="mono">7.44%</td>
-            <td class="mono">8.59%</td>
-            <td class="mono" style="color:var(--gold-1);">6.65%</td>
+            <td><b>Model sizes</b></td>
+            <td class="mono">tiny → large-v3-turbo</td>
+            <td class="mono" style="color:var(--gold-1);">base · tiny</td>
           </tr>
           <tr>
-            <td><b>Install</b></td>
-            <td class="mono">pip + cublas</td>
-            <td class="mono">AUR / cmake</td>
-            <td class="mono" style="color:var(--cyan-1);">pip install moonshine-voice</td>
+            <td><b>Default model</b></td>
+            <td class="mono">large-v3</td>
+            <td class="mono" style="color:var(--gold-1);">base</td>
           </tr>
         </tbody>
       </table>
@@ -795,7 +797,7 @@
     <span class="eyebrow fade-up">// open source · MIT</span>
     <h2 class="h-display fade-up" style="font-size: clamp(36px, 5vw, 64px); margin-top: 18px;">Ready when you are.</h2>
     <p class="lead fade-up" style="margin: 0 auto 32px;">
-      Install in five minutes. Forks, custom overlays, and contributions welcome.
+      Install in five minutes. Forks and contributions welcome.
     </p>
     <div class="hero-cta fade-up" style="justify-content: center;">
       <a class="btn btn-primary" href="/voxctr/docs/quickstart.html">
@@ -808,7 +810,50 @@
   </div>
 </section>
 
-<!--#include virtual="/voxctr/includes/footer.html" -->
+<footer class="foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <img src="/voxctr/assets/voxctr.gif" alt="" style="width:32px;height:32px;border-radius:8px;"/>
+          <span style="font-weight:700;font-size:18px;">vox<span style="color:var(--cyan-1)">ctr</span></span>
+        </div>
+        <p style="color: var(--txt-2); font-size: 13px; margin-top: 12px; max-width: 280px; line-height: 1.6;">
+          The audio control layer for your AI and automation stack. Native, on-device, MIT-licensed.
+        </p>
+      </div>
+      <div>
+        <h6>Product</h6>
+        <a href="/voxctr/">Overview</a>
+        <a href="/voxctr/docs/quickstart.html">Quickstart</a>
+        <a href="/voxctr/docs/mcp.html">MCP server</a>
+        <a href="/voxctr/#hardware">Hardware</a>
+        <a href="/voxctr/#backends">Backends</a>
+      </div>
+      <div>
+        <h6>Docs</h6>
+        <a href="/voxctr/docs/install.html">Installation</a>
+        <a href="/voxctr/docs/routing.html">Routing</a>
+        <a href="/voxctr/docs/atspi.html">AT-SPI2</a>
+        <a href="/voxctr/docs/overlays.html">Overlays</a>
+      </div>
+      <div>
+        <h6>Open source</h6>
+        <a href="https://github.com/jrufer/voxctr" target="_blank">GitHub</a>
+        <a href="https://github.com/jrufer/voxctr/releases" target="_blank">Releases</a>
+        <a href="https://github.com/jrufer/voxctr/issues" target="_blank">Issues</a>
+        <a href="https://github.com/jrufer/voxctr/blob/main/LICENSE" target="_blank">MIT License</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="left">
+        <img src="/voxctr/assets/favicon.png" alt="" />
+        <span>voxctr &middot; v0.1.3 &middot; linux &amp; windows</span>
+      </div>
+      <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device only</div>
+    </div>
+  </div>
+</footer>
 <script src="/voxctr/js/landing.js"></script>
 </body>
 </html>
