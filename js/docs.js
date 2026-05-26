@@ -25,18 +25,34 @@ if (content && toc) {
   }
 }
 
-/* ─────────── github star count ─────────── */
+/* ─────────── github: stars + version ─────────── */
 (async () => {
-  const el = document.getElementById('gh-star-count');
-  if (!el) return;
+  const starEl = document.getElementById('gh-star-count');
   const fmt = (n) => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, '') + 'k' : String(n);
-  try {
-    const r = await fetch('https://api.github.com/repos/JRufer/VoxCtr', { headers: { 'Accept': 'application/vnd.github+json' } });
-    if (!r.ok) throw new Error(r.status);
-    const j = await r.json();
-    if (typeof j.stargazers_count === 'number') el.textContent = fmt(j.stargazers_count);
-    else el.textContent = '★';
-  } catch {
-    el.textContent = 'Star';
+
+  const applyVersion = (tag) => {
+    document.querySelectorAll('.nav-version').forEach(el => { el.textContent = tag; });
+    document.querySelectorAll('.foot-bottom .left span').forEach(el => {
+      el.textContent = el.textContent.replace(/v[\d.]+/, tag);
+    });
+  };
+
+  const [repoRes, tagsRes] = await Promise.allSettled([
+    fetch('https://api.github.com/repos/JRufer/VoxCtr', { headers: { 'Accept': 'application/vnd.github+json' } }),
+    fetch('https://api.github.com/repos/JRufer/VoxCtr/tags',  { headers: { 'Accept': 'application/vnd.github+json' } }),
+  ]);
+
+  if (repoRes.status === 'fulfilled' && repoRes.value.ok && starEl) {
+    try {
+      const repo = await repoRes.value.json();
+      starEl.textContent = typeof repo.stargazers_count === 'number' ? fmt(repo.stargazers_count) : '★';
+    } catch { starEl.textContent = 'Star'; }
+  } else if (starEl) { starEl.textContent = 'Star'; }
+
+  if (tagsRes.status === 'fulfilled' && tagsRes.value.ok) {
+    try {
+      const tags = await tagsRes.value.json();
+      if (Array.isArray(tags) && tags.length > 0) applyVersion(tags[0].name);
+    } catch { /* leave static fallback */ }
   }
 })();
