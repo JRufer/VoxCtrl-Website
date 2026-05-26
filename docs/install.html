@@ -1,5 +1,5 @@
 <!--#set var="page_title" value="Installation — VoxCtr Docs" -->
-<!--#set var="page_desc" value="VoxCtr runs natively on Linux. Two install paths: AppImage (recommended) or source." -->
+<!--#set var="page_desc" value="VoxCtr runs on Linux and Windows. Recommended: AppImage on Linux. Built with Rust + Tauri." -->
 <!--#set var="active_section" value="docs" -->
 <!--#set var="active_doc" value="install" -->
 
@@ -23,42 +23,86 @@
   <main class="docs-content" id="docsContent">
     <div class="crumbs">GETTING STARTED <span>/</span> INSTALLATION</div>
     <h1>Installation</h1>
-    <p class="lede">VoxCtr runs natively on Linux. Two install paths: AppImage (recommended) or source.</p>
+    <p class="lede">VoxCtr is a Tauri desktop app that runs on Linux (Wayland + X11) and Windows 10/11. The recommended install on Linux is the AppImage — a single portable binary with all runtime dependencies bundled.</p>
 
-    <h2>Hardware compatibility</h2>
+    <h2>System Requirements</h2>
+    <h3>Linux</h3>
     <table class="docs-table">
-      <thead><tr><th>GPU</th><th>Backend</th><th>Notes</th></tr></thead>
+      <thead><tr><th>Package</th><th>Required?</th><th>Purpose</th></tr></thead>
       <tbody>
-        <tr><td>NVIDIA (CUDA 11+)</td><td>faster-whisper</td><td>Install CUDA pip libs — auto-selected</td></tr>
-        <tr><td>AMD RDNA / GCN</td><td>whisper.cpp + vulkan</td><td><code>whisper-cpp-vulkan</code> from AUR</td></tr>
-        <tr><td>Intel Arc / Iris Xe</td><td>whisper.cpp + vulkan</td><td>Build with <code>GGML_VULKAN=ON</code></td></tr>
-        <tr><td>CPU only</td><td>faster-whisper int8</td><td>Out of the box; slower for large models</td></tr>
-        <tr><td>Raspberry Pi / Edge (arm)</td><td>moonshine</td><td><code>pip install moonshine-voice</code> — streaming ONNX, no GPU needed</td></tr>
+        <tr><td><code>libwebkit2gtk-4.1</code></td><td>Required</td><td>Tauri WebView shell</td></tr>
+        <tr><td><code>libayatana-appindicator3</code> or <code>libappindicator3</code></td><td>Required</td><td>System tray icon</td></tr>
+        <tr><td><code>wtype</code></td><td>Optional</td><td>Wayland text injection (for inject delivery type)</td></tr>
+        <tr><td><code>xdotool</code></td><td>Optional</td><td>X11 text injection (for inject delivery type)</td></tr>
+        <tr><td><code>espeak-ng</code></td><td>Optional</td><td>TTS fallback engine</td></tr>
+        <tr><td><code>socat</code></td><td>Optional</td><td>Claude Desktop MCP bridge</td></tr>
       </tbody>
     </table>
 
-    <h2>Option A: AppImage</h2>
-    <p>The installer detects your package manager (apt/pacman/dnf/zypper), installs system libs, downloads Piper TTS to <code>/opt/piper</code>, creates udev rules, and adds you to the <code>input</code>/<code>uinput</code> groups.</p>
-    <h3>Steps</h3>
-    <ul>
-      <li>Download <code>VoxCtr-x86_64.AppImage</code> from Releases</li>
-      <li>Run <code>bash install.sh</code></li>
-      <li>Log out and back in</li>
-      <li>Launch <code>voxctr</code></li>
-    </ul>
-    <div class="note"><span class="icon">ⓘ</span> <code>pyatspi</code>, <code>mcp</code>, and <code>websockets</code> are bundled inside the AppImage — no manual install needed.</div>
+    <h3>Windows</h3>
+    <p>Windows 10 (1903+) or Windows 11. WebView2 runtime is pre-installed on Windows 11; on Windows 10 it downloads automatically on first run.</p>
 
-    <h2>Option B: from source</h2>
-    <h3>1. System deps (Arch)</h3>
-    <p>Install portaudio, wl-clipboard, xdotool, wtype, xclip, alsa-utils, espeak-ng. Optionally socat (Claude Desktop bridge) and python-atspi.</p>
-    <h3>2. Permissions</h3>
-    <p>Run <code>sudo bash scripts/setup-permissions.sh</code>. Log out and back in.</p>
-    <h3>3. Clone &amp; venv</h3>
-    <p>Clone, create a virtualenv, and <code>pip install -r requirements.txt</code>. The requirements file includes noisereduce, dbus-python, websockets, mcp, and pyatspi.</p>
-    <h3>4. NVIDIA acceleration (optional)</h3>
-    <p><code>pip install nvidia-cublas-cu12 nvidia-cudnn-cu12</code></p>
-    <h3>5. Launch</h3>
-    <p>Run <code>./voxctr.sh</code>.</p>
+    <h2>GPU Acceleration</h2>
+    <table class="docs-table">
+      <thead><tr><th>Hardware</th><th>Backend</th><th>Setup</th></tr></thead>
+      <tbody>
+        <tr><td>NVIDIA (CUDA 11+)</td><td>whisper.cpp (CUDA)</td><td>Auto-detected via <code>nvidia-smi</code> — no extra config</td></tr>
+        <tr><td>AMD RDNA / GCN</td><td>whisper.cpp (Vulkan)</td><td>Install Vulkan ICD: <code>sudo pacman -S vulkan-icd-loader</code></td></tr>
+        <tr><td>Intel Arc / Iris Xe</td><td>whisper.cpp (Vulkan)</td><td>Install Vulkan ICD: <code>sudo apt install libvulkan1 vulkan-tools</code></td></tr>
+        <tr><td>CPU only</td><td>whisper.cpp (CPU int8)</td><td>Out of the box — no extra steps</td></tr>
+        <tr><td>Raspberry Pi / Edge</td><td>Moonshine (ONNX)</td><td>Select <code>engine.backend = "moonshine"</code> in Settings → Engine</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Option A: AppImage (recommended, Linux)</h2>
+    <p>Download the latest AppImage from <a href="https://github.com/jrufer/voxctr/releases" target="_blank">GitHub Releases</a>.</p>
+
+    <h3>Quick run</h3>
+    <pre class="code-inline">chmod +x VoxCtr.AppImage
+./VoxCtr.AppImage</pre>
+
+    <h3>System install (with desktop entry and udev rules)</h3>
+    <pre class="code-inline">bash install.sh</pre>
+    <p>The install script:</p>
+    <ul>
+      <li>Copies the AppImage to <code>~/.local/bin/voxctr</code></li>
+      <li>Installs a <code>.desktop</code> file for application launchers</li>
+      <li>Creates udev rules for <code>/dev/input</code> access (required for global hotkeys)</li>
+      <li>Adds the current user to the <code>input</code> group</li>
+    </ul>
+    <div class="note"><span class="icon">!</span> After running <code>install.sh</code>, log out and back in for the <code>input</code> group membership to take effect. Until then, global hotkeys will not work.</div>
+
+    <h2>Option B: Windows</h2>
+    <p>Download the <code>VoxCtr_setup.exe</code> or <code>VoxCtr.msi</code> installer from GitHub Releases and run it. WebView2 is bundled or auto-downloaded.</p>
+    <p>Global hotkeys on Windows use Win32 hooks — no special permissions required.</p>
+
+    <h2>Option C: Build from source</h2>
+    <p>Prerequisites: Rust (stable), Node.js 20+, npm.</p>
+    <pre class="code-inline">git clone https://github.com/jrufer/voxctr.git
+cd voxctr
+npm install
+npm run tauri build</pre>
+    <p>The build output is a release binary + AppImage (Linux) or .exe/.msi (Windows).</p>
+    <p>For development with hot-reload: <code>npm run tauri dev</code></p>
+
+    <h2>First Run</h2>
+    <p>On first launch, VoxCtr creates <code>~/.config/voxctl/</code> with default config files and opens the Settings window.</p>
+    <ol>
+      <li><strong>Download a model</strong> — Settings → Engine → choose a size → click Download. Recommendation: <code>small</code> (~466 MB) for good speed/accuracy; <code>large-v3</code> (default, ~3.1 GB) for maximum accuracy.</li>
+      <li><strong>Check your hotkey</strong> — a default binding (<code>Super + Space</code>, hold gesture → inject to focused window) is created automatically. Verify in Settings → Hotkeys.</li>
+      <li><strong>Test dictation</strong> — open any text editor, click into the text area, hold <code>Super + Space</code>, speak, release.</li>
+    </ol>
+
+    <h2>Optional Setup</h2>
+    <h3>TTS (Piper voices)</h3>
+    <p>Go to Settings → TTS, enable TTS, select a voice, click Download. Voices are stored at <code>~/.local/share/voxctl/piper-voices/</code>.</p>
+
+    <h3>MCP Server (Claude Desktop)</h3>
+    <p>Enable in Settings → Engine → MCP Server. Then add to <code>~/.config/claude/claude_desktop_config.json</code>:</p>
+    <pre class="code-inline">{"mcpServers":{"voxctr":{"command":"socat","args":["STDIO","UNIX-CONNECT:/tmp/voxctl-mcp.sock"]}}}</pre>
+
+    <h3>Ollama post-processing</h3>
+    <p>Install <a href="https://ollama.ai" target="_blank">Ollama</a>, pull a model (<code>ollama pull llama3.2</code>), then enable in Settings → Ollama.</p>
 
     <div class="docs-foot">
       <a href="quickstart.html"><small>← previous</small><span>Quickstart</span></a>

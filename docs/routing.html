@@ -29,43 +29,51 @@
     <table class="docs-table">
       <thead><tr><th>Type</th><th>Mechanism</th><th>Use for</th></tr></thead>
       <tbody>
-        <tr><td>inject</td><td>at-spi2 → wtype → xdotool</td><td>Default dictation</td></tr>
-        <tr><td>clipboard</td><td>wl-copy / xclip</td><td>Copy for manual paste</td></tr>
-        <tr><td>exec</td><td>subprocess shell=False</td><td>CLI agents, llm, claude-cli</td></tr>
+        <tr><td>inject</td><td>AT-SPI2 → wtype → xdotool</td><td>Default dictation into focused window</td></tr>
+        <tr><td>clipboard</td><td>wl-copy / xclip (Linux), Win32 clipboard (Windows)</td><td>Copy for manual paste</td></tr>
+        <tr><td>exec</td><td>subprocess, shell=false</td><td>CLI agents, one-shot commands</td></tr>
         <tr><td>pipe</td><td>FIFO write O_NONBLOCK</td><td>Persistent agent processes</td></tr>
-        <tr><td>socket</td><td>TCP / Unix domain</td><td>Remote / containerised agents</td></tr>
-        <tr><td>file</td><td>append + timestamp</td><td>Voice journal, meeting notes</td></tr>
-        <tr><td>dbus</td><td>signal emission</td><td>Waybar, Rofi, automation</td></tr>
+        <tr><td>socket</td><td>TCP / Unix domain</td><td>Remote or containerised agents</td></tr>
+        <tr><td>file</td><td>append + optional timestamp</td><td>Voice journal, meeting notes</td></tr>
+        <tr><td>dbus</td><td>signal emission</td><td>Waybar, Rofi, desktop automation</td></tr>
+        <tr><td>http</td><td>HTTP POST request</td><td>Webhooks, REST APIs</td></tr>
+        <tr><td>webhook</td><td>HTTP POST with custom headers</td><td>Authenticated webhooks, n8n, Zapier</td></tr>
       </tbody>
     </table>
 
-    <h2>Post-processing modes</h2>
-    <ul>
-      <li><code>default</code> — full pipeline: snippets, spoken punctuation, Ollama rewrite</li>
-      <li><code>none</code> — raw Whisper output (best for agents)</li>
-      <li><code>strip_fillers</code> — remove um/uh/hmm only</li>
-      <li><code>snippets_only</code> — expand snippets, no rewriting</li>
-      <li><code>ollama_only</code> — skip snippets, run Ollama rewrite only</li>
-    </ul>
-    <div class="note warn"><span class="icon">!</span> Agent targets (<code>exec</code>, <code>pipe</code>, <code>socket</code>) should almost always use <code>post_processing = "none"</code> or <code>"strip_fillers"</code>. Rewriting alters command semantics.</div>
+    <h2>Post-processing pipeline</h2>
+    <p>The following steps are applied in order after Whisper transcription, configurable per target:</p>
+    <ol>
+      <li>Filler word removal (um, uh, hmm, er, ah, ugh, mhm)</li>
+      <li>Spoken punctuation ("period" → ., "comma" → ,, 20+ mappings)</li>
+      <li>Auto-format lists (first/second/third ordinals → numbered list)</li>
+      <li>Snippet expansion (custom shorthand → full text)</li>
+      <li>Custom vocabulary fuzzy correction (Levenshtein)</li>
+      <li>Code mode (camelCase, spoken operators)</li>
+      <li>Optional Ollama LLM rewrite (clean/formal/casual/bullet/concise/custom)</li>
+    </ol>
+    <div class="note warn"><span class="icon">!</span> Agent targets (<code>exec</code>, <code>pipe</code>, <code>socket</code>) should almost always use <code>remove_fillers = true</code> and <code>spoken_punctuation = false</code>. Rewriting alters command semantics.</div>
 
     <h2>Common patterns</h2>
     <h3>Agent command pipe</h3>
     <p>Send voice commands to a CLI agent via FIFO. Strip fillers so the agent gets clean input. Use <code>response_pipe</code> to stream replies back as TTS.</p>
     <h3>Voice journal</h3>
-    <p>Append timestamped entries to a markdown file. Use Ollama to format each utterance as a concise note. Set <code>file_prefix = "- "</code> for bullets.</p>
+    <p>Append timestamped entries to a markdown file. Use Ollama to format each utterance as a concise note.</p>
     <h3>Shell command execution</h3>
-    <p>Use <code>delivery = "exec"</code> with <code>command = "claude --print {TEXT}"</code>. The <code>{TEXT}</code> placeholder is substituted as a literal argument with <code>shell=False</code> to prevent injection.</p>
+    <p>Use <code>delivery = "exec"</code> with a command template. The transcript is passed as a literal argument with <code>shell=false</code> to prevent injection.</p>
     <h3>TCP socket to remote agent</h3>
     <p>Forward transcripts over TCP for distributed or containerised setups. Set <code>socket_host</code> and <code>socket_port</code>; VoxCtr opens a connection per utterance.</p>
+    <h3>HTTP / webhook delivery</h3>
+    <p>Use <code>delivery = "http"</code> for a simple POST, or <code>delivery = "webhook"</code> to attach custom headers (e.g. <code>Authorization: Bearer …</code>). The transcript is sent as the request body.</p>
 
     <h2>Config file locations</h2>
     <ul>
-      <li><code>~/.config/voxctr/config.json</code> — global settings (managed by Settings UI)</li>
-      <li><code>~/.config/voxctr/targets.toml</code> — output target definitions</li>
-      <li><code>~/.config/voxctr/bindings.toml</code> — hotkey → target bindings</li>
-      <li><code>~/.config/voxctr/backups/</code> — auto-backups, last 20 kept</li>
+      <li><code>~/.config/voxctl/config.json</code> — global settings (managed by Settings UI)</li>
+      <li><code>~/.config/voxctl/targets.toml</code> — output target definitions</li>
+      <li><code>~/.config/voxctl/bindings.toml</code> — hotkey → target bindings</li>
+      <li><code>~/.config/voxctl/backups/</code> — auto-backups, last 20 kept</li>
     </ul>
+    <div class="note"><span class="icon">ⓘ</span> All three config files are hot-reloaded on save — no restart required.</div>
 
     <div class="docs-foot">
       <a href="hotkeys.html"><small>← previous</small><span>Hotkeys &amp; gestures</span></a>

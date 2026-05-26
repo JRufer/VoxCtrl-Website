@@ -1,4 +1,5 @@
 <!--#set var="page_title" value="Overlays — VoxCtr Docs" -->
+<!--#set var="page_desc" value="VoxCtr displays a transparent always-on-top HUD while recording. Four built-in styles." -->
 <!--#set var="active_section" value="docs" -->
 <!--#set var="active_doc" value="overlays" -->
 
@@ -22,33 +23,50 @@
   <main class="docs-content" id="docsContent">
     <div class="crumbs">AI &amp; VOICE <span>/</span> OVERLAYS</div>
     <h1>Overlays</h1>
-    <p class="lede">Three overlay styles ship by default. Drop a Python file into <code>~/.config/voxctr/overlays/</code> and you've made one.</p>
+    <p class="lede">VoxCtr displays a transparent always-on-top HUD while recording. Four built-in styles ship as Svelte 5 components. Switch between them in Settings → Visual tab.</p>
 
     <h2>Built-in styles</h2>
-    <ul>
-      <li><strong>Voice Card</strong> (default) — scrolling bar history with horizontal gradient and routing badge in the header</li>
-      <li><strong>Waveform</strong> — OpenGL oscilloscope rendering raw min/max envelope</li>
-      <li><strong>Pulse Circle</strong> — soft glowing circle that expands with RMS amplitude, 30fps with exponential decay</li>
-    </ul>
+    <table class="docs-table">
+      <thead><tr><th>Style</th><th>config value</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Blue Wave</strong> <em>(default)</em></td><td><code>blue_wave</code></td><td>Animated ocean waves that react to audio level in real time</td></tr>
+        <tr><td><strong>Voice Card</strong></td><td><code>voice_card</code></td><td>Bar-graph spectrum with 45 animated bars and a gradient fill</td></tr>
+        <tr><td><strong>Waveform</strong></td><td><code>waveform</code></td><td>48-bar oscilloscope-style display</td></tr>
+        <tr><td><strong>Pulse</strong></td><td><code>pulse</code></td><td>Pill-shaped overlay with animated concentric rings</td></tr>
+      </tbody>
+    </table>
+
+    <p>To disable the overlay entirely, set <code>ui.overlay_style = "none"</code> in <code>~/.config/voxctl/config.json</code> or toggle it off in Settings → Visual.</p>
+
+    <h2>Selecting a style</h2>
+    <p>Open Settings → Visual tab → Overlay Style dropdown. Changes take effect immediately — no restart required. The setting is written to <code>config.json</code> as <code>ui.overlay_style</code>.</p>
+
+    <pre class="code-inline">// config.json excerpt
+{
+  "ui": {
+    "show_overlay": true,
+    "overlay_style": "blue_wave"
+  }
+}</pre>
+
+    <p>Valid values: <code>"blue_wave"</code>, <code>"voice_card"</code>, <code>"waveform"</code>, <code>"pulse"</code>, <code>"none"</code>.</p>
 
     <h2>Routing indicator badge</h2>
-    <p>Every overlay shows a small label with the active target's human-readable name (Focused Window, Hermes Agent, Voice Journal). When you use multiple hotkeys to route to different destinations, the badge changes with each activation. The label comes from the <code>label</code> field on the active <code>OutputTarget</code>.</p>
+    <p>Every overlay shows a small label with the active target's human-readable name (e.g. "Focused Window", "Hermes Agent", "Voice Journal"). When you use multiple hotkeys to route to different destinations, the badge changes with each activation. The label comes from the <code>label</code> field on the active target definition in <code>targets.toml</code>.</p>
 
-    <h2>Custom overlays</h2>
-    <p>Drop a <code>.py</code> file into <code>~/.config/voxctr/overlays/</code>. Click <strong>Open Overlays Folder</strong> in Settings to go there directly. A <code>_template.py</code> starter is created automatically the first time you open the folder.</p>
+    <h2>How it works</h2>
+    <p>The overlay is a dedicated Tauri window (560×160 px, transparent background, always-on-top, click-through). It renders a Svelte component over whatever application is in focus. Mouse and keyboard events pass through to the underlying window.</p>
+    <p>Audio levels are forwarded from the Rust backend approximately every 50ms as RMS energy (0.0–1.0). Each overlay component uses this to drive its animation.</p>
+    <p>The overlay is shown automatically when recording starts and hidden when transcription completes, provided <code>ui.show_overlay = true</code>.</p>
 
-    <h3>Required structure</h3>
-    <ul>
-      <li><code>DISPLAY_NAME</code> — string shown in the dropdown</li>
-      <li><code>class OverlayUI(QWidget)</code> — the widget itself</li>
-      <li>Three methods: <code>update_audio(data)</code>, <code>show_mode(label)</code>, <code>hide_mode()</code></li>
-    </ul>
-    <div class="note"><span class="icon">ⓘ</span> Files whose names begin with <code>_</code> (e.g. <code>_template.py</code>) are ignored by the loader — use this convention for notes, drafts, or helper modules.</div>
-
-    <h3>The three methods</h3>
-    <p><code>update_audio(data)</code> — called from the audio thread every 20–60ms. <code>data</code> is a numpy float32 ndarray, ~1024 samples, ±32768 amplitude range. Don't draw here; store and call <code>QMetaObject.invokeMethod(self, "update", QueuedConnection)</code>.</p>
-    <p><code>show_mode(label)</code> — called on the Qt main thread when recording starts. <code>label</code> is the active target name (use it for your routing badge or ignore it).</p>
-    <p><code>hide_mode()</code> — called on the Qt main thread when recording stops.</p>
+    <h2>Configuration reference</h2>
+    <table class="docs-table">
+      <thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>ui.show_overlay</code></td><td>bool</td><td><code>true</code></td><td>Show/hide overlay on recording</td></tr>
+        <tr><td><code>ui.overlay_style</code></td><td>string</td><td><code>"blue_wave"</code></td><td>Active overlay style identifier</td></tr>
+      </tbody>
+    </table>
 
     <div class="docs-foot">
       <a href="tts.html"><small>← previous</small><span>Voice output</span></a>

@@ -22,7 +22,7 @@
   <main class="docs-content" id="docsContent">
     <div class="crumbs">REFERENCE <span>/</span> CONFIGURATION</div>
     <h1>Configuration</h1>
-    <p class="lede">All settings live under <code>~/.config/voxctr/</code>. The Settings UI is a thin layer over these files — they're the source of truth.</p>
+    <p class="lede">All settings live under <code>~/.config/voxctl/</code>. The Settings UI is a thin layer over these files — they're the source of truth. All three config files are hot-reloaded on save.</p>
 
     <h2>Files</h2>
     <table class="docs-table">
@@ -32,9 +32,15 @@
         <tr><td>targets.toml</td><td>TOML</td><td>Output target definitions</td></tr>
         <tr><td>bindings.toml</td><td>TOML</td><td>Hotkey → target bindings</td></tr>
         <tr><td>backups/</td><td>—</td><td>Auto-backups of all three (last 20 kept)</td></tr>
-        <tr><td>overlays/</td><td>—</td><td>Custom overlay Python files</td></tr>
       </tbody>
     </table>
+
+    <h2>Data directory</h2>
+    <p>Models, TTS voices, and other data are stored under <code>~/.local/share/voxctl/</code>:</p>
+    <ul>
+      <li><code>~/.local/share/voxctl/models/</code> — downloaded GGUF / ONNX model files</li>
+      <li><code>~/.local/share/voxctl/piper-voices/</code> — downloaded Piper TTS voice files</li>
+    </ul>
 
     <h2>Validation</h2>
     <p>A startup validator catches malformed <code>config.json</code>, <code>targets.toml</code>, and <code>bindings.toml</code> with clear error messages. Errors fall back to defaults rather than crashing the app.</p>
@@ -43,13 +49,16 @@
     <table class="docs-table">
       <thead><tr><th>Key</th><th>Default</th><th>Description</th></tr></thead>
       <tbody>
+        <tr><td>engine.backend</td><td>"auto"</td><td>Inference backend: "auto" | "whisper-cpp" | "moonshine"</td></tr>
+        <tr><td>engine.whisper_cpp.model_size</td><td>"large-v3"</td><td>Active Whisper model name</td></tr>
         <tr><td>tts.enabled</td><td>false</td><td>Master TTS on/off</td></tr>
         <tr><td>tts.voice</td><td>en-us-lessac-medium</td><td>Active Piper voice</td></tr>
         <tr><td>tts.stop_key</td><td>[KEY_ESCAPE]</td><td>Global TTS interrupt</td></tr>
         <tr><td>tts.response_overlay</td><td>true</td><td>Show teal overlay during TTS</td></tr>
         <tr><td>mcp.server_enabled</td><td>false</td><td>Start MCP server on launch</td></tr>
         <tr><td>mcp.record_timeout</td><td>15.0</td><td>Default recording timeout (s)</td></tr>
-        <tr><td>atspi.injection</td><td>true</td><td>Try at-spi2 insertText first</td></tr>
+        <tr><td>ui.overlay_style</td><td>"blue_wave"</td><td>Active overlay style: "blue_wave" | "voice_card" | "waveform" | "pulse" | "none"</td></tr>
+        <tr><td>atspi.injection</td><td>true</td><td>Try AT-SPI2 insertText first</td></tr>
       </tbody>
     </table>
 

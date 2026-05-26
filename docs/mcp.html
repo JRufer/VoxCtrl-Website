@@ -36,14 +36,27 @@
     </table>
 
     <h2>Transport</h2>
-    <p>Unix domain socket at <code>/tmp/voxctr-mcp.sock</code>. Each connection gets its own daemon thread. Newline-delimited JSON-RPC 2.0 — one JSON object per line, terminated with <code>\n</code>.</p>
+    <p>Unix domain socket at <code>/tmp/voxctl-mcp.sock</code> (Linux) or named pipe <code>\\\\.\\ pipe\\voxctl-mcp</code> (Windows). Each connection gets its own async handler. Newline-delimited JSON-RPC 2.0 — one JSON object per line, terminated with <code>\n</code>.</p>
 
     <h2>Enabling</h2>
-    <p>Settings → AI → MCP Server → toggle <strong>Enable MCP Server</strong>. Or in <code>config.json</code>: <code>{"mcp": {"server_enabled": true}}</code>.</p>
+    <p>Settings → Engine → MCP Server → toggle <strong>Enable MCP Server</strong>. Or set directly in <code>~/.config/voxctl/config.json</code>:</p>
+    <pre class="code-inline">{"mcp": {"server_enabled": true}}</pre>
 
     <h2>Claude Desktop</h2>
-    <p>Click <strong>Register in Claude Desktop</strong> in Settings — VoxCtr writes the socat bridge config to <code>~/.config/claude/claude_desktop_config.json</code>. Restart Claude Desktop. The three tools appear in the picker automatically.</p>
-    <div class="note"><span class="icon">ⓘ</span> VoxCtr must already be running before Claude Desktop connects. The socket is created at app startup.</div>
+    <p>Click <strong>Register in Claude Desktop</strong> in Settings — VoxCtr writes the socat bridge config to <code>~/.config/claude/claude_desktop_config.json</code> automatically. Restart Claude Desktop. The three tools appear in the picker.</p>
+    <p>To configure manually, add the following to <code>~/.config/claude/claude_desktop_config.json</code>:</p>
+    <pre class="code-inline">{
+  "mcpServers": {
+    "voxctr": {
+      "command": "socat",
+      "args": [
+        "STDIO",
+        "UNIX-CONNECT:/tmp/voxctl-mcp.sock"
+      ]
+    }
+  }
+}</pre>
+    <div class="note"><span class="icon">ⓘ</span> VoxCtr must already be running before Claude Desktop connects. The socket is created at app startup when MCP is enabled.</div>
 
     <h2>Protocol handshake</h2>
     <ul>
@@ -56,14 +69,14 @@
     <h2>Behaviour notes</h2>
     <ul>
       <li>While <code>transcribe_voice</code> records, the recording overlay is always shown — the user always has a visual indicator that the mic is live</li>
-      <li>The mic is released automatically once VAD detects silence or <code>timeout_seconds</code> elapses</li>
+      <li>The mic is released automatically once the RMS noise gate detects silence or <code>timeout_seconds</code> elapses</li>
       <li>VoxCtr's full post-processing pipeline is applied before the transcript is returned</li>
       <li><code>speak_text</code> returns as soon as the text is queued — does not block until playback finishes</li>
       <li>Only one <code>transcribe_voice</code> call can be in flight at a time; concurrent calls queue</li>
     </ul>
 
     <h2>Response loopback (FIFO)</h2>
-    <p>For agents that generate responses to a named FIFO, set <code>response_pipe</code> on the target. <code>ResponseListener</code> reads each line and passes it to <code>TTSEngine.speak()</code>. Each line in the FIFO becomes a separate utterance; empty lines are ignored. The listener re-opens the FIFO on EOF so the agent can restart without restarting VoxCtr.</p>
+    <p>For agents that generate responses to a named FIFO, set <code>response_pipe</code> on the target. VoxCtr reads each line and passes it to the TTS engine. Each line in the FIFO becomes a separate utterance; empty lines are ignored. The listener re-opens the FIFO on EOF so the agent can restart without restarting VoxCtr.</p>
 
     <div class="docs-foot">
       <a href="overlays.html"><small>← previous</small><span>Overlays</span></a>
