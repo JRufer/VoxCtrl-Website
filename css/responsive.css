@@ -13,6 +13,7 @@
 @media (max-width: 1000px) {
   .hero-grid { grid-template-columns: 1fr; gap: 32px; }
   .cards-3, .cards-4 { grid-template-columns: repeat(2, 1fr); }
+  .overlays-row { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ───────── ≤ 980px: tab panels & MCP ───────── */
@@ -27,12 +28,11 @@
   .pipeline-grid .arrow { transform: rotate(90deg); justify-self: center; height: 24px !important; }
 }
 
-/* ───────── ≤ 880px: privacy band & overlays ───────── */
+/* ───────── ≤ 880px: privacy band ───────── */
 @media (max-width: 880px) {
   .privacy-band { grid-template-columns: 1fr; padding: 32px 28px; gap: 20px; }
   .pb-grid { grid-template-columns: 1fr 1fr; }
   .pb-title { font-size: 26px; }
-  .overlays-row { grid-template-columns: 1fr; }
 }
 
 /* ───────── ≤ 800px: footer ───────── */
