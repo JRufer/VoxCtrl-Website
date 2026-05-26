@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.3] - 2026-05-26
+
+updated version number
+
+---
+
 ## [v0.1.2] - 2026-05-25
 
 feat: update frontend styles and rebuild application assets
