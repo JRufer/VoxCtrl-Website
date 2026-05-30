@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.4] - 2026-05-30
+
+Feature: added support for selecting which monitor the overlay appears on. Also bumping the version to v0.1.4
+
+---
+
 ## [v0.1.3] - 2026-05-26
 
 updated version number
