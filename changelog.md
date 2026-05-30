@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.1.5] - 2026-05-30
+
+fix: annotate pos type to resolve E0282 on Windows
+On Windows, the #[cfg(target_os = "linux")] blocks that use `pos` are
+compiled out, leaving the compiler unable to infer the Option type.
+Explicit annotation fixes the build without affecting Linux behaviour.
+https://claude.ai/code/session_01WPCPCafF4rYNGMB11XuEFS
+
+---
+
 ## [v0.1.4] - 2026-05-30
 
 Feature: added support for selecting which monitor the overlay appears on. Also bumping the version to v0.1.4
