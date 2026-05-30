@@ -2,6 +2,16 @@
 
 ## [v0.1.6] - 2026-05-30
 
+chore: bump version to 0.1.6
+v0.1.4 and v0.1.5 tags existed at pre-fix commits; 0.1.6 ensures the
+release build includes all Windows fixes (E0282 annotation, unused
+import, correct bundle artifact path).
+https://claude.ai/code/session_01WPCPCafF4rYNGMB11XuEFS
+
+---
+
+## [v0.1.6] - 2026-05-30
+
 Fix correctly updated version number v0.1.3
 
 ---
