@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.6] - 2026-05-30
+
+Fix correctly updated version number v0.1.3
+
+---
+
 ## [v0.1.5] - 2026-05-30
 
 fix: annotate pos type to resolve E0282 on Windows
