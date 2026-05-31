@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.7] - 2026-05-31
+
+Merge branch 'claude/voice-model-folder-settings-vSnhJ' into development
+
+---
+
 ## [v0.1.6] - 2026-05-31
 
 fix: pass --bundles deb directly to tauri binary for Linux CUDA build
