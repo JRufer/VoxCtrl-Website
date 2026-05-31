@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.8] - 2026-05-31
+
+update version to v0.1.8
+
+---
+
 ## [v0.1.7] - 2026-05-31
 
 Merge branch 'claude/voice-model-folder-settings-vSnhJ' into development
