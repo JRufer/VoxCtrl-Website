@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.1.6] - 2026-05-31
+
+fix: pass --bundles deb directly to tauri binary for Linux CUDA build
+npm run tauri build -- --bundles deb sends --bundles to cargo (not tauri)
+because everything after -- is treated as cargo args. Calling
+node_modules/.bin/tauri build --bundles deb -- --features cuda
+puts --bundles before the cargo separator so tauri sees it correctly.
+https://claude.ai/code/session_01WPCPCafF4rYNGMB11XuEFS
+
+---
+
 ## [v0.1.6] - 2026-05-30
 
 fix: search workspace for bundle artifacts instead of hardcoded path
