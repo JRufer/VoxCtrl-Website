@@ -38,8 +38,8 @@ if (content && toc) {
   };
 
   const [repoRes, tagsRes] = await Promise.allSettled([
-    fetch('https://api.github.com/repos/JRufer/VoxCtr', { headers: { 'Accept': 'application/vnd.github+json' } }),
-    fetch('https://api.github.com/repos/JRufer/VoxCtr/tags',  { headers: { 'Accept': 'application/vnd.github+json' } }),
+    fetch('https://api.github.com/repos/JRufer/voxctrl', { headers: { 'Accept': 'application/vnd.github+json' } }),
+    fetch('https://api.github.com/repos/JRufer/voxctrl/tags', { headers: { 'Accept': 'application/vnd.github+json' } }),
   ]);
 
   if (repoRes.status === 'fulfilled' && repoRes.value.ok && starEl) {

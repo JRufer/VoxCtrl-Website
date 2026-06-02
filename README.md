@@ -1,6 +1,6 @@
-# VoxCtr Website
+# voxctrl Website
 
-Marketing and documentation website for [VoxCtr](https://github.com/jrufer/voxctr) — a programmable voice broker for Linux.
+Marketing and documentation website for [voxctrl](https://github.com/jrufer/voxctrl) — a programmable voice broker for Linux.
 
 Built with PHP includes for shared layout, with separate pages for the landing/marketing section and a full documentation section covering quickstart, installation, configuration, integrations, and architecture.
 

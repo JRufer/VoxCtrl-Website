@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════
-   VoxCtr — Base Styles
+   voxctrl — Base Styles
    Design tokens, reset, typography, nav, backgrounds, shells
    ═══════════════════════════════════════════════════════ */
 
@@ -22,9 +22,12 @@
   --cyan-d: #0d8ea3;
   --cyan-glow: rgba(34, 212, 239, 0.35);
   /* gold — split-complementary to cyan (~188°), anchored at ~42° HSL */
-  --gold-0: #e8a019;   /* deep gold — borders, glows        hsl(39,84%,50%) */
-  --gold-1: #f5c842;   /* mid gold  — text, highlights       hsl(44,90%,61%) */
-  --gold-2: #fde68a;   /* light gold — tints, fills          hsl(47,96%,77%) */
+  --gold-0: #e8a019;
+  /* deep gold — borders, glows        hsl(39,84%,50%) */
+  --gold-1: #f5c842;
+  /* mid gold  — text, highlights       hsl(44,90%,61%) */
+  --gold-2: #fde68a;
+  /* light gold — tints, fills          hsl(47,96%,77%) */
   --gold-glow: rgba(232, 160, 25, 0.3);
   --warn: #ffb454;
   --good: #6ad48a;
@@ -402,34 +405,75 @@ button {
 
 /* ───────── Keyframes ───────── */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
 }
 
 @keyframes scanGlow {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes railScroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes dataFlow {
-  0% { left: 0%; opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { left: 100%; opacity: 0; }
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
 }
 
 /* ───────── Footer ───────── */

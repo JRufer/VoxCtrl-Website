@@ -104,7 +104,7 @@ fix: prep the app for appimage release,
 
 ---
 
-All VoxCtr releases are listed here. Entries are added automatically when a new
-tag is pushed to the [VoxCtr](https://github.com/jrufer/voxctr) repository.
+All voxctrl releases are listed here. Entries are added automatically when a new
+tag is pushed to the [voxctrl](https://github.com/jrufer/voxctrl) repository.
 
 ---

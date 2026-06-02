@@ -73,7 +73,7 @@ setInterval(() => {
 document.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
-    window.location.href = '/voxctr/docs/quickstart.html';
+    window.location.href = '/voxctrl/docs/quickstart.html';
   }
 });
 
@@ -90,8 +90,8 @@ document.addEventListener('keydown', (e) => {
   };
 
   const [repoRes, tagsRes] = await Promise.allSettled([
-    fetch('https://api.github.com/repos/JRufer/VoxCtr', { headers: { 'Accept': 'application/vnd.github+json' } }),
-    fetch('https://api.github.com/repos/JRufer/VoxCtr/tags',  { headers: { 'Accept': 'application/vnd.github+json' } }),
+    fetch('https://api.github.com/repos/JRufer/voxctrl', { headers: { 'Accept': 'application/vnd.github+json' } }),
+    fetch('https://api.github.com/repos/JRufer/voxctrl/tags', { headers: { 'Accept': 'application/vnd.github+json' } }),
   ]);
 
   if (repoRes.status === 'fulfilled' && repoRes.value.ok && starEl) {

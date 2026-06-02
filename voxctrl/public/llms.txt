@@ -1,8 +1,8 @@
-# VoxCtr — Intelligent Audio Interface for Linux
+# voxctrl — Intelligent Audio Interface for Linux
 # llms.txt — structured index for AI agent discovery
 # https://llmstxt.org/
 
-> VoxCtr is a programmable voice input broker for Linux. It transcribes speech locally using
+> voxctrl is a programmable voice input broker for Linux. It transcribes speech locally using
 > faster-whisper (NVIDIA CUDA), whisper.cpp (AMD/Intel Vulkan), or Moonshine (streaming ONNX, CPU/edge),
 > routes the transcript to
 > named output targets (inject, exec, pipe, socket, file, dbus), applies per-target AI post-processing
@@ -14,9 +14,9 @@
 - License: MIT
 - Platform: Linux (Wayland-native; X11 supported)
 - Language: Python, PyQt6
-- Repository: https://github.com/JRufer/VoxCtr
-- MCP Server: Unix domain socket at /tmp/voxctr-mcp.sock (JSON-RPC 2.0)
-- Config: ~/.config/voxctr/config.json, targets.toml, bindings.toml
+- Repository: https://github.com/JRufer/voxctrl
+- MCP Server: Unix domain socket at /tmp/voxctrl-mcp.sock (JSON-RPC 2.0)
+- Config: ~/.config/voxctrl/config.json, targets.toml, bindings.toml
 
 ## Key Capabilities
 
@@ -31,8 +31,8 @@
 
 ## MCP Integration
 
-Server name: voxctr
-Socket: /tmp/voxctr-mcp.sock
+Server name: voxctrl
+Socket: /tmp/voxctrl-mcp.sock
 Protocol: JSON-RPC 2.0, newline-delimited
 
 ### Tools
@@ -48,9 +48,9 @@ Protocol: JSON-RPC 2.0, newline-delimited
 ```json
 {
   "mcpServers": {
-    "voxctr": {
+    "voxctrl": {
       "command": "socat",
-      "args": ["STDIO", "UNIX-CONNECT:/tmp/voxctr-mcp.sock"]
+      "args": ["STDIO", "UNIX-CONNECT:/tmp/voxctrl-mcp.sock"]
     }
   }
 }
@@ -95,21 +95,21 @@ target  = "focused_window"
 
 ## Documentation Sections
 
-- Installation: https://voxctr.dev/docs
-- Quickstart: https://voxctr.dev/docs/quickstart
-- Core Concepts: https://voxctr.dev/docs/concepts
-- Hotkeys & Gestures: https://voxctr.dev/docs/hotkeys
-- Routing & Targets: https://voxctr.dev/docs/routing
-- AT-SPI2 Integration: https://voxctr.dev/docs/atspi
-- Code Mode: https://voxctr.dev/docs/code-mode
-- AI Post-Processing: https://voxctr.dev/docs/ai
-- Voice Output (TTS): https://voxctr.dev/docs/tts
-- Recording Overlays: https://voxctr.dev/docs/overlays
-- MCP Server: https://voxctr.dev/docs/mcp
-- Security: https://voxctr.dev/docs/security
-- Configuration Reference: https://voxctr.dev/docs/configuration
-- Tutorials: https://voxctr.dev/docs/tutorials
-- Architecture: https://voxctr.dev/docs/architecture
+- Installation: https://voxctrl.dev/docs
+- Quickstart: https://voxctrl.dev/docs/quickstart
+- Core Concepts: https://voxctrl.dev/docs/concepts
+- Hotkeys & Gestures: https://voxctrl.dev/docs/hotkeys
+- Routing & Targets: https://voxctrl.dev/docs/routing
+- AT-SPI2 Integration: https://voxctrl.dev/docs/atspi
+- Code Mode: https://voxctrl.dev/docs/code-mode
+- AI Post-Processing: https://voxctrl.dev/docs/ai
+- Voice Output (TTS): https://voxctrl.dev/docs/tts
+- Recording Overlays: https://voxctrl.dev/docs/overlays
+- MCP Server: https://voxctrl.dev/docs/mcp
+- Security: https://voxctrl.dev/docs/security
+- Configuration Reference: https://voxctrl.dev/docs/configuration
+- Tutorials: https://voxctrl.dev/docs/tutorials
+- Architecture: https://voxctrl.dev/docs/architecture
 
 ## Hardware Backends
 

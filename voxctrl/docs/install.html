@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Installation — voxctrl Docs</title>
+  <meta name="description"
+    content="voxctrl runs on Linux and Windows. Recommended: AppImage on Linux. Built with Rust + Tauri." />
+  <link rel="icon" href="/voxctrl/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/voxctrl/css/base.css" />
+  <link rel="stylesheet" href="/voxctrl/css/components.css" />
+  <link rel="stylesheet" href="/voxctrl/css/docs.css" />
+  <link rel="stylesheet" href="/voxctrl/css/responsive.css" />
+</head>
+
+<body>
+
+  <div class="bg-stack">
+    <div class="grid-bg"></div>
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <nav class="nav">
+    <a class="nav-brand" href="/voxctrl/">
+      <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
+      <span>vox<span class="v">ctr</span></span>
+      <span class="nav-version">v0.1.3</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/voxctrl/">Overview</a>
+      <a class="nav-link is-active" href="/voxctrl/docs/quickstart.html">Documentation</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-tools">
+      <a class="btn-pill" id="gh-star" href="https://github.com/JRufer/voxctrl" target="_blank" rel="noreferrer">
+        <span class="stars">&#9733;</span> <span id="gh-star-count">&#x2026;</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="docs-shell">
+    <aside class="docs-side">
+      <div class="group">
+        <span class="h">Getting started</span>
+        <a class="item" href="/voxctrl/docs/quickstart.html"><span class="glyph">&#x2303;</span> Quickstart</a>
+        <a class="item is-active" href="/voxctrl/docs/install.html"><span class="glyph">&#x229E;</span>
+          Installation</a>
+        <a class="item" href="/voxctrl/docs/concepts.html"><span class="glyph">&#x25C7;</span> Core concepts</a>
+      </div>
+      <div class="group">
+        <span class="h">Input &amp; routing</span>
+        <a class="item" href="/voxctrl/docs/hotkeys.html"><span class="glyph">&#x2341;</span> Hotkeys</a>
+        <a class="item" href="/voxctrl/docs/routing.html"><span class="glyph">&#x22B3;</span> Routing &amp;
+          targets</a>
+        <a class="item" href="/voxctrl/docs/atspi.html"><span class="glyph">&#x2237;</span> AT-SPI2</a>
+        <a class="item" href="/voxctrl/docs/codemode.html"><span class="glyph">&#x27E8;/&#x27E9;</span> Code mode</a>
+      </div>
+      <div class="group">
+        <span class="h">AI &amp; voice</span>
+        <a class="item" href="/voxctrl/docs/ai.html"><span class="glyph">&#x2207;</span> AI processing</a>
+        <a class="item" href="/voxctrl/docs/tts.html"><span class="glyph">&#x2295;</span> Voice output</a>
+        <a class="item" href="/voxctrl/docs/overlays.html"><span class="glyph">&#x2C6C;</span> Overlays</a>
+      </div>
+      <div class="group">
+        <span class="h">Integrations</span>
+        <a class="item" href="/voxctrl/docs/mcp.html"><span class="glyph">&#x229E;</span> MCP server</a>
+        <a class="item" href="/voxctrl/docs/dbus.html"><span class="glyph">&#x2234;</span> DBus control</a>
+      </div>
+      <div class="group">
+        <span class="h">Reference</span>
+        <a class="item" href="/voxctrl/docs/config.html"><span class="glyph">&#x2261;</span> Configuration</a>
+        <a class="item" href="/voxctrl/docs/architecture.html"><span class="glyph">&#x25A3;</span> Architecture</a>
+      </div>
+    </aside>
+
+    <main class="docs-content" id="docsContent">
+      <div class="crumbs">GETTING STARTED <span>/</span> INSTALLATION</div>
+      <h1>Installation</h1>
+      <p class="lede">voxctrl is a Tauri desktop app that runs on Linux (Wayland + X11) and Windows 10/11. The
+        recommended install on Linux is the AppImage — a single portable binary with all runtime dependencies bundled.
+      </p>
+
+      <h2>System Requirements</h2>
+      <h3>Linux</h3>
+      <table class="docs-table">
+        <thead>
+          <tr>
+            <th>Package</th>
+            <th>Required?</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>libwebkit2gtk-4.1</code></td>
+            <td>Required</td>
+            <td>Tauri WebView shell</td>
+          </tr>
+          <tr>
+            <td><code>libayatana-appindicator3</code> or <code>libappindicator3</code></td>
+            <td>Required</td>
+            <td>System tray icon</td>
+          </tr>
+          <tr>
+            <td><code>wtype</code></td>
+            <td>Optional</td>
+            <td>Wayland text injection (for inject delivery type)</td>
+          </tr>
+          <tr>
+            <td><code>xdotool</code></td>
+            <td>Optional</td>
+            <td>X11 text injection (for inject delivery type)</td>
+          </tr>
+          <tr>
+            <td><code>espeak-ng</code></td>
+            <td>Optional</td>
+            <td>TTS fallback engine</td>
+          </tr>
+          <tr>
+            <td><code>socat</code></td>
+            <td>Optional</td>
+            <td>Claude Desktop MCP bridge</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Windows</h3>
+      <p>Windows 10 (1903+) or Windows 11. WebView2 runtime is pre-installed on Windows 11; on Windows 10 it downloads
+        automatically on first run.</p>
+
+      <h2>GPU Acceleration</h2>
+      <table class="docs-table">
+        <thead>
+          <tr>
+            <th>Hardware</th>
+            <th>Backend</th>
+            <th>Setup</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>NVIDIA (CUDA 11+)</td>
+            <td>whisper.cpp (CUDA)</td>
+            <td>Auto-detected via <code>nvidia-smi</code> — no extra config</td>
+          </tr>
+          <tr>
+            <td>AMD RDNA / GCN</td>
+            <td>whisper.cpp (Vulkan)</td>
+            <td>Install Vulkan ICD: <code>sudo pacman -S vulkan-icd-loader</code></td>
+          </tr>
+          <tr>
+            <td>Intel Arc / Iris Xe</td>
+            <td>whisper.cpp (Vulkan)</td>
+            <td>Install Vulkan ICD: <code>sudo apt install libvulkan1 vulkan-tools</code></td>
+          </tr>
+          <tr>
+            <td>CPU only</td>
+            <td>whisper.cpp (CPU int8)</td>
+            <td>Out of the box — no extra steps</td>
+          </tr>
+          <tr>
+            <td>Raspberry Pi / Edge</td>
+            <td>Moonshine (ONNX)</td>
+            <td>Select <code>engine.backend = "moonshine"</code> in Settings → Engine</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Option A: AppImage (recommended, Linux)</h2>
+      <p>Download the latest AppImage from <a href="https://github.com/jrufer/voxctrl/releases" target="_blank">GitHub
+          Releases</a>.</p>
+
+      <h3>Quick run</h3>
+      <pre class="code-inline">chmod +x voxctrl.AppImage
+./voxctrl.AppImage</pre>
+
+      <h3>System install (with desktop entry and udev rules)</h3>
+      <pre class="code-inline">bash install.sh</pre>
+      <p>The install script:</p>
+      <ul>
+        <li>Copies the AppImage to <code>~/.local/bin/voxctrl</code></li>
+        <li>Installs a <code>.desktop</code> file for application launchers</li>
+        <li>Creates udev rules for <code>/dev/input</code> access (required for global hotkeys)</li>
+        <li>Adds the current user to the <code>input</code> group</li>
+      </ul>
+      <div class="note"><span class="icon">!</span> After running <code>install.sh</code>, log out and back in for the
+        <code>input</code> group membership to take effect. Until then, global hotkeys will not work.
+      </div>
+
+      <h2>Option B: Windows</h2>
+      <p>Download the <code>voxctrl_setup.exe</code> or <code>voxctrl.msi</code> installer from GitHub Releases and
+        run
+        it. WebView2 is bundled or auto-downloaded.</p>
+      <p>Global hotkeys on Windows use Win32 hooks — no special permissions required.</p>
+
+      <h2>Option C: Build from source</h2>
+      <p>Prerequisites: Rust (stable), Node.js 20+, npm.</p>
+      <pre class="code-inline">git clone https://github.com/jrufer/voxctrl.git
+cd voxctrl
+npm install
+npm run tauri build</pre>
+      <p>The build output is a release binary + AppImage (Linux) or .exe/.msi (Windows).</p>
+      <p>For development with hot-reload: <code>npm run tauri dev</code></p>
+
+      <h2>First Run</h2>
+      <p>On first launch, voxctrl creates <code>~/.config/voxctrl/</code> with default config files and opens the
+        Settings window.</p>
+      <ol>
+        <li><strong>Download a model</strong> — Settings → Engine → choose a size → click Download. Recommendation:
+          <code>small</code> (~466 MB) for good speed/accuracy; <code>large-v3</code> (default, ~3.1 GB) for maximum
+          accuracy.
+        </li>
+        <li><strong>Check your hotkey</strong> — a default binding (<code>Super + Space</code>, hold gesture → inject to
+          focused window) is created automatically. Verify in Settings → Hotkeys.</li>
+        <li><strong>Test dictation</strong> — open any text editor, click into the text area, hold
+          <code>Super + Space</code>, speak, release.
+        </li>
+      </ol>
+
+      <h2>Optional Setup</h2>
+      <h3>TTS (Piper voices)</h3>
+      <p>Go to Settings → TTS, enable TTS, select a voice, click Download. Voices are stored at
+        <code>~/.local/share/voxctrl/piper-voices/</code>.
+      </p>
+
+      <h3>MCP Server (Claude Desktop)</h3>
+      <p>Enable in Settings → Engine → MCP Server. Then add to <code>~/.config/claude/claude_desktop_config.json</code>:
+      </p>
+      <pre
+        class="code-inline">{"mcpServers":{"voxctrl":{"command":"socat","args":["STDIO","UNIX-CONNECT:/tmp/voxctrl-mcp.sock"]}}}</pre>
+
+      <h3>Ollama post-processing</h3>
+      <p>Install <a href="https://ollama.ai" target="_blank">Ollama</a>, pull a model
+        (<code>ollama pull llama3.2</code>), then enable in Settings → Ollama.</p>
+
+      <div class="docs-foot">
+        <a href="quickstart.html"><small>← previous</small><span>Quickstart</span></a>
+        <a href="concepts.html" style="text-align:right;"><small>next →</small><span>Core concepts</span></a>
+      </div>
+    </main>
+
+    <aside class="docs-toc" id="docsToc"></aside>
+  </div>
+
+  <footer class="foot">
+    <div class="shell">
+      <div class="foot-grid">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <img src="/voxctrl/assets/voxctrl.gif" alt="" style="width:32px;height:32px;border-radius:8px;" />
+            <span style="font-weight:700;font-size:18px;">vox<span style="color:var(--cyan-1)">ctr</span></span>
+          </div>
+          <p style="color: var(--txt-2); font-size: 13px; margin-top: 12px; max-width: 280px; line-height: 1.6;">
+            The audio control layer for your AI and automation stack. Native, on-device, MIT-licensed.
+          </p>
+        </div>
+        <div>
+          <h6>Product</h6>
+          <a href="/voxctrl/">Overview</a>
+          <a href="/voxctrl/docs/quickstart.html">Quickstart</a>
+          <a href="/voxctrl/docs/mcp.html">MCP server</a>
+          <a href="/voxctrl/#hardware">Hardware</a>
+          <a href="/voxctrl/#backends">Backends</a>
+        </div>
+        <div>
+          <h6>Docs</h6>
+          <a href="/voxctrl/docs/install.html">Installation</a>
+          <a href="/voxctrl/docs/routing.html">Routing</a>
+          <a href="/voxctrl/docs/atspi.html">AT-SPI2</a>
+          <a href="/voxctrl/docs/overlays.html">Overlays</a>
+        </div>
+        <div>
+          <h6>Open source</h6>
+          <a href="https://github.com/jrufer/voxctrl" target="_blank">GitHub</a>
+          <a href="https://github.com/jrufer/voxctrl/releases" target="_blank">Releases</a>
+          <a href="https://github.com/jrufer/voxctrl/issues" target="_blank">Issues</a>
+          <a href="https://github.com/jrufer/voxctrl/blob/main/LICENSE" target="_blank">MIT License</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <div class="left">
+          <img src="/voxctrl/assets/favicon.png" alt="" />
+          <span>voxctrl &middot; v0.1.3 &middot; linux &amp; windows</span>
+        </div>
+        <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
+          only</div>
+      </div>
+    </div>
+  </footer>
+  <script src="/voxctrl/js/docs.js"></script>
+</body>
+
+</html>
