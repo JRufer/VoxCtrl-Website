@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.9] - 2026-06-02
+
+version bump
+
+---
+
 ## [v0.1.8] - 2026-05-31
 
 update version to v0.1.8
