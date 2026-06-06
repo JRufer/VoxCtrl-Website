@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.12] - 2026-06-06
+
+Merge branch 'development'
+
+---
+
 ## [v0.1.11] - 2026-06-06
 
 version bump to v0.1.11
