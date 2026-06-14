@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.2.1] - 2026-06-14
+
+Version Bump to v0.2.1
+
+---
+
 ## [v0.2.0] - 2026-06-11
 
 Merge remote-tracking branch 'origin/development'
