@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.5.1] - 2026-09-07
+
+Merge pull request #91 from JRufer/claude/bug-report-feature-fdd85e
+Let a tester file a bug report without a GitHub account
+
+---
+
 ## [v0.5.0] - 2026-09-06
 
 Merge pull request #87 from JRufer/claude/voxctrl-memory-usage-increase-fe297f
