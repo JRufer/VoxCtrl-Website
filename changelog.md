@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.5.2] - 2026-09-08
+
+Merge pull request #92 from JRufer/claude/cpu-vulkan-build-versions-09eb7b
+Publish one Linux AppImage instead of separate CPU and Vulkan builds
+
+---
+
 ## [v0.5.1] - 2026-09-07
 
 Merge pull request #91 from JRufer/claude/bug-report-feature-fdd85e
