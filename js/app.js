@@ -908,7 +908,7 @@ function initTargetTabs() {
 /* ==========================================================================
    5. Distro Installer Tabs
    ========================================================================== */
-const APPIMAGE = 'VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage';
+const APPIMAGE = 'VoxCtrl_0.5.3_amd64-linux-x86_64-vulkan.AppImage';
 
 const distroSnippets = {
   appimage: `# 1. Grab the one Linux build from the latest release
@@ -956,8 +956,8 @@ chmod +x ${APPIMAGE}
   windows: `# Windows 10 (21H2+) or Windows 11 — EARLY BETA, please report what breaks
 #
 # Download one installer from the latest release:
-#   VoxCtrl_0.5.2_x64-setup-windows-x86_64.exe          (runs anywhere)
-#   VoxCtrl_0.5.2_x64-setup-windows-x86_64-webgpu.exe   (Moonshine on any D3D12 GPU)
+#   VoxCtrl_0.5.3_x64-setup-windows-x86_64.exe          (runs anywhere)
+#   VoxCtrl_0.5.3_x64-setup-windows-x86_64-webgpu.exe   (Moonshine on any D3D12 GPU)
 #
 # The installer is not code-signed yet, so SmartScreen will say the
 # publisher is unknown: click "More info" then "Run anyway".
