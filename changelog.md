@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.5.3] - 2026-09-09
+
+bump version to v0.5.3
+
+---
+
 ## [v0.5.2] - 2026-09-08
 
 Merge pull request #92 from JRufer/claude/cpu-vulkan-build-versions-09eb7b
