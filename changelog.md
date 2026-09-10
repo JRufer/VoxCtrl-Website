@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.5.4] - 2026-09-10
+
+Merge pull request #101 from JRufer/development
+Bring your own speech engine
+
+---
+
 ## [v0.5.3] - 2026-09-09
 
 bump version to v0.5.3
