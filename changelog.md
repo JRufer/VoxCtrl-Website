@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.5.5] - 2026-09-11
+
+Merge pull request #106 from JRufer/development
+Version v0.5.5
+
+---
+
 ## [v0.5.4] - 2026-09-10
 
 Merge pull request #101 from JRufer/development
