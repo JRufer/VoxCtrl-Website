@@ -7,8 +7,8 @@
   <!-- Primary SEO Meta Tags -->
   <title>VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows</title>
   <meta name="title" content="VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows">
-  <meta name="description" content="VoxCtrl v0.5.3 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine and Parakeet TDT run locally, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
-  <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
+  <meta name="description" content="VoxCtrl v0.5.5 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
+  <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, remote speech engine, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
   <meta name="author" content="JRufer">
   <meta name="theme-color" content="#07090e">
   <link rel="icon" type="image/png" href="assets/app_icon.png">
@@ -40,7 +40,7 @@
       <a href="#" class="nav-brand" id="navBrand">
         <img src="assets/app_icon.png" alt="VoxCtrl Logo" class="nav-logo-icon">
         <span>VoxCtrl</span>
-        <span class="nav-version-badge">v0.5.3</span>
+        <span class="nav-version-badge">v0.5.5</span>
       </a>
 
       <nav>
@@ -101,7 +101,7 @@
         </h1>
 
         <p class="hero-subtitle">
-          Real-time voice dictation and programmable <strong>Output Commands</strong> you trigger by name, out loud. whisper.cpp, Moonshine and Parakeet TDT run natively on your own CPU or GPU, hotkeys arrive through the XDG GlobalShortcuts portal, and a seven-step first-run wizard has the whole thing working before you ever open Settings.
+          Real-time voice dictation and programmable <strong>Output Commands</strong> you trigger by name, out loud. whisper.cpp, Moonshine and Parakeet TDT run natively on your own CPU or GPU — or hand transcription to a <strong>Remote Speech Engine</strong> over the network — hotkeys arrive through the XDG GlobalShortcuts portal, and a seven-step first-run wizard has the whole thing working before you ever open Settings.
         </p>
 
         <div class="hero-cta-group">
@@ -111,7 +111,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>Download v0.5.3</span>
+            <span>Download v0.5.5</span>
           </a>
 
           <div class="hero-terminal-pill" id="heroQuickSnippet">
@@ -122,7 +122,7 @@
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
               </svg>
             </button>
-            <span id="terminalQuickCmd" style="display:none;">chmod +x VoxCtrl_0.5.3_amd64-linux-x86_64-vulkan.AppImage &amp;&amp; ./VoxCtrl_0.5.3_amd64-linux-x86_64-vulkan.AppImage</span>
+            <span id="terminalQuickCmd" style="display:none;">chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage &amp;&amp; ./VoxCtrl-linux-x86_64-vulkan.AppImage</span>
           </div>
 
           <a href="https://github.com/JRufer/VoxCtrl" target="_blank" rel="noopener noreferrer" class="btn-secondary" id="btnHeroDocs">
@@ -181,14 +181,15 @@
               <polyline points="2 12 12 17 22 12"></polyline>
             </svg>
           </div>
-          <h3 class="feature-card-title">Three engines, all on-device</h3>
+          <h3 class="feature-card-title">Four speech engines, on-device by default</h3>
           <p class="feature-card-desc">
-            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription. All run on your own CPU or GPU — nothing leaves the machine.
+            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription — all three run on your own CPU or GPU, nothing leaves the machine. New in v0.5.4: a <strong>Remote Speech Engine</strong> ("Bring Your Own Voice Engine") that streams audio to any OpenAI-compatible <code>/v1/audio/transcriptions</code> server instead — a homelab GPU box, vLLM, or a cloud API — with connection testing and model discovery built in.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">whisper-rs</span>
             <span class="feature-tag">Moonshine ONNX</span>
             <span class="feature-tag">Parakeet TDT</span>
+            <span class="feature-tag">Remote Speech Engine</span>
             <span class="feature-tag">Vulkan</span>
             <span class="feature-tag">CUDA (opt-in)</span>
           </div>
@@ -245,9 +246,10 @@
           </div>
           <h3 class="feature-card-title">Local Neural TTS Feedback</h3>
           <p class="feature-card-desc">
-            Hear synthesized replies aloud without cloud APIs. Choose from Breeze-TTS-2, Pocket-TTS voice cloning, Piper, Inflect Micro (38MB ONNX), or lightweight eSpeak-NG. Since v0.5.3 the model can hand its memory back: switch <strong>Model Memory</strong> to on-demand and the weights load when a spoken reply is coming and unload after 15 minutes idle.
+            Hear synthesized replies aloud without cloud APIs. Choose from six engines: the new <strong>VoxCPM2</strong> (2B, voice design or cloning), Breeze-TTS-2, Pocket-TTS voice cloning, Piper, Inflect Micro (38MB ONNX), or lightweight eSpeak-NG. Since v0.5.3 the model can hand its memory back: switch <strong>Model Memory</strong> to on-demand and the weights load when a spoken reply is coming and unload after 15 minutes idle.
           </p>
           <div class="feature-tag-list">
+            <span class="feature-tag">VoxCPM2</span>
             <span class="feature-tag">Pocket-TTS Clone</span>
             <span class="feature-tag">Breeze-TTS-2</span>
             <span class="feature-tag">Piper</span>
@@ -887,11 +889,11 @@ strip_newlines = false</code></pre>
 
       <!-- The other nine tabs -->
       <div class="settings-index">
-        <div class="set-idx"><b>Engine</b><span>Backend, model size and download, GPU offloading</span></div>
+        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, Remote Speech Engine), model size and download, GPU offloading, S1-mini dictation cleanup — the Remote Speech Engine and S1-mini added in v0.5.4/v0.5.5, after these screenshots</span></div>
         <div class="set-idx"><b>Hotkeys</b><span>Gestures, bindings, and how shortcuts are reaching VoxCtrl</span></div>
         <div class="set-idx"><b>Visual</b><span>Overlay style, position, and the command trigger overlay</span></div>
         <div class="set-idx"><b>Audio</b><span>Input device, VAD, RNNoise suppression</span></div>
-        <div class="set-idx"><b>TTS</b><span>Engine, voice downloads, global stop key, and Model Memory — added in v0.5.3, after these screenshots</span></div>
+        <div class="set-idx"><b>TTS</b><span>Engine, voice downloads, global stop key, and Model Memory — VoxCPM2 added in v0.5.5, Model Memory in v0.5.3, after these screenshots</span></div>
         <div class="set-idx"><b>Features</b><span>Snippets, spoken punctuation, code mode, history</span></div>
         <div class="set-idx"><b>OpenAI API</b><span>Any OpenAI-compatible endpoint for LLM rewriting</span></div>
         <div class="set-idx set-idx-new"><b>Bug Report</b><span>Added in v0.5.1, after these screenshots were taken</span></div>
@@ -1017,11 +1019,25 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">RELEASE TIMELINE</div>
         <h2 class="section-title">Everything that landed since v0.3.6.</h2>
         <p class="section-desc">
-          Nine releases in nine days, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta and a TTS model that gives its memory back.
+          Eleven releases in ten days, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta, a Remote Speech Engine and now on-device dictation cleanup.
         </p>
       </div>
 
       <ol class="rel-timeline" id="relTimeline">
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.5.5</b><span class="rel-date">10 Sep 2026</span><span class="rel-tag">VoxCPM2 + S1-mini</span></div>
+            <p><strong>S1-mini</strong> joins as an on-device dictation cleanup pass — a Qwen3-0.6B model, run through Candle in an isolated sidecar process, that smooths hesitations and self-corrections into clean prose. It's Vulkan-accelerated with a CPU fallback, and toggles globally in Settings → Engine or per hotkey. <strong>VoxCPM2</strong> arrives as a sixth TTS voice alongside the existing five: 2B-parameter, with both voice design and voice cloning. Release builds also stop stamping a version number into their filename, so the in-app updater works the way it was supposed to.</p>
+          </div>
+        </li>
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.5.4</b><span class="rel-date">9 Sep 2026</span><span class="rel-tag">Remote Speech Engine</span></div>
+            <p>Bring your own speech engine: Settings → Engine and the setup wizard can now point at any OpenAI-compatible <code>/v1/audio/transcriptions</code> server — a homelab GPU box, vLLM, LocalAI, or a cloud API — with a live connection test and model discovery before you commit. Also fixes a major bug when swapping STT engines at runtime, and a bug-reporting regression.</p>
+          </div>
+        </li>
         <li class="rel-item">
           <span class="rel-dot"></span>
           <div class="rel-body">
@@ -1207,12 +1223,12 @@ strip_newlines = false</code></pre>
 #    (Vulkan-accelerated, and falls back to the CPU when there is no GPU)
 
 # 2. Make it executable
-chmod +x VoxCtrl_0.5.3_amd64-linux-x86_64-vulkan.AppImage
+chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
 
 # 3. Run it. The first-run wizard opens, and VoxCtrl registers its own
 #    desktop entry and icon under ~/.local/share — no install step, no
 #    udev rule, no permissions to grant.
-./VoxCtrl_0.5.3_amd64-linux-x86_64-vulkan.AppImage</code></pre>
+./VoxCtrl-linux-x86_64-vulkan.AppImage</code></pre>
 
             <button class="btn-copy-terminal" data-copy-target="terminalCodeSnippet" id="btnCopyInstall">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1301,7 +1317,7 @@ chmod +x VoxCtrl_0.5.3_amd64-linux-x86_64-vulkan.AppImage
 
       <div class="footer-bottom">
         <div>© 2026 VoxCtrl Project. Created by JRufer. MIT licensed, free and open source.</div>
-        <div>v0.5.3 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
+        <div>v0.5.5 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
       </div>
     </div>
   </footer>

@@ -151,11 +151,11 @@ const onboardingSteps = [
     step: '02',
     eyebrow: '// 02 · TRANSCRIPTION ENGINE',
     title: 'Which ears should VoxCtrl use?',
-    blurb: 'Pick the engine and the model size, with speed, accuracy, RAM and VRAM drawn side by side — and a quiet-room versus noisy-room comparison, because that is the difference that actually decides it. The model downloads before you are allowed to continue, so nothing is half-configured later.',
+    blurb: 'Pick the engine and the model size, with speed, accuracy, RAM and VRAM drawn side by side — and a quiet-room versus noisy-room comparison, because that is the difference that actually decides it. Prefer to run nothing locally? Point this step at a Remote Speech Engine instead and test the connection live. The model downloads (or the remote endpoint tests clean) before you are allowed to continue, so nothing is half-configured later.',
     features: [
-      'whisper.cpp, Moonshine or Parakeet TDT — all on-device',
+      'whisper.cpp, Moonshine, Parakeet TDT — all on-device — or a Remote Speech Engine over the network',
       'GPU offloading toggle says which engine your build can accelerate',
-      'The chosen model is on disk before the wizard moves on'
+      'The chosen model is on disk (or the remote endpoint tested) before the wizard moves on'
     ]
   },
   {
@@ -195,9 +195,9 @@ const onboardingSteps = [
     step: '06',
     eyebrow: '// 06 · TEXT TO SPEECH · OPTIONAL',
     title: 'Should VoxCtrl talk back?',
-    blurb: 'Optional, and easy to skip. Five engines compared on quality, speed and download size, each with a sample you can play before committing. Breeze-TTS-2 and Pocket TTS are gated HuggingFace downloads, so the token field is right there with links to accept the licences.',
+    blurb: 'Optional, and easy to skip. Six engines compared on quality, speed and download size, each with a sample you can play before committing — including the new VoxCPM2 neural voice. Breeze-TTS-2 and Pocket TTS are gated HuggingFace downloads, so the token field is right there with links to accept the licences; VoxCPM2 downloads without one.',
     features: [
-      'Breeze-TTS-2, Pocket TTS, Piper, Inflect Micro, eSpeak-NG',
+      'VoxCPM2, Breeze-TTS-2, Pocket TTS, Piper, Inflect Micro, eSpeak-NG',
       'Play a sample before you choose',
       '“Skip for now” — TTS can be enabled later in Settings → TTS'
     ]
@@ -908,7 +908,7 @@ function initTargetTabs() {
 /* ==========================================================================
    5. Distro Installer Tabs
    ========================================================================== */
-const APPIMAGE = 'VoxCtrl_0.5.3_amd64-linux-x86_64-vulkan.AppImage';
+const APPIMAGE = 'VoxCtrl-linux-x86_64-vulkan.AppImage';
 
 const distroSnippets = {
   appimage: `# 1. Grab the one Linux build from the latest release
@@ -956,8 +956,8 @@ chmod +x ${APPIMAGE}
   windows: `# Windows 10 (21H2+) or Windows 11 — EARLY BETA, please report what breaks
 #
 # Download one installer from the latest release:
-#   VoxCtrl_0.5.3_x64-setup-windows-x86_64.exe          (runs anywhere)
-#   VoxCtrl_0.5.3_x64-setup-windows-x86_64-webgpu.exe   (Moonshine on any D3D12 GPU)
+#   VoxCtrl-windows-x86_64.exe          (runs anywhere)
+#   VoxCtrl-windows-x86_64-webgpu.exe   (Moonshine on any D3D12 GPU)
 #
 # The installer is not code-signed yet, so SmartScreen will say the
 # publisher is unknown: click "More info" then "Run anyway".

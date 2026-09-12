@@ -131,7 +131,9 @@
         release; the migrated config is immediately re-saved to disk to clean up the old key.</p>
 
       <h2>engine</h2>
-      <p>The engine config has two top-level fields plus a nested sub-object per backend.</p>
+      <p>The engine config supports four distinct speech-recognition backends, each with its own nested sub-object.
+        There is also an on-device dictation cleanup pass, <code>s1_mini</code>, that runs independently of which
+        backend is selected.</p>
       <table class="docs-table">
         <thead>
           <tr>
@@ -143,19 +145,15 @@
         <tbody>
           <tr>
             <td>backend</td>
-            <td>"auto"</td>
-            <td>"auto" | "whisper-cpp" | "moonshine" — auto selects based on GPU availability</td>
-          </tr>
-          <tr>
-            <td>inference_mode</td>
-            <td>"Balanced"</td>
-            <td>"Balanced" | "Aggressive" — Balanced is recommended</td>
+            <td>"whisper-cpp"</td>
+            <td>"whisper-cpp" | "moonshine" | "parakeet" | "remote-openai" — which speech-recognition backend to use</td>
           </tr>
           <tr>
             <td>whisper_cpp.model_size</td>
-            <td>"large-v3"</td>
+            <td>"tiny"</td>
             <td>tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v2, large-v3,
-              large-v3-turbo</td>
+              large-v3-turbo. <code>tiny</code>/<code>tiny.en</code> auto-download silently on first launch; other
+              sizes require an explicit download in Settings → Engine.</td>
           </tr>
           <tr>
             <td>whisper_cpp.device</td>
@@ -165,7 +163,7 @@
           <tr>
             <td>whisper_cpp.threads</td>
             <td>0</td>
-            <td>CPU thread count; 0 = half of logical cores</td>
+            <td>CPU thread count; 0 = one per physical core</td>
           </tr>
           <tr>
             <td>whisper_cpp.model_dir</td>
@@ -180,10 +178,60 @@
           <tr>
             <td>moonshine.language</td>
             <td>"en"</td>
-            <td>BCP-47 language code</td>
+            <td>BCP-47 language code (output label only)</td>
+          </tr>
+          <tr>
+            <td>parakeet.model_size</td>
+            <td>"tdt-0.6b-v3"</td>
+            <td>Parakeet model size, INT8 ONNX (only used when backend = "parakeet")</td>
+          </tr>
+          <tr>
+            <td>parakeet.language</td>
+            <td>"auto"</td>
+            <td>Target language code</td>
+          </tr>
+          <tr>
+            <td>remote_openai.endpoint</td>
+            <td>"http://localhost:8000/v1"</td>
+            <td>URL of the OpenAI-compatible speech-to-text service (used when backend = "remote-openai" — "Bring
+              Your Own Voice Engine")</td>
+          </tr>
+          <tr>
+            <td>remote_openai.api_key</td>
+            <td>null</td>
+            <td>Optional Bearer token authentication</td>
+          </tr>
+          <tr>
+            <td>remote_openai.model</td>
+            <td>"whisper-1"</td>
+            <td>Remote model name, e.g. <code>whisper-1</code>, <code>large-v3</code></td>
+          </tr>
+          <tr>
+            <td>remote_openai.language</td>
+            <td>""</td>
+            <td>Language code for transcription, or blank for automatic detection</td>
+          </tr>
+          <tr>
+            <td>remote_openai.timeout_secs</td>
+            <td>30</td>
+            <td>Request timeout in seconds (min 5, max 300)</td>
+          </tr>
+          <tr>
+            <td>s1_mini.enabled</td>
+            <td>false</td>
+            <td>Enable on-device dictation cleanup via Superwhisper's fine-tuned S1-mini (Qwen3-0.6B) model —
+              normalizes hesitations and self-corrections after transcription, independent of the STT backend</td>
+          </tr>
+          <tr>
+            <td>s1_mini.styling</td>
+            <td>"semi-formal"</td>
+            <td>"semi-formal" | "formal" | "casual", etc. — text styling passed to S1-mini</td>
           </tr>
         </tbody>
       </table>
+      <p>A config still holding a retired <code>backend = "auto"</code> value loads as <code>"whisper-cpp"</code>.
+        Moonshine is a default compile-time feature; a build made with <code>--no-default-features</code> omits it,
+        and selecting <code>"moonshine"</code> then transparently falls back to <code>whisper-cpp</code>.</p>
 
       <h2>audio</h2>
       <table class="docs-table">
