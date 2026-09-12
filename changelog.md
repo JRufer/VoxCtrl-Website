@@ -2,15 +2,20 @@
 
 ## [v0.5.5] - 2026-09-11
 
-Merge pull request #106 from JRufer/development
-Version v0.5.5
+S1-mini joins as an on-device dictation cleanup pass (Qwen3-0.6B via Candle,
+Vulkan-accelerated with a CPU fallback, toggle globally or per hotkey).
+VoxCPM2 arrives as a sixth TTS voice — 2B-parameter, voice design and
+cloning. Release builds stop stamping a version number into their filename,
+so the in-app updater works correctly again.
 
 ---
 
 ## [v0.5.4] - 2026-09-10
 
-Merge pull request #101 from JRufer/development
-Bring your own speech engine
+Bring your own speech engine: Settings → Engine and the setup wizard can now
+point at any OpenAI-compatible `/v1/audio/transcriptions` server, with a live
+connection test and model discovery. Also fixes a major bug when swapping
+STT engines at runtime, and a bug-reporting regression.
 
 ---
 

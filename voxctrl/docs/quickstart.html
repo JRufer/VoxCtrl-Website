@@ -119,7 +119,10 @@
       </ul>
       <p>Models are stored in <code>~/.local/share/voxctrl/models/</code>. The default inference backend is
         whisper.cpp, automatically selecting CUDA (NVIDIA, requires a CUDA-enabled build), Vulkan (AMD/Intel/NVIDIA),
-        or CPU at startup. A Moonshine backend is also available — switch via Settings → Engine.</p>
+        or CPU at startup. Three more backends are available from the same tab: Moonshine (ONNX, tuned for noisy
+        rooms), Parakeet TDT (NVIDIA FastConformer, ultra-fast), and a Remote Speech Engine that sends audio to any
+        OpenAI-compatible <code>/v1/audio/transcriptions</code> server instead of running a model locally — switch
+        backends via Settings → Engine.</p>
 
       <h2>4. Speak</h2>
       <p>Click into any text field. Hold <code>Super+Space</code>. Speak. Release. Your transcript appears.</p>
