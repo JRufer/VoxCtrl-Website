@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.5.6] - 2026-09-13
+
+Merge pull request #109 from JRufer/development
+Settings UI overhaul: reorder tabs, move S1-mini to Post-Processing, centralize HF token
+
+---
+
 ## [v0.5.5] - 2026-09-11
 
 S1-mini joins as an on-device dictation cleanup pass (Qwen3-0.6B via Candle,
