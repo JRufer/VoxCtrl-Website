@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.5.7] - 2026-09-15
+
+Merge pull request #111 from JRufer/development
+* Replaced Slint for Overlay UI rendering. This added the ability for users to create custom Overlay UI designs.
+* Fixed a language issue with Whisper.cpp
+
+---
+
 ## [v0.5.6] - 2026-09-13
 
 Merge pull request #109 from JRufer/development
