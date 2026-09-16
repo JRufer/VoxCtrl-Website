@@ -1,26 +1,24 @@
 # voxctrl Website
 
-Marketing and documentation website for [voxctrl](https://github.com/jrufer/voxctrl) — a programmable voice broker for Linux.
+Marketing and documentation website for [voxctrl](https://github.com/jrufer/voxctrl) — a programmable voice broker for Linux and Windows.
 
-Built with PHP includes for shared layout, with separate pages for the landing/marketing section and a full documentation section covering quickstart, installation, configuration, integrations, and architecture.
+Hand-written, static HTML/CSS/JS with no build step and no framework. Served at `jrufer.com/voxctrl/`, which corresponds to this repo's `voxctrl/` folder with the landing page (and its own `css/`, `js/`, `assets/`) laid over the top.
 
 ## Structure
 
 ```
-index.php              # Landing page
-includes/              # Shared PHP partials (head, nav, footer, docs sidebar)
-docs/                  # Documentation pages (14 pages)
-js/                    # landing.js, docs.js
-css/                   # Stylesheets
-assets/                # Images, GIFs, favicon
+index.html              # Landing page — this IS the deployed page, no build step
+css/, js/, assets/      # Landing page's stylesheet, script, and media
+changelog.md            # Appended automatically by the app repo's update-changelog.yml
+voxctrl/docs/           # Documentation pages (14 pages), own css/js/assets
 ```
 
 ## Local development
 
-Requires a PHP server:
+Any static file server works, e.g.:
 
 ```bash
-php -S localhost:8000
+python3 -m http.server 8000
 ```
 
 Then open [http://localhost:8000](http://localhost:8000).

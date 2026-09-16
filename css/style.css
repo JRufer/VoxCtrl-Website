@@ -2461,6 +2461,44 @@ section {
   line-height: 1.7;
 }
 
+/* Overlays section — "build your own" callout */
+.ovl-cta {
+  margin-top: 28px;
+  position: relative;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(192, 132, 252, 0.28);
+  background: linear-gradient(160deg, rgba(30, 16, 60, 0.55), rgba(9, 12, 20, 0.92));
+  box-shadow: var(--shadow-lg);
+}
+
+.ovl-cta-body { padding: 32px 36px; }
+
+.ovl-cta-title {
+  font-size: 1.15rem;
+  margin-bottom: 14px;
+  color: var(--text-primary, #f1f5f9);
+}
+
+.ovl-cta-title code { color: var(--purple-400); }
+
+.ovl-cta-lead {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 82ch;
+  margin-bottom: 24px;
+}
+
+.ovl-cta-lead code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--purple-400);
+}
+
+@media (max-width: 640px) {
+  .ovl-cta-body { padding: 22px 18px; }
+}
+
 .nav-beta {
   font-family: var(--font-mono);
   font-size: 0.55rem;
