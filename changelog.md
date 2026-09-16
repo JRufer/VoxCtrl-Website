@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.5.9] - 2026-09-16
+
+Merge pull request #118 from JRufer/claude/custom-overlay-freeze-bug-qrovxu
+v0.5.9: Fix overlay freeze on Linux (KDE/XWayland) — move window lifecycle to the backend
+
+---
+
 ## [v0.5.8] - 2026-09-16
 
 Merge pull request #115 from JRufer/development
