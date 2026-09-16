@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.5.8] - 2026-09-16
+
+Merge pull request #115 from JRufer/development
+After auditing VoxCtrl for MIT license compliance, it came to my attention that one of the libraries used for Vulcan acceleration for Pocket TTS was not compatible with our goal of MIT license compliance. To address this I replaced the entire Pocket TTS pipeline to use audio.cpp. Doing so exposed several bugs that were preventing some of the other TTS engines from running properly so they too now use audio.cpp to drive their Vulcan acceleration.
+After this was complete, I addressed an issue that was reloading all of the TTS engines on every utterance. This was bloating their time to response immensely. This issue is now fixed and now a tts model will stay in memory until the app is closed or the user defined timeout is triggered.
+
+---
+
 ## [v0.5.7] - 2026-09-15
 
 Merge pull request #111 from JRufer/development
