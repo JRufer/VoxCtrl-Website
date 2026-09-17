@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.2.7</span>
+      <span class="nav-version">v0.6.1</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -118,8 +118,9 @@
         <li><code>tiny</code> (~75 MB) — fastest, suitable for quick testing or weak hardware</li>
       </ul>
       <p>Models are stored in <code>~/.local/share/voxctrl/models/</code>. The default inference backend is
-        whisper.cpp, automatically selecting CUDA (NVIDIA, requires a CUDA-enabled build), Vulkan (AMD/Intel/NVIDIA),
-        or CPU at startup. Three more backends are available from the same tab: Moonshine (ONNX, tuned for noisy
+        whisper.cpp, which automatically uses Vulkan to accelerate any NVIDIA, AMD or Intel GPU through the host
+        driver, falling back to the CPU when there is no Vulkan device. Three more backends are available from the
+        same tab: Moonshine (ONNX, tuned for noisy
         rooms), Parakeet TDT (NVIDIA FastConformer, ultra-fast), and a Remote Speech Engine that sends audio to any
         OpenAI-compatible <code>/v1/audio/transcriptions</code> server instead of running a model locally — switch
         backends via Settings → Engine.</p>
@@ -187,7 +188,7 @@
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.2.7 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.6.1 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>

@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.2.7</span>
+      <span class="nav-version">v0.6.1</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -152,16 +152,12 @@
         </thead>
         <tbody>
           <tr>
-            <td>NVIDIA (CUDA)</td>
-            <td>whisper.cpp (CUDA)</td>
-            <td>Requires a CUDA-enabled build (<code>npm run tauri build -- --features cuda</code>) — the
-              standard AppImage is CPU/Vulkan only. Auto-detected via <code>nvidia-smi</code> once built with CUDA.</td>
-          </tr>
-          <tr>
-            <td>AMD / Intel / NVIDIA</td>
+            <td>NVIDIA / AMD / Intel</td>
             <td>whisper.cpp (Vulkan)</td>
-            <td>Install Vulkan ICD: <code>sudo pacman -S vulkan-icd-loader</code> (Arch) or
-              <code>sudo apt install vulkan-tools libvulkan1</code> (Ubuntu)</td>
+            <td>The published AppImage already has this built in — it uses the host Vulkan driver
+              automatically. Only needed as a manual step if you're building from source without the
+              bundled loader: <code>sudo pacman -S vulkan-icd-loader</code> (Arch) or
+              <code>sudo apt install vulkan-tools libvulkan1</code> (Ubuntu).</td>
           </tr>
           <tr>
             <td>CPU only</td>
@@ -367,7 +363,7 @@ sudo pacman -S xdotool</pre>
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.2.7 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.6.1 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>
