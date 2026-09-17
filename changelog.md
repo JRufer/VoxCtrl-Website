@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.6.1] - 2026-09-17
+
+Merge pull request #123 from JRufer/development
+v0.6.1: Fix the overlay's smeared closing animation on released AppImages
+
+---
+
 ## [v0.5.9] - 2026-09-16
 
 Merge pull request #118 from JRufer/claude/custom-overlay-freeze-bug-qrovxu
