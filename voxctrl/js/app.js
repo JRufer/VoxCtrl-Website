@@ -949,8 +949,8 @@ sudo pacman -S --needed wtype xdotool
 chmod +x ${APPIMAGE}
 ./${APPIMAGE}
 
-# Building from source instead (Vulkan is the standard build;
-# CUDA is opt-in at compile time):
+# Building from source instead (Vulkan is the standard build,
+# and runs on the CPU when there is no Vulkan device):
 # npm install && npx tauri build --features vulkan`,
 
   windows: `# Windows 10 (21H2+) or Windows 11 — EARLY BETA, please report what breaks

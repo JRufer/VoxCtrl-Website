@@ -1061,7 +1061,7 @@ strip_newlines = false</code></pre>
         <li class="rel-item rel-item-major">
           <span class="rel-dot"></span>
           <div class="rel-body">
-            <div class="rel-head"><b>v0.6.1</b><span class="rel-date">16 Sep 2026</span><span class="rel-tag">overlay freeze, fixed for real</span></div>
+            <div class="rel-head"><b>v0.6.1 · v0.5.9</b><span class="rel-date">16 Sep 2026</span><span class="rel-tag">overlay smear fixed</span></div>
             <p>A patch release fixing the overlay's blurry, opaque smear on close. The cause was the WebKitGTK bundled into released AppImages, which renders a transparent window's compositing layers without their alpha channel mid-animation — VoxCtrl now prefers the WebKitGTK already on your system, falling back to its own copy only when none is found. With that fixed, the overlay window goes back to being built once at startup and kept for the session (rather than destroyed and rebuilt on every dictation, v0.5.9's stopgap for the same bug), so it also opens faster and the brief black-box flash on every activation is gone. Every build now reports the exact commit it came from (<code>--version</code>).</p>
           </div>
         </li>
