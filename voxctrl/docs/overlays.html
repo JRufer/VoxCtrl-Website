@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Overlays — voxctrl Docs</title>
   <meta name="description"
-    content="voxctrl displays a transparent always-on-top HUD while recording, rendered by a native Slint helper process. Eight built-in styles." />
+    content="voxctrl displays a transparent always-on-top HUD while recording, rendered by a Tauri WebviewWindow. Eight built-in styles, plus custom styles you build yourself in HTML and CSS." />
   <link rel="icon" href="/voxctrl/assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -85,8 +85,10 @@
       <div class="crumbs">AI &amp; VOICE <span>/</span> OVERLAYS</div>
       <h1>Overlays</h1>
       <p class="lede">voxctrl displays a transparent always-on-top HUD while recording, while TTS is speaking, or
-        while the MCP server is actively recording. Eight built-in styles are rendered by a dedicated native helper
-        process. Switch between them in Settings → Visual tab.</p>
+        while the MCP server is actively recording. Eight built-in styles are rendered by an ordinary Tauri
+        <code>WebviewWindow</code> — the same component tree used for the style preview in Settings, so what you see
+        there is exactly what appears during a real dictation. Switch between them, or add a
+        <a href="#custom-overlay-styles">style of your own</a>, in Settings → Visual Feedback.</p>
 
       <h2>Built-in styles</h2>
       <p>The default is <strong>Ocean Wave</strong>. All styles share three state palettes: Recording (the style's
@@ -154,12 +156,12 @@
       </table>
 
       <p>To disable the overlay entirely, set <code>ui.overlay_style = "none"</code> in
-        <code>~/.config/voxctrl/config.json</code> or toggle it off in Settings → Visual.
+        <code>~/.config/voxctrl/config.json</code> or toggle it off in Settings → Visual Feedback.
       </p>
 
       <h2>Selecting a style</h2>
-      <p>Open Settings → Visual tab → Overlay Style dropdown. Changes take effect immediately and are hot-switched
-        without restarting the overlay helper. The setting is written to <code>config.json</code> as
+      <p>Open Settings → Visual Feedback → Overlay style dropdown. Changes take effect immediately and are
+        hot-switched without recreating the window. The setting is written to <code>config.json</code> as
         <code>ui.overlay_style</code>.</p>
 
       <pre class="code-inline">// config.json excerpt
@@ -174,7 +176,8 @@
 
       <p>Valid <code>overlay_style</code> values: <code>"blue_wave"</code>, <code>"voice_card"</code>,
         <code>"waveform"</code>, <code>"pulse"</code>, <code>"mono_bars"</code>, <code>"spectrum"</code>,
-        <code>"terminal"</code>, <code>"vinyl"</code>, <code>"none"</code>.
+        <code>"terminal"</code>, <code>"vinyl"</code>, <code>"none"</code> — or the name of any
+        <a href="#custom-overlay-styles">custom overlay folder</a> you've added.
       </p>
 
       <h2>Positioning</h2>
@@ -215,22 +218,80 @@
         live mini-equalizer and the active target label, and slides back down when speech ends.</p>
 
       <h2>How it works</h2>
-      <p>The built-in overlay styles are rendered by a dedicated native helper process (<code>voxctrl-overlay</code>,
-        built with <a href="https://slint.dev" target="_blank" rel="noreferrer">Slint</a>) in a borderless,
-        transparent, always-on-top, click-through window (560×190 logical px) drawn over whatever application is in
-        focus. The main VoxCtrl process spawns this helper at startup and streams newline-delimited JSON messages
-        (<code>status</code>, <code>position</code>, <code>shutdown</code>) to its stdin — recording/processing/
-        speaking state, smoothed microphone level, the active routing target label, the configured style, and screen
-        coordinates.</p>
-      <p>The window is fully transparent except for drawn pixels, stays always-on-top (re-asserted on every
-        re-appearance), and is click-through (cursor hit-testing disabled at the windowing-system level), so mouse
-        events pass cleanly through to the window beneath it.</p>
+      <p>The overlay — built-in or custom — is rendered by an ordinary Tauri <code>WebviewWindow</code>: a
+        borderless, transparent, always-on-top, click-through window (592×222 logical px) drawn over whatever
+        application is in focus. It's the same component tree used for the style preview in Settings, so what you
+        see there is exactly what appears during a real dictation. State reaches it the same way it reaches every
+        other window in the app — the <code>status-tick</code> and <code>audio-level</code> Tauri events the backend
+        already emits app-wide — so there's no separate IPC protocol just for the overlay.</p>
+      <p>The window is built once at startup and kept for the whole session, rendering nothing while idle — not
+        rebuilt on every dictation. An interim v0.5.9 build had switched to creating it fresh per activation as a
+        workaround for a stale-frame bug (see below); v0.6.1 fixes the actual cause and reverts to the
+        built-once approach, so there's no longer a brief black-box flash before each overlay appears.</p>
+      <p><strong>The v0.6.1 fix:</strong> released AppImages bundle their own copy of WebKitGTK, and the version
+        bundled by the build host rendered a transparent window's compositing layers without their alpha channel —
+        static content drew fine, but anything mid-animation turned into an opaque copy of its last frame, which is
+        what caused the closing animation's blurry smear (and, before that, made a hidden-then-reshown window keep
+        displaying whatever was last composited). VoxCtrl now prefers the WebKitGTK already installed on your
+        system, falling back to its bundled copy only when none is found — every newer WebKitGTK renders the
+        overlay correctly, which is most desktops and all rolling releases. This is owned entirely by the Rust
+        backend, so it works the same regardless of which style — built-in or custom — is selected.</p>
+      <p>The window is fully transparent except for drawn pixels, stays always-on-top (re-asserted on a roughly
+        1-second heartbeat while a dictation is active, since a window manager can restack it mid-session and it
+        never recovers on its own), and is click-through (cursor hit-testing disabled at the windowing-system
+        level), so mouse events pass cleanly through to the window beneath it. On Wayland, VoxCtrl forces the whole
+        app onto XWayland at startup to get real positioning and always-on-top back, since Wayland gives clients no
+        way to do either themselves.</p>
       <p>Every built-in style plays a dedicated spring-driven load animation when it appears and an unload animation
-        when it disappears — the helper window stays alive until the unload animation finishes, rather than
-        vanishing the instant recording stops.</p>
+        when it disappears, driven client-side in Svelte — the window stays alive for the whole animation, so the
+        unload animation is never cut off mid-play.</p>
       <p>The overlay is shown automatically when recording starts and hidden when transcription completes, provided
         <code>ui.show_overlay = true</code>.
       </p>
+
+      <h2 id="custom-overlay-styles">Custom overlay styles</h2>
+      <p><strong>New in v0.5.7.</strong> Beyond the eight built-in styles, VoxCtrl loads user-authored styles from an
+        overlays folder — <code>~/.local/share/voxctrl/overlays</code> on Linux, the platform-equivalent path
+        elsewhere. Every subfolder containing an <code>index.html</code> and a <code>style.css</code> becomes a
+        selectable style in <strong>Settings → Visual Feedback → Overlay style</strong>, named after the folder. New
+        or renamed folders show up the next time that dropdown opens, and both files are read fresh, together,
+        every time you select that style — including re-selecting the one already active — and again every time the
+        overlay next activates. No app restart needed either way.</p>
+      <p>VoxCtrl seeds a <code>Custom/</code> folder the first time it runs: a complete, working example — a copy of
+        the built-in Voice Card style with one line changed (<code>VOXCTRL</code> → <code>CUSTOM OVERLAY</code>) —
+        so you can compare the two and see exactly what a real overlay folder looks like. VoxCtrl makes sure
+        <code>Custom/</code> exists and never touches it again once it does, edited or not, so it's safe to
+        experiment in directly. To keep your own style alongside it, duplicate <code>Custom/</code>, rename the
+        copy (the folder name becomes the style's name in Settings), and edit its two files.</p>
+      <p><strong>There's no <code>&lt;script&gt;</code> tag.</strong> The overlay window's content-security-policy
+        is <code>script-src 'self'</code> with no <code>unsafe-inline</code>, which silently blocks inline
+        <code>&lt;script&gt;</code> execution everywhere in the app, custom overlays included, with no visible error
+        (there's no console in that window). Drive your overlay from CSS instead: VoxCtrl continuously writes live
+        state onto custom properties on the page root, for <code>var()</code>/<code>calc()</code> to read directly —
+        no script needed.</p>
+      <table class="docs-table">
+        <thead>
+          <tr><th>Custom property</th><th>Range</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--voxctrl-recording</code></td><td><code>0</code> / <code>1</code></td><td>Microphone is capturing</td></tr>
+          <tr><td><code>--voxctrl-processing</code></td><td><code>0</code> / <code>1</code></td><td>Audio is being transcribed</td></tr>
+          <tr><td><code>--voxctrl-speaking</code></td><td><code>0</code> / <code>1</code></td><td>TTS is playing a reply</td></tr>
+          <tr><td><code>--voxctrl-mcp-recording</code></td><td><code>0</code> / <code>1</code></td><td>The MCP server is actively recording</td></tr>
+          <tr><td><code>--voxctrl-audio-ready</code></td><td><code>0</code> / <code>1</code></td><td>The audio pipeline has warmed up</td></tr>
+          <tr><td><code>--voxctrl-audio-level</code></td><td><code>0</code>..<code>1</code></td><td>Smoothed microphone level</td></tr>
+        </tbody>
+      </table>
+      <p>CSS can't swap text content based on a variable, so for anything that needs to change text — not just
+        color — the trick <code>Custom/</code> uses is to pre-render every possible label stacked on top of each
+        other and toggle each one's opacity with the boolean-algebra formula that should show it. A custom overlay's
+        <code>index.html</code> also gets one-time <code>{{target}}</code> / <code>{{trigger}}</code> placeholder
+        substitution for the active routing target's label. See the shipped <code>Custom/index.html</code> and
+        <code>style.css</code> for a fully commented, working example of both techniques.</p>
+      <p>Looking for a starting point instead of the blank-page version? The
+        <a href="https://github.com/JRufer/VoxCtrl-Scripts-and-Overlays" target="_blank" rel="noopener noreferrer">VoxCtrl-Scripts-and-Overlays</a>
+        repository collects community-made overlay styles — ready to drop straight into the folder — alongside
+        scripts you can trigger with a voice command.</p>
 
       <h2>Configuration reference</h2>
       <table class="docs-table">

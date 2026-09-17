@@ -705,17 +705,38 @@ strip_newlines = false</code></pre>
         </div>
       </div>
 
-      <div class="rel-foot" style="flex-direction: column; gap: 10px; text-align: center;">
-        <p style="color: var(--text-muted); font-size: 0.92rem; max-width: 560px; margin: 0 auto;">
-          Custom overlays live in <code>~/.local/share/voxctrl/overlays</code> and show up in
-          <strong>Settings → Visual Feedback → Overlay style</strong> the moment the folder exists —
-          hot-reloaded on every selection, no rebuild. A shipped <code>Custom/</code> example, fully
-          commented, shows how to read live state off CSS custom properties like
-          <code>--voxctrl-audio-level</code>.
-        </p>
-        <a class="btn-secondary" href="https://github.com/JRufer/VoxCtrl-Scripts-and-Overlays" target="_blank" rel="noopener noreferrer">
-          <span>Browse community overlay designs &amp; scripts</span>
-        </a>
+      <div class="ovl-cta">
+        <div class="ovl-cta-body">
+          <div class="win-badge-row">
+            <span class="win-badge win-badge-ghost">NEW SINCE v0.5.7</span>
+          </div>
+          <h3 class="ovl-cta-title">Every overlay above is just a folder — <code>index.html</code> + <code>style.css</code>.</h3>
+          <p class="ovl-cta-lead">
+            Drop a new one into <code>~/.local/share/voxctrl/overlays</code> and it shows up as a selectable style in
+            <strong>Settings → Visual Feedback</strong>, named after the folder — no rebuild, no restart. There's no
+            <code>&lt;script&gt;</code> tag (the overlay window's content-security-policy blocks it), so everything —
+            the load/unload animation, a status label that changes text, an audio-reactive meter — is driven by
+            plain CSS reading live custom properties (<code>--voxctrl-recording</code>, <code>--voxctrl-audio-level</code>,
+            and friends) that VoxCtrl writes onto the page every frame. A fully commented, working example ships
+            in the folder already, and VoxCtrl never touches it once it exists, so you can experiment freely and
+            duplicate it to start your own style.
+          </p>
+          <div class="win-cta-row">
+            <a class="btn-primary" href="https://github.com/JRufer/VoxCtrl-Scripts-and-Overlays" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              <span>Browse community overlays &amp; scripts</span>
+            </a>
+            <a class="btn-secondary" href="docs/overlays.html#custom-overlay-styles" target="_blank" rel="noopener noreferrer">
+              <span>Read the custom overlay guide</span>
+            </a>
+            <span class="win-cta-note">
+              Two ready-made styles to start from — <strong>Glass Pill</strong> and a Star Trek LCARS console — plus a
+              voice-triggered audio-device-switch script
+            </span>
+          </div>
+        </div>
       </div>
 
     </div>
