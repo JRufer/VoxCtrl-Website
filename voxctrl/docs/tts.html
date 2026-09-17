@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.2.7</span>
+      <span class="nav-version">v0.6.1</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -107,10 +107,10 @@
       </ul>
 
       <h2>GPU acceleration</h2>
-      <p>VoxCtrl supports GPU acceleration (CUDA) for the <strong>Piper</strong> engine only — it appends a
-        <code>--cuda</code> flag to the spawned Piper subprocess at runtime. Pocket-TTS (Candle-based) does not
-        currently expose a GPU toggle. If GPU initialization fails, Piper automatically and gracefully falls back to
-        the CPU without crashing.</p>
+      <p>Pocket-TTS, Breeze-TTS-2 and VoxCPM2 run through <a href="https://github.com/0xShug0/audio.cpp" target="_blank">audio.cpp</a>,
+        which accelerates any NVIDIA, AMD or Intel GPU through Vulkan and falls back to the CPU when no Vulkan
+        device is found — no build feature or extra setup needed, the downloaded binary already has it. Piper and
+        Inflect-Micro-v2 run on the CPU only in the published build.</p>
 
       <h2>Piper voice catalog</h2>
       <table class="docs-table">
@@ -289,7 +289,7 @@
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.2.7 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.6.1 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>

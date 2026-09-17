@@ -7,8 +7,8 @@
   <!-- Primary SEO Meta Tags -->
   <title>VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows</title>
   <meta name="title" content="VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows">
-  <meta name="description" content="VoxCtrl v0.5.2 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine and Parakeet TDT run locally, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
-  <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
+  <meta name="description" content="VoxCtrl v0.6.1 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a single Vulkan-accelerated Linux build runs on any GPU or the CPU, custom overlay designs are drop-in CSS, and a Windows build is now in early beta.">
+  <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, remote speech engine, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
   <meta name="author" content="JRufer">
   <meta name="theme-color" content="#07090e">
   <link rel="icon" type="image/png" href="assets/app_icon.png">
@@ -40,7 +40,7 @@
       <a href="#" class="nav-brand" id="navBrand">
         <img src="assets/app_icon.png" alt="VoxCtrl Logo" class="nav-logo-icon">
         <span>VoxCtrl</span>
-        <span class="nav-version-badge">v0.5.2</span>
+        <span class="nav-version-badge">v0.6.1</span>
       </a>
 
       <nav>
@@ -101,7 +101,7 @@
         </h1>
 
         <p class="hero-subtitle">
-          Real-time voice dictation and programmable <strong>Output Commands</strong> you trigger by name, out loud. whisper.cpp, Moonshine and Parakeet TDT run natively on your own CPU or GPU, hotkeys arrive through the XDG GlobalShortcuts portal, and a seven-step first-run wizard has the whole thing working before you ever open Settings.
+          Real-time voice dictation and programmable <strong>Output Commands</strong> you trigger by name, out loud. whisper.cpp, Moonshine and Parakeet TDT run natively on your own CPU or GPU — or hand transcription to a <strong>Remote Speech Engine</strong> over the network — hotkeys arrive through the XDG GlobalShortcuts portal, and a seven-step first-run wizard has the whole thing working before you ever open Settings.
         </p>
 
         <div class="hero-cta-group">
@@ -111,7 +111,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>Download v0.5.2</span>
+            <span>Download v0.6.1</span>
           </a>
 
           <div class="hero-terminal-pill" id="heroQuickSnippet">
@@ -122,7 +122,7 @@
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
               </svg>
             </button>
-            <span id="terminalQuickCmd" style="display:none;">chmod +x VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage &amp;&amp; ./VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage</span>
+            <span id="terminalQuickCmd" style="display:none;">chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage &amp;&amp; ./VoxCtrl-linux-x86_64-vulkan.AppImage</span>
           </div>
 
           <a href="https://github.com/JRufer/VoxCtrl" target="_blank" rel="noopener noreferrer" class="btn-secondary" id="btnHeroDocs">
@@ -145,7 +145,7 @@
           </div>
           <div class="spec-item">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-            <span>Vulkan &amp; CUDA Acceleration</span>
+            <span>Vulkan GPU Acceleration</span>
           </div>
           <div class="spec-item">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line></svg>
@@ -181,16 +181,16 @@
               <polyline points="2 12 12 17 22 12"></polyline>
             </svg>
           </div>
-          <h3 class="feature-card-title">Three engines, all on-device</h3>
+          <h3 class="feature-card-title">Four speech engines, on-device by default</h3>
           <p class="feature-card-desc">
-            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription. All run on your own CPU or GPU — nothing leaves the machine.
+            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription — all three run on your own CPU or GPU, nothing leaves the machine. New in v0.5.4: a <strong>Remote Speech Engine</strong> ("Bring Your Own Voice Engine") that streams audio to any OpenAI-compatible <code>/v1/audio/transcriptions</code> server instead — a homelab GPU box, vLLM, or a cloud API — with connection testing and model discovery built in.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">whisper-rs</span>
             <span class="feature-tag">Moonshine ONNX</span>
             <span class="feature-tag">Parakeet TDT</span>
-            <span class="feature-tag">Vulkan</span>
-            <span class="feature-tag">CUDA (opt-in)</span>
+            <span class="feature-tag">Remote Speech Engine</span>
+            <span class="feature-tag">Vulkan (GPU or CPU)</span>
           </div>
         </div>
 
@@ -245,11 +245,13 @@
           </div>
           <h3 class="feature-card-title">Local Neural TTS Feedback</h3>
           <p class="feature-card-desc">
-            Hear synthesized replies aloud without cloud APIs. Choose from Breeze-TTS-2, Pocket-TTS voice cloning, Piper, Inflect Micro (38MB ONNX), or lightweight eSpeak-NG.
+            Hear synthesized replies aloud without cloud APIs. Choose from six engines: VoxCPM2 (2B, voice cloning), Breeze-TTS-2 (voice cloning), Pocket-TTS (voice cloning), Piper, Inflect Micro (38MB ONNX), or lightweight eSpeak-NG. Since v0.5.8, the three cloning engines run through <strong>audio.cpp</strong>, a Vulkan-accelerated inference engine that replaced an earlier Candle backend — same voices, no HuggingFace token, and GPU offload on any Vulkan device with a CPU fallback. Since v0.5.3 the model can also hand its memory back: switch <strong>Model Memory</strong> to on-demand and the weights load when a spoken reply is coming and unload after 15 minutes idle.
           </p>
           <div class="feature-tag-list">
+            <span class="feature-tag">VoxCPM2</span>
             <span class="feature-tag">Pocket-TTS Clone</span>
             <span class="feature-tag">Breeze-TTS-2</span>
+            <span class="feature-tag">audio.cpp · Vulkan</span>
             <span class="feature-tag">Piper</span>
           </div>
         </div>
@@ -590,7 +592,7 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">DYNAMIC HUD OVERLAYS</div>
         <h2 class="section-title">Eight animated overlays. Zero visual clutter.</h2>
         <p class="section-desc">
-          VoxCtrl provides instant visual feedback while the microphone is live. Choose your preferred aesthetic, or run silently with tray-only notifications.
+          VoxCtrl provides instant visual feedback while the microphone is live. Choose your preferred aesthetic, or run silently with tray-only notifications. Every style below is also just an <code>index.html</code> + <code>style.css</code> pair, so it's also a starting point for your own.
         </p>
       </div>
 
@@ -699,6 +701,40 @@ strip_newlines = false</code></pre>
             <div style="color: var(--emerald-400); font-size: 0.76rem; display: flex; align-items: center; gap: 6px;">
               <span class="pulse-dot"></span> Live Signal
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ovl-cta">
+        <div class="ovl-cta-body">
+          <div class="win-badge-row">
+            <span class="win-badge win-badge-ghost">NEW SINCE v0.5.7</span>
+          </div>
+          <h3 class="ovl-cta-title">Every overlay above is just a folder — <code>index.html</code> + <code>style.css</code>.</h3>
+          <p class="ovl-cta-lead">
+            Drop a new one into <code>~/.local/share/voxctrl/overlays</code> and it shows up as a selectable style in
+            <strong>Settings → Visual Feedback</strong>, named after the folder — no rebuild, no restart. There's no
+            <code>&lt;script&gt;</code> tag (the overlay window's content-security-policy blocks it), so everything —
+            the load/unload animation, a status label that changes text, an audio-reactive meter — is driven by
+            plain CSS reading live custom properties (<code>--voxctrl-recording</code>, <code>--voxctrl-audio-level</code>,
+            and friends) that VoxCtrl writes onto the page every frame. A fully commented, working example ships
+            in the folder already, and VoxCtrl never touches it once it exists, so you can experiment freely and
+            duplicate it to start your own style.
+          </p>
+          <div class="win-cta-row">
+            <a class="btn-primary" href="https://github.com/JRufer/VoxCtrl-Scripts-and-Overlays" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              <span>Browse community overlays &amp; scripts</span>
+            </a>
+            <a class="btn-secondary" href="docs/overlays.html#custom-overlay-styles" target="_blank" rel="noopener noreferrer">
+              <span>Read the custom overlay guide</span>
+            </a>
+            <span class="win-cta-note">
+              Two ready-made styles to start from — <strong>Glass Pill</strong> and a Star Trek LCARS console — plus a
+              voice-triggered audio-device-switch script
+            </span>
           </div>
         </div>
       </div>
@@ -887,12 +923,12 @@ strip_newlines = false</code></pre>
 
       <!-- The other nine tabs -->
       <div class="settings-index">
-        <div class="set-idx"><b>Engine</b><span>Backend, model size and download, GPU offloading</span></div>
+        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, Remote Speech Engine), model size and download, GPU offloading — the Remote Speech Engine added in v0.5.4, after these screenshots</span></div>
         <div class="set-idx"><b>Hotkeys</b><span>Gestures, bindings, and how shortcuts are reaching VoxCtrl</span></div>
-        <div class="set-idx"><b>Visual</b><span>Overlay style, position, and the command trigger overlay</span></div>
-        <div class="set-idx"><b>Audio</b><span>Input device, VAD, RNNoise suppression</span></div>
-        <div class="set-idx"><b>TTS</b><span>Engine, voice downloads, global stop key</span></div>
-        <div class="set-idx"><b>Features</b><span>Snippets, spoken punctuation, code mode, history</span></div>
+        <div class="set-idx set-idx-new"><b>Visual Feedback</b><span>Overlay style (including custom folders), position, and the command trigger overlay — renamed from "Visual" in v0.5.6</span></div>
+        <div class="set-idx set-idx-new"><b>Audio Input</b><span>Input device, VAD, RNNoise suppression — renamed from "Audio" in v0.5.6</span></div>
+        <div class="set-idx"><b>TTS</b><span>Engine, voice downloads, global stop key, and Model Memory — VoxCPM2 added in v0.5.5, Model Memory in v0.5.3, after these screenshots</span></div>
+        <div class="set-idx set-idx-new"><b>Post-Processing</b><span>Snippets, spoken punctuation, code mode, history, and S1-mini dictation cleanup — renamed from "Features" and gained S1-mini in v0.5.6, after these screenshots</span></div>
         <div class="set-idx"><b>OpenAI API</b><span>Any OpenAI-compatible endpoint for LLM rewriting</span></div>
         <div class="set-idx set-idx-new"><b>Bug Report</b><span>Added in v0.5.1, after these screenshots were taken</span></div>
         <div class="set-idx"><b>About</b><span>Version, build, and what this build can put on the GPU</span></div>
@@ -1017,11 +1053,65 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">RELEASE TIMELINE</div>
         <h2 class="section-title">Everything that landed since v0.3.6.</h2>
         <p class="section-desc">
-          Eight releases in eight days, from the Breeze-TTS-2 engine to a single Linux build and a Windows beta.
+          Sixteen releases in sixteen days, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta, a Remote Speech Engine, on-device dictation cleanup, and a rebuilt overlay window.
         </p>
       </div>
 
       <ol class="rel-timeline" id="relTimeline">
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.6.1 · v0.5.9</b><span class="rel-date">16 Sep 2026</span><span class="rel-tag">overlay smear fixed</span></div>
+            <p>A patch release fixing the overlay's blurry, opaque smear on close. The cause was the WebKitGTK bundled into released AppImages, which renders a transparent window's compositing layers without their alpha channel mid-animation — VoxCtrl now prefers the WebKitGTK already on your system, falling back to its own copy only when none is found. With that fixed, the overlay window goes back to being built once at startup and kept for the session (rather than destroyed and rebuilt on every dictation, v0.5.9's stopgap for the same bug), so it also opens faster and the brief black-box flash on every activation is gone. Every build now reports the exact commit it came from (<code>--version</code>).</p>
+          </div>
+        </li>
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.5.8</b><span class="rel-date">15 Sep 2026</span><span class="rel-tag">audio.cpp</span></div>
+            <p>Pocket-TTS, Breeze-TTS-2 and VoxCPM2 move onto <strong>audio.cpp</strong>, a Vulkan-accelerated C++ inference engine, replacing an earlier Candle-based implementation that pulled in a proprietary Intel MKL dependency — clearing the way for VoxCtrl's MIT license. Also fixes TTS models reloading from disk on every synthesis instead of staying resident.</p>
+          </div>
+        </li>
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.5.7</b><span class="rel-date">15 Sep 2026</span><span class="rel-tag">custom overlays</span></div>
+            <p>Custom overlay styles: drop an <code>index.html</code> + <code>style.css</code> folder into <code>~/.local/share/voxctrl/overlays</code> and it appears in Settings → Visual Feedback, live-reloaded on every selection or dictation start. Ships with a documented, fully-commented <code>Custom/</code> example. The built-in overlay styles also move fully onto a Tauri <code>WebviewWindow</code>, replacing the old Slint-based helper process.</p>
+          </div>
+        </li>
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.5.6</b><span class="rel-date">13 Sep 2026</span></div>
+            <p>Settings audit: tabs reordered and renamed (<strong>Features → Post-Processing</strong>, <strong>Visual → Visual Feedback</strong>, <strong>Audio → Audio Input</strong>), the HuggingFace token field centralized, and the cloned-voice folder renamed. Fixes onboarding wizard layout issues and a couple of missing TTS options.</p>
+          </div>
+        </li>
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.5.5</b><span class="rel-date">10 Sep 2026</span><span class="rel-tag">VoxCPM2 + S1-mini</span></div>
+            <p><strong>S1-mini</strong> joins as an on-device dictation cleanup pass — a Qwen3-0.6B model, run through a dedicated llama.cpp sidecar process, that smooths hesitations and self-corrections into clean prose. It's Vulkan-accelerated with a CPU fallback, and toggles globally in Settings → Engine or per hotkey. <strong>VoxCPM2</strong> arrives as a sixth TTS engine alongside the existing five: 2B-parameter, with voice cloning. Release builds also stop stamping a version number into their filename, so the in-app updater works the way it was supposed to.</p>
+          </div>
+        </li>
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.5.4</b><span class="rel-date">9 Sep 2026</span><span class="rel-tag">Remote Speech Engine</span></div>
+            <p>Bring your own speech engine: Settings → Engine and the setup wizard can now point at any OpenAI-compatible <code>/v1/audio/transcriptions</code> server — a homelab GPU box, vLLM, LocalAI, or a cloud API — with a live connection test and model discovery before you commit. Also fixes a major bug when swapping STT engines at runtime, and a bug-reporting regression.</p>
+          </div>
+        </li>
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.5.3</b><span class="rel-date">9 Sep 2026</span></div>
+            <p>The TTS model can give its memory back. <strong>Settings &rarr; TTS &rarr; Model Memory</strong>
+              adds an on-demand mode that loads the weights when a spoken reply is coming and drops them after
+              15 minutes idle, with a tray toggle beside it; existing installs keep the model resident.
+              The wake word also works on a default install now &mdash; &ldquo;VoxCtrl,&nbsp;&hellip;&rdquo; was only
+              being repaired for people who had configured a custom vocabulary &mdash; and a recording keeps the
+              300&nbsp;ms the microphone heard before the keypress, so the first word is not clipped.</p>
+          </div>
+        </li>
         <li class="rel-item">
           <span class="rel-dot"></span>
           <div class="rel-body">
@@ -1195,12 +1285,12 @@ strip_newlines = false</code></pre>
 #    (Vulkan-accelerated, and falls back to the CPU when there is no GPU)
 
 # 2. Make it executable
-chmod +x VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage
+chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
 
 # 3. Run it. The first-run wizard opens, and VoxCtrl registers its own
 #    desktop entry and icon under ~/.local/share — no install step, no
 #    udev rule, no permissions to grant.
-./VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage</code></pre>
+./VoxCtrl-linux-x86_64-vulkan.AppImage</code></pre>
 
             <button class="btn-copy-terminal" data-copy-target="terminalCodeSnippet" id="btnCopyInstall">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1289,7 +1379,7 @@ chmod +x VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage
 
       <div class="footer-bottom">
         <div>© 2026 VoxCtrl Project. Created by JRufer. MIT licensed, free and open source.</div>
-        <div>v0.5.2 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
+        <div>v0.6.1 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
       </div>
     </div>
   </footer>
