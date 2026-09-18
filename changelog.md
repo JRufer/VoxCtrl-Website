@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.6.3] - 2026-09-18
+
+Merge pull request #128 from JRufer/development
+v0.6.3: Mitigate Hyprland WebKit SIGFPE and stuck hold-to-talk
+
+---
+
 ## [v0.6.2] - 2026-09-18
 
 Merge pull request #127 from JRufer/development
