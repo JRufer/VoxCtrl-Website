@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.6.4] - 2026-09-18
+
+Merge pull request #137 from JRufer/development
+v0.6.4: Fix six Linux bug reports (#129-#131, #133-#135) + license/packaging cleanup
+
+---
+
 ## [v0.6.3] - 2026-09-18
 
 Merge pull request #128 from JRufer/development
