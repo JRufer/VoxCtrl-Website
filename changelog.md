@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.6.2] - 2026-09-18
+
+Merge pull request #127 from JRufer/development
+Fix Windows hotkeys/mic silent failures; wizard surfaces setup errors (0.6.2)
+
+---
+
 ## [v0.6.1] - 2026-09-17
 
 Merge pull request #123 from JRufer/development
