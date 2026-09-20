@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.6.0] - 2026-09-20
+
+Merge pull request #145 from JRufer/development
+v0.6.5: Hyprland hold-release root cause + D-Bus service actually on the bus
+
+---
+
 ## [v0.6.5] - 2026-09-19
 
 Merge pull request #145 from JRufer/development
