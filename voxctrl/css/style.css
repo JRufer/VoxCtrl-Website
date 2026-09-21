@@ -133,7 +133,7 @@ body::before {
 }
 
 a {
-  color: inherit;
+  color: var(--cyan-400);
   text-decoration: none;
 }
 
@@ -238,6 +238,7 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   gap: 12px;
+  color: var(--text-primary);
   font-family: var(--font-display);
   font-size: 1.25rem;
   font-weight: 700;
