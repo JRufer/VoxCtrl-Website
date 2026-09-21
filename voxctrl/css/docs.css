@@ -76,6 +76,7 @@
 }
 
 .docs-content h1 {
+  font-family: var(--sans-display);
   font-size: 38px;
   letter-spacing: -0.025em;
   margin: 0 0 12px;

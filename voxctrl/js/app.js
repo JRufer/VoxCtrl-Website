@@ -587,6 +587,17 @@ function initCommandLab() {
 
   const esc = str => String(str).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
+  // Grow the textarea to fit its content instead of clipping long phrases.
+  const autoGrow = () => {
+    input.style.height = 'auto';
+    input.style.height = `${input.scrollHeight}px`;
+  };
+  input.addEventListener('input', autoGrow);
+  window.addEventListener('resize', autoGrow);
+  // Re-measure once the mono webfont swaps in — the fallback font wraps
+  // differently, so a height measured before then is often too short.
+  if (document.fonts) document.fonts.ready.then(autoGrow);
+
   // ── the command rail ──
   if (railList) {
     railList.innerHTML = CMD_TARGETS.map(t => `
@@ -695,6 +706,7 @@ function initCommandLab() {
   }
 
   function run(animate) {
+    autoGrow();
     const phrase = input.value;
     const parsed = parseVoiceCommand(phrase, CMD_TARGETS);
 
@@ -742,7 +754,7 @@ function initCommandLab() {
 const SETTINGS_SHOTS = [
   {
     title: 'General',
-    text: 'Re-run the first-launch wizard whenever you like, decide whether VoxCtrl asks GitHub for a newer release on startup, and switch the local MCP JSON-RPC server on or off. The socket path is spelled out for both platforms: <code>/tmp/voxctrl-mcp.sock</code> on Linux, <code>\\\\.\\pipe\\voxctrl-mcp</code> on Windows.'
+    text: 'Re-run the first-launch wizard whenever you like, hold the single HuggingFace access token every gated voice model shares (Pocket-TTS, Breeze-TTS-2, VoxCPM2), decide whether VoxCtrl asks GitHub for a newer release on startup, and switch the local MCP JSON-RPC server on or off. The socket path is spelled out for both platforms: <code>/tmp/voxctrl-mcp.sock</code> on Linux, <code>\\\\.\\pipe\\voxctrl-mcp</code> on Windows.'
   },
   {
     title: 'Output Commands',
@@ -949,15 +961,14 @@ sudo pacman -S --needed wtype xdotool
 chmod +x ${APPIMAGE}
 ./${APPIMAGE}
 
-# Building from source instead (Vulkan is the standard build;
-# CUDA is opt-in at compile time):
+# Building from source instead (Vulkan is the standard build):
 # npm install && npx tauri build --features vulkan`,
 
   windows: `# Windows 10 (21H2+) or Windows 11 — EARLY BETA, please report what breaks
 #
 # Download the installer from the latest release:
-#   VoxCtrl-windows-x86_64-webgpu.exe   (Moonshine accelerated on any D3D12 GPU,
-#                                        falls back to the CPU when there is none)
+#   VoxCtrl-windows-x86_64-webgpu.exe   (Moonshine on any D3D12 GPU,
+#                                        falls back to the CPU otherwise)
 #
 # The installer is not code-signed yet, so SmartScreen will say the
 # publisher is unknown: click "More info" then "Run anyway".
