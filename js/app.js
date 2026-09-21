@@ -955,9 +955,9 @@ chmod +x ${APPIMAGE}
 
   windows: `# Windows 10 (21H2+) or Windows 11 — EARLY BETA, please report what breaks
 #
-# Download one installer from the latest release:
-#   VoxCtrl-windows-x86_64.exe          (runs anywhere)
-#   VoxCtrl-windows-x86_64-webgpu.exe   (Moonshine on any D3D12 GPU)
+# Download the installer from the latest release:
+#   VoxCtrl-windows-x86_64-webgpu.exe   (Moonshine accelerated on any D3D12 GPU,
+#                                        falls back to the CPU when there is none)
 #
 # The installer is not code-signed yet, so SmartScreen will say the
 # publisher is unknown: click "More info" then "Run anyway".
