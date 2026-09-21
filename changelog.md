@@ -1,5 +1,40 @@
 # Changelog
 
+## [v0.6.0] - 2026-09-20
+
+Merge pull request #145 from JRufer/development
+v0.6.5: Hyprland hold-release root cause + D-Bus service actually on the bus
+
+---
+
+## [v0.6.5] - 2026-09-19
+
+Merge pull request #145 from JRufer/development
+v0.6.5: Hyprland hold-release root cause + D-Bus service actually on the bus
+
+---
+
+## [v0.6.4] - 2026-09-18
+
+Merge pull request #137 from JRufer/development
+v0.6.4: Fix six Linux bug reports (#129-#131, #133-#135) + license/packaging cleanup
+
+---
+
+## [v0.6.3] - 2026-09-18
+
+Merge pull request #128 from JRufer/development
+v0.6.3: Mitigate Hyprland WebKit SIGFPE and stuck hold-to-talk
+
+---
+
+## [v0.6.2] - 2026-09-18
+
+Merge pull request #127 from JRufer/development
+Fix Windows hotkeys/mic silent failures; wizard surfaces setup errors (0.6.2)
+
+---
+
 ## [v0.6.1] - 2026-09-17
 
 Merge pull request #123 from JRufer/development
