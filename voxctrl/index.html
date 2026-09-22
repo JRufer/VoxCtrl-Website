@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <!-- Primary SEO Meta Tags -->
   <title>VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows</title>
   <meta name="title" content="VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows">
-  <meta name="description" content="VoxCtrl v0.6.5 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
-  <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
+  <meta name="description"
+    content="VoxCtrl v0.6.5 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
+  <meta name="keywords"
+    content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
   <meta name="author" content="JRufer">
   <meta name="theme-color" content="#07090e">
   <link rel="icon" type="image/png" href="assets/app_icon.png">
@@ -17,20 +20,23 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://github.com/JRufer/VoxCtrl">
   <meta property="og:title" content="VoxCtrl — Speak to anything on your machine">
-  <meta property="og:description" content="Zero cloud. Zero telemetry. 100% on-device voice dictation and spoken Output Commands. A seven-step first-run wizard sets it up, 12 delivery types route your speech, and Windows is now in early beta.">
+  <meta property="og:description"
+    content="Zero cloud. Zero telemetry. 100% on-device voice dictation and spoken Output Commands. A seven-step first-run wizard sets it up, 12 delivery types route your speech, and Windows is now in early beta.">
   <meta property="og:image" content="assets/banner.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://github.com/JRufer/VoxCtrl">
   <meta property="twitter:title" content="VoxCtrl — Speak to anything on your machine">
-  <meta property="twitter:description" content="100% on-device voice dictation and a spoken Output Command router. Linux native, Windows in early beta.">
+  <meta property="twitter:description"
+    content="100% on-device voice dictation and a spoken Output Command router. Linux native, Windows in early beta.">
   <meta property="twitter:image" content="assets/banner.png">
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/design-system.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
   <!-- ========================================================================
@@ -59,9 +65,11 @@
       </nav>
 
       <div class="nav-actions">
-        <a href="https://github.com/JRufer/VoxCtrl" target="_blank" rel="noopener noreferrer" class="btn-github" id="btnNavGithub">
+        <a href="https://github.com/JRufer/VoxCtrl" target="_blank" rel="noopener noreferrer" class="btn-github"
+          id="btnNavGithub">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
           </svg>
           <span>Star</span>
         </a>
@@ -90,7 +98,7 @@
   <section class="hero-section" id="hero">
     <div class="container">
       <div class="hero-content">
-        
+
         <div class="hero-badge-row">
           <div class="hero-badge">
             <span class="pulse-dot"></span>
@@ -103,7 +111,10 @@
         </h1>
 
         <p class="hero-subtitle">
-          Real-time voice dictation and programmable <strong>Output Commands</strong> you trigger by name, out loud. whisper.cpp, Moonshine and Parakeet TDT run natively on your own CPU or GPU, hotkeys arrive through the XDG GlobalShortcuts portal, and a seven-step first-run wizard has the whole thing working before you ever open Settings.
+          Real-time voice dictation and programmable <strong>Output Commands</strong> you trigger by name, out loud.
+          whisper.cpp, Moonshine and Parakeet TDT run natively on your own CPU or GPU, hotkeys arrive through the XDG
+          GlobalShortcuts portal, and a seven-step first-run wizard has the whole thing working before you ever open
+          Settings.
         </p>
 
         <div class="hero-cta-group">
@@ -118,16 +129,19 @@
 
           <div class="hero-terminal-pill" id="heroQuickSnippet">
             <code>chmod +x VoxCtrl-*.AppImage &amp;&amp; ./VoxCtrl-*.AppImage</code>
-            <button class="btn-copy-mini" data-copy-target="terminalQuickCmd" title="Copy quick command" id="btnHeroCopy">
+            <button class="btn-copy-mini" data-copy-target="terminalQuickCmd" title="Copy quick command"
+              id="btnHeroCopy">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
               </svg>
             </button>
-            <span id="terminalQuickCmd" style="display:none;">chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage &amp;&amp; ./VoxCtrl-linux-x86_64-vulkan.AppImage</span>
+            <span id="terminalQuickCmd" style="display:none;">chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage &amp;&amp;
+              ./VoxCtrl-linux-x86_64-vulkan.AppImage</span>
           </div>
 
-          <a href="https://github.com/JRufer/VoxCtrl" target="_blank" rel="noopener noreferrer" class="btn-secondary" id="btnHeroDocs">
+          <a href="https://github.com/JRufer/VoxCtrl" target="_blank" rel="noopener noreferrer" class="btn-secondary"
+            id="btnHeroDocs">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
@@ -138,19 +152,28 @@
 
         <div class="hero-spec-strip">
           <div class="spec-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
             <span>Linux Native · Windows Beta</span>
           </div>
           <div class="spec-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
             <span>XDG Portal (Zero Keylogging)</span>
           </div>
           <div class="spec-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
             <span>Vulkan GPU Acceleration</span>
           </div>
           <div class="spec-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+            </svg>
             <span>12 Delivery Types + Command Router</span>
           </div>
         </div>
@@ -169,7 +192,8 @@
         <div class="mono-tag">CORE ARCHITECTURE</div>
         <h2 class="section-title">Engineered for absolute speed and privacy.</h2>
         <p class="section-desc">
-          VoxCtrl is not another wrapper around an expensive cloud API. It is a native desktop service written in Rust and Tauri — Linux-first, now with a Windows build in early beta.
+          VoxCtrl is not another wrapper around an expensive cloud API. It is a native desktop service written in Rust
+          and Tauri — Linux-first, now with a Windows build in early beta.
         </p>
       </div>
 
@@ -185,7 +209,9 @@
           </div>
           <h3 class="feature-card-title">Three engines, all on-device</h3>
           <p class="feature-card-desc">
-            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription. All run on your own CPU or GPU — nothing leaves the machine.
+            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT
+              0.6B</strong> for ultra-fast non-autoregressive transcription. All run on your own CPU or GPU — nothing
+            leaves the machine.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">whisper-rs</span>
@@ -205,7 +231,8 @@
           </div>
           <h3 class="feature-card-title">XDG GlobalShortcuts Portal</h3>
           <p class="feature-card-desc">
-            Shortcuts register with your desktop environment. The OS tells VoxCtrl only when its own key fires. VoxCtrl cannot see your typing in browsers, terminals, or password managers.
+            Shortcuts register with your desktop environment. The OS tells VoxCtrl only when its own key fires. VoxCtrl
+            cannot see your typing in browsers, terminals, or password managers.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">No Keylogger</span>
@@ -224,7 +251,9 @@
           </div>
           <h3 class="feature-card-title">Output Commands, spoken by name</h3>
           <p class="feature-card-desc">
-            Say <em>“VoxCtrl notes, remember to call the plumber”</em> and the text lands in your notes instead of your cursor. Twelve delivery types — inject, file, exec, pipe, socket, dbus, http, webhook, mcp, speak, chat, clipboard — plus the Voice Command Router that picks between them.
+            Say <em>“VoxCtrl notes, remember to call the plumber”</em> and the text lands in your notes instead of your
+            cursor. Twelve delivery types — inject, file, exec, pipe, socket, dbus, http, webhook, mcp, speak, chat,
+            clipboard — plus the Voice Command Router that picks between them.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">12 Delivery Types</span>
@@ -246,7 +275,8 @@
           </div>
           <h3 class="feature-card-title">Local Neural TTS Feedback</h3>
           <p class="feature-card-desc">
-            Hear synthesized replies aloud without cloud APIs. Choose from Breeze-TTS-2, Pocket-TTS voice cloning, Piper, Inflect Micro (38MB ONNX), or lightweight eSpeak-NG.
+            Hear synthesized replies aloud without cloud APIs. Choose from Breeze-TTS-2, Pocket-TTS voice cloning,
+            Piper, Inflect Micro (38MB ONNX), or lightweight eSpeak-NG.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">Pocket-TTS Clone</span>
@@ -266,7 +296,8 @@
           </div>
           <h3 class="feature-card-title">Built-in MCP Server</h3>
           <p class="feature-card-desc">
-            Exposes voice dictation and speech synthesis as high-level JSON-RPC tools to AI clients like Claude Desktop and Cursor via secure local Unix domain sockets.
+            Exposes voice dictation and speech synthesis as high-level JSON-RPC tools to AI clients like Claude Desktop
+            and Cursor via secure local Unix domain sockets.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">Model Context Protocol</span>
@@ -285,7 +316,8 @@
           </div>
           <h3 class="feature-card-title">Low-Latency Capture Loop</h3>
           <p class="feature-card-desc">
-            Built on CPAL to keep capture latency down. Voice Activity Detection stops the recording when you stop talking, and optional RNNoise suppression filters fans and keyboards off the capture path.
+            Built on CPAL to keep capture latency down. Voice Activity Detection stops the recording when you stop
+            talking, and optional RNNoise suppression filters fans and keyboards off the capture path.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">CPAL</span>
@@ -298,15 +330,21 @@
         <div class="feature-card">
           <div class="feature-icon-box">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2v4"></path><path d="M12 18v4"></path>
-              <path d="M4.9 4.9l2.9 2.9"></path><path d="M16.2 16.2l2.9 2.9"></path>
-              <path d="M2 12h4"></path><path d="M18 12h4"></path>
-              <path d="M4.9 19.1l2.9-2.9"></path><path d="M16.2 7.8l2.9-2.9"></path>
+              <path d="M12 2v4"></path>
+              <path d="M12 18v4"></path>
+              <path d="M4.9 4.9l2.9 2.9"></path>
+              <path d="M16.2 16.2l2.9 2.9"></path>
+              <path d="M2 12h4"></path>
+              <path d="M18 12h4"></path>
+              <path d="M4.9 19.1l2.9-2.9"></path>
+              <path d="M16.2 7.8l2.9-2.9"></path>
             </svg>
           </div>
           <h3 class="feature-card-title">Seven-step first-run wizard</h3>
           <p class="feature-card-desc">
-            New in v0.4.0. A fresh install picks an engine and model size (downloaded before you continue), records a hotkey and registers it with your desktop, chooses an overlay, runs a live dictation test, and optionally adds a voice — instead of dropping you into a settings window full of defaults nobody chose.
+            New in v0.4.0. A fresh install picks an engine and model size (downloaded before you continue), records a
+            hotkey and registers it with your desktop, chooses an overlay, runs a live dictation test, and optionally
+            adds a voice — instead of dropping you into a settings window full of defaults nobody chose.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">Saves as you go</span>
@@ -327,7 +365,10 @@
           </div>
           <h3 class="feature-card-title">Self-updating, checksum-verified</h3>
           <p class="feature-card-desc">
-            VoxCtrl asks GitHub once on launch whether a newer release exists, shows what changed, and — if you agree — downloads the build matching your install, verifies it against the published checksum, replaces itself and restarts. Nothing is replaced until a complete, verified file is on disk. One tick in Settings → General turns the check off.
+            VoxCtrl asks GitHub once on launch whether a newer release exists, shows what changed, and — if you agree —
+            downloads the build matching your install, verifies it against the published checksum, replaces itself and
+            restarts. Nothing is replaced until a complete, verified file is on disk. One tick in Settings → General
+            turns the check off.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">Checksum verified</span>
@@ -399,8 +440,8 @@
             </label>
             <div class="cmd-mic-input-row">
               <span class="cmd-quote">“</span>
-              <textarea id="cmdPhraseInput" class="cmd-phrase-input" spellcheck="false" rows="1"
-                        >VoxCtrl, add this to my notes: remember to call the plumber</textarea>
+              <textarea id="cmdPhraseInput" class="cmd-phrase-input" spellcheck="false"
+                rows="1">VoxCtrl, add this to my notes: remember to call the plumber</textarea>
               <span class="cmd-quote">”</span>
               <button class="cmd-speak-btn" id="cmdSpeakBtn" type="button">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -453,19 +494,25 @@
       <div class="cmd-rules">
         <div class="cmd-rule">
           <h4>Longest name wins</h4>
-          <p>Candidates are sorted by length, so a command called <code>Personal Notes</code> is matched before one called <code>Notes</code> — you don't have to rename anything to disambiguate.</p>
+          <p>Candidates are sorted by length, so a command called <code>Personal Notes</code> is matched before one
+            called <code>Notes</code> — you don't have to rename anything to disambiguate.</p>
         </div>
         <div class="cmd-rule">
           <h4>Natural phrasing is allowed</h4>
-          <p>Up to ten filler words may sit between the trigger and the command name — <em>add, put, send, this, to my, please…</em> — and connectors like <em>saying</em>, <em>that says</em> or <em>with</em> are trimmed off the front of the payload.</p>
+          <p>Up to ten filler words may sit between the trigger and the command name — <em>add, put, send, this, to my,
+              please…</em> — and connectors like <em>saying</em>, <em>that says</em> or <em>with</em> are trimmed off
+            the front of the payload.</p>
         </div>
         <div class="cmd-rule">
           <h4>The trigger survives bad transcription</h4>
-          <p><code>voxctrl</code>, <code>vox ctrl</code>, <code>vox control</code> all count, any <em>“&lt;word&gt; control”</em> phrase counts, and a leading token within a small edit distance of <code>voxctrl</code> is accepted too.</p>
+          <p><code>voxctrl</code>, <code>vox ctrl</code>, <code>vox control</code> all count, any <em>“&lt;word&gt;
+              control”</em> phrase counts, and a leading token within a small edit distance of <code>voxctrl</code> is
+            accepted too.</p>
         </div>
         <div class="cmd-rule">
           <h4>No trigger, no surprise</h4>
-          <p>A dictation with no trigger phrase in it falls straight through to the target your hotkey is bound to. The Command router is a superset of plain injection, not a mode you have to remember to leave.</p>
+          <p>A dictation with no trigger phrase in it falls straight through to the target your hotkey is bound to. The
+            Command router is a superset of plain injection, not a mode you have to remember to leave.</p>
         </div>
       </div>
 
@@ -499,7 +546,8 @@
           </p>
 
           <div class="voice-command-formula">
-            <span class="say-trigger">"VoxCtrl </span><span class="say-keyword">[command-name]</span><span class="say-trigger">, </span><span class="say-payload">[your text here...]"</span>
+            <span class="say-trigger">"VoxCtrl </span><span class="say-keyword">[command-name]</span><span
+              class="say-trigger">, </span><span class="say-payload">[your text here...]"</span>
           </div>
 
           <p style="font-size: 0.92rem; color: var(--text-muted);">
@@ -560,7 +608,8 @@
             <span class="target-meta-badge" id="targetBadge">inject</span>
           </h4>
           <p id="targetDesc">
-            Simulates typing directly into the active focused window. Uses native Wayland wtype, X11 xdotool, or clipboard Ctrl+V fallback.
+            Simulates typing directly into the active focused window. Uses native Wayland wtype, X11 xdotool, or
+            clipboard Ctrl+V fallback.
           </p>
           <div class="target-usecase-box" id="targetUsecase">
             Perfect for hands-free code dictation, emails, slack messages, and editor writing.
@@ -591,18 +640,24 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">DYNAMIC HUD OVERLAYS</div>
         <h2 class="section-title">Eight animated overlays. Zero visual clutter.</h2>
         <p class="section-desc">
-          VoxCtrl provides instant visual feedback while the microphone is live. Choose your preferred aesthetic, or run silently with tray-only notifications. Every style is also a drop-in <code>index.html</code> + <code>style.css</code> pair in the overlays folder — edit it, and the change shows up on the next dictation with no restart.
+          VoxCtrl provides instant visual feedback while the microphone is live. Choose your preferred aesthetic, or run
+          silently with tray-only notifications. Every style is also a drop-in <code>index.html</code> +
+          <code>style.css</code> pair in the overlays folder — edit it, and the change shows up on the next dictation
+          with no restart.
         </p>
         <p class="section-desc">
-          <a href="https://github.com/JRufer/VoxCtrl-Scripts-and-Overlays/tree/main/Overlays" target="_blank" rel="noopener noreferrer">GitHub Overlays</a>
+          <a href="https://github.com/JRufer/VoxCtrl-Scripts-and-Overlays/tree/main/Overlays" target="_blank"
+            rel="noopener noreferrer">GitHub Overlays</a>
         </p>
       </div>
 
       <div class="overlays-container">
         <!-- List of Overlays -->
         <div class="overlay-selector-list" id="overlayList" role="tablist" aria-label="Overlay style">
-          <button class="overlay-card-item is-active" type="button" role="tab" aria-selected="true" data-overlay="blue_wave">
-            <img class="overlay-thumb" src="assets/overlays/blue_wave.webp" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <button class="overlay-card-item is-active" type="button" role="tab" aria-selected="true"
+            data-overlay="blue_wave">
+            <img class="overlay-thumb" src="assets/overlays/blue_wave.webp" alt="" width="480" height="360"
+              loading="lazy" decoding="async">
             <span class="overlay-info">
               <span class="overlay-name">Ocean Wave</span>
               <span class="overlay-meta">default · tide-pool waves</span>
@@ -611,7 +666,8 @@ strip_newlines = false</code></pre>
           </button>
 
           <button class="overlay-card-item" type="button" role="tab" aria-selected="false" data-overlay="voice_card">
-            <img class="overlay-thumb" src="assets/overlays/voice_card.webp" alt="" width="480" height="360" loading="lazy" decoding="async">
+            <img class="overlay-thumb" src="assets/overlays/voice_card.webp" alt="" width="480" height="360"
+              loading="lazy" decoding="async">
             <span class="overlay-info">
               <span class="overlay-name">Voice Card</span>
               <span class="overlay-meta">20×6 LED VU matrix</span>
@@ -620,7 +676,8 @@ strip_newlines = false</code></pre>
           </button>
 
           <button class="overlay-card-item" type="button" role="tab" aria-selected="false" data-overlay="waveform">
-            <img class="overlay-thumb" src="assets/overlays/waveform.webp" alt="" width="480" height="360" loading="lazy" decoding="async">
+            <img class="overlay-thumb" src="assets/overlays/waveform.webp" alt="" width="480" height="360"
+              loading="lazy" decoding="async">
             <span class="overlay-info">
               <span class="overlay-name">Waveform</span>
               <span class="overlay-meta">scrolling oscilloscope</span>
@@ -629,7 +686,8 @@ strip_newlines = false</code></pre>
           </button>
 
           <button class="overlay-card-item" type="button" role="tab" aria-selected="false" data-overlay="pulse">
-            <img class="overlay-thumb" src="assets/overlays/pulse.webp" alt="" width="480" height="360" loading="lazy" decoding="async">
+            <img class="overlay-thumb" src="assets/overlays/pulse.webp" alt="" width="480" height="360" loading="lazy"
+              decoding="async">
             <span class="overlay-info">
               <span class="overlay-name">Pulse Ring</span>
               <span class="overlay-meta">sonar sweep · target lock</span>
@@ -638,7 +696,8 @@ strip_newlines = false</code></pre>
           </button>
 
           <button class="overlay-card-item" type="button" role="tab" aria-selected="false" data-overlay="mono_bars">
-            <img class="overlay-thumb" src="assets/overlays/mono_bars.webp" alt="" width="480" height="360" loading="lazy" decoding="async">
+            <img class="overlay-thumb" src="assets/overlays/mono_bars.webp" alt="" width="480" height="360"
+              loading="lazy" decoding="async">
             <span class="overlay-info">
               <span class="overlay-name">Mono Bars</span>
               <span class="overlay-meta">black &amp; white 5-bar meter</span>
@@ -647,7 +706,8 @@ strip_newlines = false</code></pre>
           </button>
 
           <button class="overlay-card-item" type="button" role="tab" aria-selected="false" data-overlay="spectrum">
-            <img class="overlay-thumb" src="assets/overlays/spectrum.webp" alt="" width="480" height="360" loading="lazy" decoding="async">
+            <img class="overlay-thumb" src="assets/overlays/spectrum.webp" alt="" width="480" height="360"
+              loading="lazy" decoding="async">
             <span class="overlay-info">
               <span class="overlay-name">Neon Spectrum</span>
               <span class="overlay-meta">16-band equalizer</span>
@@ -656,7 +716,8 @@ strip_newlines = false</code></pre>
           </button>
 
           <button class="overlay-card-item" type="button" role="tab" aria-selected="false" data-overlay="terminal">
-            <img class="overlay-thumb" src="assets/overlays/terminal.webp" alt="" width="480" height="360" loading="lazy" decoding="async">
+            <img class="overlay-thumb" src="assets/overlays/terminal.webp" alt="" width="480" height="360"
+              loading="lazy" decoding="async">
             <span class="overlay-info">
               <span class="overlay-name">Retro Terminal</span>
               <span class="overlay-meta">DOS-blue ASCII meter</span>
@@ -665,7 +726,8 @@ strip_newlines = false</code></pre>
           </button>
 
           <button class="overlay-card-item" type="button" role="tab" aria-selected="false" data-overlay="vinyl">
-            <img class="overlay-thumb" src="assets/overlays/vinyl.webp" alt="" width="480" height="360" loading="lazy" decoding="async">
+            <img class="overlay-thumb" src="assets/overlays/vinyl.webp" alt="" width="480" height="360" loading="lazy"
+              decoding="async">
             <span class="overlay-info">
               <span class="overlay-name">Analog VU</span>
               <span class="overlay-meta">vintage needle meter</span>
@@ -685,11 +747,9 @@ strip_newlines = false</code></pre>
             <div class="preview-overlay-box" id="previewOverlayBox">
               <!-- The poster is in the markup so the overlay is visible with no
                    JS and before the clip arrives; app.js attaches the .webm. -->
-              <video id="overlayPreviewVideo"
-                     poster="assets/overlays/blue_wave.webp"
-                     width="720" height="540"
-                     autoplay muted loop playsinline preload="metadata"
-                     aria-label="Ocean Wave overlay, recorded while dictating"></video>
+              <video id="overlayPreviewVideo" poster="assets/overlays/blue_wave.webp" width="720" height="540" autoplay
+                muted loop playsinline preload="metadata"
+                aria-label="Ocean Wave overlay, recorded while dictating"></video>
             </div>
           </div>
 
@@ -697,7 +757,8 @@ strip_newlines = false</code></pre>
             <div>
               <strong id="previewOverlayTitle">Ocean Wave (Default)</strong>
               <p style="color: var(--text-muted); font-size: 0.78rem; margin-top: 2px;" id="previewOverlayDesc">
-                Smooth fluid wave animations that react dynamically to your speech amplitude. Minimalist and non-intrusive.
+                Smooth fluid wave animations that react dynamically to your speech amplitude. Minimalist and
+                non-intrusive.
               </p>
             </div>
             <div style="color: var(--emerald-400); font-size: 0.76rem; display: flex; align-items: center; gap: 6px;">
@@ -784,7 +845,9 @@ strip_newlines = false</code></pre>
 
             <div class="wizard-outcome">
               <div class="wizard-outcome-title">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
                 <span>Configured out of the box</span>
               </div>
               <p>
@@ -800,32 +863,49 @@ strip_newlines = false</code></pre>
 
           <div class="wizard-image-frame">
             <div class="wizard-stack" id="wizardStack">
-              <img class="wizard-slide is-active" src="images/screenshots/onboarding/onboarding-00.png" alt="Setup wizard step 1 of 7 — Welcome" loading="lazy" width="1340" height="1107">
-              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-01.png" alt="Setup wizard step 2 of 7 — Transcription engine" loading="lazy" width="1340" height="1107">
-              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-02.png" alt="Setup wizard step 3 of 7 — First key binding" loading="lazy" width="1340" height="1107">
-              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-03.png" alt="Setup wizard step 4 of 7 — On-screen overlay" loading="lazy" width="1340" height="1107">
-              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-04.png" alt="Setup wizard step 5 of 7 — Live dictation test" loading="lazy" width="1340" height="1107">
-              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-05.png" alt="Setup wizard step 6 of 7 — Text to speech" loading="lazy" width="1340" height="1107">
-              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-06.png" alt="Setup wizard step 7 of 7 — Ready" loading="lazy" width="1340" height="1107">
+              <img class="wizard-slide is-active" src="images/screenshots/onboarding/onboarding-00.png"
+                alt="Setup wizard step 1 of 7 — Welcome" loading="lazy" width="1340" height="1107">
+              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-01.png"
+                alt="Setup wizard step 2 of 7 — Transcription engine" loading="lazy" width="1340" height="1107">
+              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-02.png"
+                alt="Setup wizard step 3 of 7 — First key binding" loading="lazy" width="1340" height="1107">
+              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-03.png"
+                alt="Setup wizard step 4 of 7 — On-screen overlay" loading="lazy" width="1340" height="1107">
+              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-04.png"
+                alt="Setup wizard step 5 of 7 — Live dictation test" loading="lazy" width="1340" height="1107">
+              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-05.png"
+                alt="Setup wizard step 6 of 7 — Text to speech" loading="lazy" width="1340" height="1107">
+              <img class="wizard-slide" src="images/screenshots/onboarding/onboarding-06.png"
+                alt="Setup wizard step 7 of 7 — Ready" loading="lazy" width="1340" height="1107">
             </div>
-            <div class="wizard-progress" aria-hidden="true"><span class="wizard-progress-bar" id="wizardProgressBar"></span></div>
+            <div class="wizard-progress" aria-hidden="true"><span class="wizard-progress-bar"
+                id="wizardProgressBar"></span></div>
           </div>
         </div>
 
         <!-- Controls -->
         <div class="wizard-nav-controls">
-          <button class="btn-secondary btn-wizard-nav" id="btnWizardPrev" type="button" aria-label="Previous setup step">← Previous</button>
+          <button class="btn-secondary btn-wizard-nav" id="btnWizardPrev" type="button"
+            aria-label="Previous setup step">← Previous</button>
 
           <div class="wizard-nav-meta">
-            <button class="btn-wizard-play" id="btnWizardPlay" type="button" aria-pressed="true" aria-label="Pause the walkthrough">
-              <svg class="ico-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
-              <svg class="ico-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+            <button class="btn-wizard-play" id="btnWizardPlay" type="button" aria-pressed="true"
+              aria-label="Pause the walkthrough">
+              <svg class="ico-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+              </svg>
+              <svg class="ico-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="6 3 20 12 6 21 6 3"></polygon>
+              </svg>
               <span id="wizardPlayLabel">Pause</span>
             </button>
-            <span class="wizard-nav-count">Step <span id="currentStepNum">1</span> / 7 · every choice editable later in Settings</span>
+            <span class="wizard-nav-count">Step <span id="currentStepNum">1</span> / 7 · every choice editable later in
+              Settings</span>
           </div>
 
-          <button class="btn-primary btn-wizard-nav" id="btnWizardNext" type="button" aria-label="Next setup step">Continue →</button>
+          <button class="btn-primary btn-wizard-nav" id="btnWizardNext" type="button"
+            aria-label="Next setup step">Continue →</button>
         </div>
 
       </div>
@@ -870,11 +950,11 @@ strip_newlines = false</code></pre>
         <div class="settings-stage">
           <div class="settings-frame">
             <img class="settings-shot is-active" src="images/screenshots/settings/Settings-00.png"
-                 alt="VoxCtrl Settings — General tab, showing the setup wizard, update check and MCP server controls"
-                 width="874" height="1024" loading="lazy">
+              alt="VoxCtrl Settings — General tab, showing the setup wizard, update check and MCP server controls"
+              width="874" height="1024" loading="lazy">
             <img class="settings-shot" src="images/screenshots/settings/Settings-01.png"
-                 alt="VoxCtrl Settings — Output Commands tab, listing the Notes, Personal Notes, Say and Command targets"
-                 width="874" height="1024" loading="lazy">
+              alt="VoxCtrl Settings — Output Commands tab, listing the Notes, Personal Notes, Say and Command targets"
+              width="874" height="1024" loading="lazy">
           </div>
 
           <div class="settings-caption" id="settingsCaption">
@@ -892,14 +972,17 @@ strip_newlines = false</code></pre>
 
       <!-- The other nine tabs -->
       <div class="settings-index">
-        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, Remote Speech Engine), model size and download, GPU offloading</span></div>
-        <div class="set-idx"><b>Post-Processing</b><span>S1-mini dictation cleanup, basic text cleanup (filler words, punctuation, list formatting), custom vocabulary, and snippets</span></div>
+        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, Remote Speech Engine),
+            model size and download, GPU offloading</span></div>
+        <div class="set-idx"><b>Post-Processing</b><span>S1-mini dictation cleanup, basic text cleanup (filler words,
+            punctuation, list formatting), custom vocabulary, and snippets</span></div>
         <div class="set-idx"><b>Hotkeys</b><span>Gestures, bindings, and a per-keybind S1-mini override</span></div>
         <div class="set-idx"><b>Visual</b><span>Overlay style, position, and the command trigger overlay</span></div>
         <div class="set-idx"><b>Audio</b><span>Input device, VAD, RNNoise suppression</span></div>
         <div class="set-idx"><b>TTS</b><span>Engine, voice downloads, global stop key, and Model Memory</span></div>
         <div class="set-idx"><b>OpenAI API</b><span>Any OpenAI-compatible endpoint for LLM rewriting</span></div>
-        <div class="set-idx set-idx-new"><b>Bug Report</b><span>Added in v0.5.1, after these screenshots were taken</span></div>
+        <div class="set-idx set-idx-new"><b>Bug Report</b><span>Added in v0.5.1, after these screenshots were
+            taken</span></div>
         <div class="set-idx"><b>About</b><span>Version, build, and what this build can put on the GPU</span></div>
       </div>
     </div>
@@ -940,21 +1023,23 @@ strip_newlines = false</code></pre>
               <h4>Check the microphone</h4>
               <p>Windows denies microphone access silently, with no prompt and no error. If dictation produces
                 nothing at all, turn on <em>Settings → Privacy &amp; security → Microphone → Let desktop apps
-                access your microphone</em>. This catches most people once.</p>
+                  access your microphone</em>. This catches most people once.</p>
             </div>
             <div class="win-card">
               <span class="win-card-num">03</span>
               <h4>Try the awkward parts</h4>
               <p>Punctuation and symbols are the single most valuable test — anything with
                 <code>% ( ) + [ ] { } ^ ~</code> in it. Then a few different apps, all four gesture styles, and a
-                paragraph or two long enough that the app switches from typing to pasting.</p>
+                paragraph or two long enough that the app switches from typing to pasting.
+              </p>
             </div>
             <div class="win-card win-card-accent">
               <span class="win-card-num">04</span>
               <h4>Tell me what broke — one button</h4>
               <p>Settings → <strong>Bug Report</strong>. Describe what happened and press a button; it gathers the
                 log, your Windows version, CPU and GPU, which build you are on and your settings, and files it
-                <strong>with no GitHub account needed</strong>.</p>
+                <strong>with no GitHub account needed</strong>.
+              </p>
             </div>
           </div>
 
@@ -992,7 +1077,8 @@ strip_newlines = false</code></pre>
           </div>
 
           <div class="win-cta-row">
-            <a class="btn-primary" href="https://github.com/JRufer/VoxCtrl/releases/latest" target="_blank" rel="noopener noreferrer">
+            <a class="btn-primary" href="https://github.com/JRufer/VoxCtrl/releases/latest" target="_blank"
+              rel="noopener noreferrer">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
@@ -1000,11 +1086,13 @@ strip_newlines = false</code></pre>
               </svg>
               <span>Get the Windows beta</span>
             </a>
-            <a class="btn-secondary" href="https://github.com/JRufer/VoxCtrl/blob/master/docs/windows_testing.md" target="_blank" rel="noopener noreferrer">
+            <a class="btn-secondary" href="https://github.com/JRufer/VoxCtrl/blob/master/docs/windows_testing.md"
+              target="_blank" rel="noopener noreferrer">
               <span>Read the 15-minute test plan</span>
             </a>
             <span class="win-cta-note">
-              One installer now: <code>-windows-x86_64-webgpu.exe</code> puts <strong>Moonshine</strong> on any Direct3D 12 GPU and falls back to the CPU when there isn't one
+              One installer now: <code>-windows-x86_64-webgpu.exe</code> puts <strong>Moonshine</strong> on any Direct3D
+              12 GPU and falls back to the CPU when there isn't one
             </span>
           </div>
         </div>
@@ -1021,7 +1109,8 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">RELEASE TIMELINE</div>
         <h2 class="section-title">Everything that landed since v0.3.6.</h2>
         <p class="section-desc">
-          Twenty releases since v0.3.6, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta, a Remote Speech Engine and now on-device dictation cleanup.
+          Twenty releases since v0.3.6, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta, a Remote
+          Speech Engine and now on-device dictation cleanup.
         </p>
       </div>
 
@@ -1029,15 +1118,28 @@ strip_newlines = false</code></pre>
         <li class="rel-item rel-item-major">
           <span class="rel-dot"></span>
           <div class="rel-body">
-            <div class="rel-head"><b>v0.6.1 – v0.6.5</b><span class="rel-date">17–19 Sep 2026</span><span class="rel-tag">Stability + one Windows build</span></div>
-            <p>Fixed a WebKitGTK bug that left a blurry smear on screen as the overlay closed on released Linux AppImages, and two silent Windows failure modes — global hotkeys blocked by an elevated foreground window, and a microphone that opens successfully but delivers only silence. Mitigated a Hyprland WebKit crash and a stuck hold-to-talk gesture, and kept the D-Bus service reliably on the session bus. The separate Windows CPU-only installer is gone — the single <code>-windows-x86_64-webgpu.exe</code> build now covers both, accelerating Moonshine on any Direct3D 12 GPU and falling back to the CPU when there isn't one. VoxCtrl also added a proper MIT <code>LICENSE</code> file.</p>
+            <div class="rel-head"><b>v0.6.1 – v0.6.5</b><span class="rel-date">17–19 Sep 2026</span><span
+                class="rel-tag">Stability + one Windows build</span></div>
+            <p>Fixed a WebKitGTK bug that left a blurry smear on screen as the overlay closed on released Linux
+              AppImages, and two silent Windows failure modes — global hotkeys blocked by an elevated foreground window,
+              and a microphone that opens successfully but delivers only silence. Mitigated a Hyprland WebKit crash and
+              a stuck hold-to-talk gesture, and kept the D-Bus service reliably on the session bus. The separate Windows
+              CPU-only installer is gone — the single <code>-windows-x86_64-webgpu.exe</code> build now covers both,
+              accelerating Moonshine on any Direct3D 12 GPU and falling back to the CPU when there isn't one. VoxCtrl
+              also added a proper MIT <code>LICENSE</code> file.</p>
           </div>
         </li>
         <li class="rel-item rel-item-major">
           <span class="rel-dot"></span>
           <div class="rel-body">
-            <div class="rel-head"><b>v0.5.3 – v0.5.9</b><span class="rel-date">9–16 Sep 2026</span><span class="rel-tag">Remote Speech Engine + S1-mini</span></div>
-            <p>Bring your own speech engine: any OpenAI-compatible <code>/v1/audio/transcriptions</code> server can now handle transcription instead. <strong>S1-mini</strong> arrives as an on-device dictation cleanup pass — a Qwen3-0.6B model, run through llama.cpp in an isolated sidecar process, that smooths hesitations and self-corrections into clean prose — alongside <strong>VoxCPM2</strong> as a sixth TTS voice. Settings gained a dedicated <strong>Post-Processing</strong> tab for S1-mini and text cleanup, and overlay styles became drop-in customizable via an <code>index.html</code> + <code>style.css</code> pair.</p>
+            <div class="rel-head"><b>v0.5.3 – v0.5.9</b><span class="rel-date">9–16 Sep 2026</span><span
+                class="rel-tag">Remote Speech Engine + S1-mini</span></div>
+            <p>Bring your own speech engine: any OpenAI-compatible <code>/v1/audio/transcriptions</code> server can now
+              handle transcription instead. <strong>S1-mini</strong> arrives as an on-device dictation cleanup pass — a
+              Qwen3-0.6B model, run through llama.cpp in an isolated sidecar process, that smooths hesitations and
+              self-corrections into clean prose — alongside <strong>VoxCPM2</strong> as a sixth TTS voice. Settings
+              gained a dedicated <strong>Post-Processing</strong> tab for S1-mini and text cleanup, and overlay styles
+              became drop-in customizable via an <code>index.html</code> + <code>style.css</code> pair.</p>
           </div>
         </li>
         <li class="rel-item">
@@ -1060,7 +1162,8 @@ strip_newlines = false</code></pre>
         <li class="rel-item rel-item-major">
           <span class="rel-dot"></span>
           <div class="rel-body">
-            <div class="rel-head"><b>v0.5.0</b><span class="rel-date">6 Sep 2026</span><span class="rel-tag">first Windows build</span></div>
+            <div class="rel-head"><b>v0.5.0</b><span class="rel-date">6 Sep 2026</span><span class="rel-tag">first
+                Windows build</span></div>
             <p>VoxCtrl's first Windows release. Settings → Engine now states plainly which engine <em>this</em>
               build can put on the GPU, rather than implying all of them can. And one unreadable value in the
               config no longer takes the rest of your settings down with it.</p>
@@ -1069,10 +1172,12 @@ strip_newlines = false</code></pre>
         <li class="rel-item rel-item-major">
           <span class="rel-dot"></span>
           <div class="rel-body">
-            <div class="rel-head"><b>v0.4.0</b><span class="rel-date">4 Sep 2026</span><span class="rel-tag">setup wizard</span></div>
+            <div class="rel-head"><b>v0.4.0</b><span class="rel-date">4 Sep 2026</span><span class="rel-tag">setup
+                wizard</span></div>
             <p>The seven-step first-run wizard, self-updating from GitHub releases with checksum verification,
               <strong>Output Targets renamed to Output Commands</strong> with the spoken form explained in the app
-              itself, and a settings audit that either implemented or removed every control that did nothing.</p>
+              itself, and a settings audit that either implemented or removed every control that did nothing.
+            </p>
           </div>
         </li>
         <li class="rel-item">
@@ -1101,7 +1206,8 @@ strip_newlines = false</code></pre>
       </ol>
 
       <div class="rel-foot">
-        <a class="btn-secondary" href="https://github.com/JRufer/VoxCtrl/releases" target="_blank" rel="noopener noreferrer">
+        <a class="btn-secondary" href="https://github.com/JRufer/VoxCtrl/releases" target="_blank"
+          rel="noopener noreferrer">
           <span>Full release notes on GitHub</span>
         </a>
       </div>
@@ -1117,7 +1223,8 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">SECURITY GUARANTEE</div>
         <h2 class="section-title">Why Linux power users trust VoxCtrl.</h2>
         <p class="section-desc">
-          Most voice dictation software acts like malware—reading all raw input events or requiring root udev privileges. VoxCtrl changes that permanently.
+          Most voice dictation software acts like malware—reading all raw input events or requiring root udev
+          privileges. VoxCtrl changes that permanently.
         </p>
       </div>
 
@@ -1130,16 +1237,25 @@ strip_newlines = false</code></pre>
           </div>
           <ul class="privacy-list safe-list">
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span><strong>Zero Keystroke Snooping:</strong> Global shortcuts are registered with your desktop environment. The OS grabs the key and tells VoxCtrl only that its own shortcut fired.</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span><strong>Zero Keystroke Snooping:</strong> Global shortcuts are registered with your desktop
+                environment. The OS grabs the key and tells VoxCtrl only that its own shortcut fired.</span>
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span><strong>Zero Permissions to Grant:</strong> No root access, no <code>/etc/udev/rules.d/</code> alterations, no adding your user to the dangerous <code>input</code> group.</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span><strong>Zero Permissions to Grant:</strong> No root access, no <code>/etc/udev/rules.d/</code>
+                alterations, no adding your user to the dangerous <code>input</code> group.</span>
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span><strong>Air-Gapped Operation:</strong> After downloading models, VoxCtrl operates 100% offline. Ambient audio never touches the wire.</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span><strong>Air-Gapped Operation:</strong> After downloading models, VoxCtrl operates 100% offline.
+                Ambient audio never touches the wire.</span>
             </li>
           </ul>
         </div>
@@ -1152,16 +1268,28 @@ strip_newlines = false</code></pre>
           </div>
           <ul class="privacy-list unsafe-list">
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-              <span><strong>Global Keyloggers:</strong> Often read <code>/dev/input/event*</code> directly, granting read access to everything typed in browsers, terminals, and password managers.</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+              <span><strong>Global Keyloggers:</strong> Often read <code>/dev/input/event*</code> directly, granting
+                read access to everything typed in browsers, terminals, and password managers.</span>
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-              <span><strong>Cloud Latency &amp; Eavesdropping:</strong> Streaming audio to proprietary third-party cloud servers introduces lag and compromises conversational privacy.</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+              <span><strong>Cloud Latency &amp; Eavesdropping:</strong> Streaming audio to proprietary third-party cloud
+                servers introduces lag and compromises conversational privacy.</span>
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-              <span><strong>Permanent System Degradation:</strong> Messing with udev rules and input permissions exposes your whole desktop to unprivileged rogue processes.</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+              <span><strong>Permanent System Degradation:</strong> Messing with udev rules and input permissions exposes
+                your whole desktop to unprivileged rogue processes.</span>
             </li>
           </ul>
         </div>
@@ -1200,14 +1328,16 @@ strip_newlines = false</code></pre>
           <button class="distro-tab" type="button" role="tab" aria-selected="false" data-distro="arch">
             <span class="dt-long">Arch / CachyOS</span><span class="dt-short">Arch</span>
           </button>
-          <button class="distro-tab distro-tab-beta" type="button" role="tab" aria-selected="false" data-distro="windows">
-            <span class="dt-long">Windows</span><span class="dt-short">Windows</span><span class="distro-beta">beta</span>
+          <button class="distro-tab distro-tab-beta" type="button" role="tab" aria-selected="false"
+            data-distro="windows">
+            <span class="dt-long">Windows</span><span class="dt-short">Windows</span><span
+              class="distro-beta">beta</span>
           </button>
         </div>
 
         <p class="install-latest-note">
-          Grab the latest build from
-          <a href="https://github.com/JRufer/VoxCtrl/releases/latest" target="_blank" rel="noopener noreferrer">https://github.com/JRufer/VoxCtrl/releases/latest</a>
+          Grab the latest build from <a href="https://github.com/JRufer/VoxCtrl/releases/latest" target="_blank"
+            rel="noopener noreferrer"> https://github.com/JRufer/VoxCtrl/releases/latest</a>
         </p>
 
         <!-- Terminal Snippet Box -->
@@ -1237,19 +1367,28 @@ chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
           <!-- Requirements Checklist -->
           <div class="system-requirements-checklist">
             <div class="req-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
               <span>Linux: glibc 2.35+ (Ubuntu 22.04, Mint 21, Debian 12, Fedora 36, Arch)</span>
             </div>
             <div class="req-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
               <span>A desktop with the XDG GlobalShortcuts portal (KDE Plasma, GNOME 48+, Hyprland)</span>
             </div>
             <div class="req-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>PipeWire or PulseAudio · <code>wtype</code> (Wayland) or <code>xdotool</code> (X11) for typing</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>PipeWire or PulseAudio · <code>wtype</code> (Wayland) or <code>xdotool</code> (X11) for
+                typing</span>
             </div>
             <div class="req-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
               <span>Windows 10 21H2+ or Windows 11 — installer not code-signed yet</span>
             </div>
           </div>
@@ -1279,13 +1418,20 @@ chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
         <div class="footer-col">
           <h5>Documentation</h5>
           <ul class="footer-links">
-            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/routing.md" target="_blank">Output Routing</a></li>
-            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/hotkeys.md" target="_blank">Global Hotkeys</a></li>
-            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/privacy.md" target="_blank">Privacy Architecture</a></li>
-            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/tts.md" target="_blank">Neural TTS Engines</a></li>
-            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/mcp_documentation.md" target="_blank">MCP Server Guide</a></li>
-            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/bug_reports.md" target="_blank">Bug Reports &amp; Redaction</a></li>
-            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/windows_testing.md" target="_blank">Windows Beta Testing</a></li>
+            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/routing.md" target="_blank">Output
+                Routing</a></li>
+            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/hotkeys.md" target="_blank">Global
+                Hotkeys</a></li>
+            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/privacy.md" target="_blank">Privacy
+                Architecture</a></li>
+            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/tts.md" target="_blank">Neural TTS
+                Engines</a></li>
+            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/mcp_documentation.md" target="_blank">MCP
+                Server Guide</a></li>
+            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/bug_reports.md" target="_blank">Bug Reports
+                &amp; Redaction</a></li>
+            <li><a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/windows_testing.md" target="_blank">Windows
+                Beta Testing</a></li>
           </ul>
         </div>
 
@@ -1322,4 +1468,5 @@ chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
   <script src="js/reveal.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>
