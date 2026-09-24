@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.7.0] - 2026-09-24
+
+Merge pull request #155 from JRufer/development
+v0.7.0: "Hey Vox" trigger, mid-speech command detection, earlier TTS loading
+
+---
+
 ## [v0.6.0] - 2026-09-20
 
 Merge pull request #145 from JRufer/development
