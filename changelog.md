@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.7.1] - 2026-09-27
+
+Merge pull request #159 from JRufer/claude/ecstatic-curie-azrhcw
+Name Print Screen, Menu and media keys as the backends do; repair more legacy key names
+
+---
+
 ## [v0.7.0] - 2026-09-24
 
 Merge pull request #155 from JRufer/development
