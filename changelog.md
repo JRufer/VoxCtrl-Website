@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.7.2] - 2026-10-02
+
+Merge pull request #160 from JRufer/ccr-362122fb-ljim8y
+Simplify update check UI; show changelog since current version
+
+---
+
 ## [v0.7.1] - 2026-09-27
 
 Merge pull request #159 from JRufer/claude/ecstatic-curie-azrhcw
