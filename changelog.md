@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.7.4] - 2026-10-04
+
+Merge pull request #164 from JRufer/development
+Release v0.7.4
+Added support for for Parakeet Redux, A smaller Parakeet model with slightly less accuracy but a smaller memory footprint.
+
+---
+
 ## [v0.7.3] - 2026-10-04
 
 Merge pull request #162 from JRufer/development
