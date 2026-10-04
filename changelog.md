@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.7.3] - 2026-10-04
+
+Merge pull request #162 from JRufer/development
+v0.7.3: paste dictation with full clipboard restore, live transcript for overlays
+
+---
+
 ## [v0.7.2] - 2026-10-02
 
 Merge pull request #160 from JRufer/ccr-362122fb-ljim8y
