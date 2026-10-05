@@ -422,6 +422,8 @@ const CMD_EXAMPLES = [
     note: 'Filler words are allowed before the name — and “Personal Notes” beats “Notes”.' },
   { tag: 'connector',   phrase: 'VoxCtrl say saying that the build finished',
     note: '“saying that” is a connector, so it is trimmed off the payload.' },
+  { tag: 'hey vox',     phrase: 'Hey Vox, add this to my notes: renew the domain on Friday',
+    note: '“Hey Vox” opens a command just like “VoxCtrl”.' },
   { tag: 'fuzzy',       phrase: 'Vox control commit fix the audio buffer race',
     note: 'A mis-transcribed trigger still counts.' },
   { tag: 'fan-out',     phrase: 'VoxCtrl put this in Home, turn the office lamp off',
@@ -501,20 +503,32 @@ function parseVoiceCommand(text, targets) {
   const lower = text.toLowerCase();
   let pos = null, triggerLen = 0;
 
-  for (const trigger of ['voxctrl', 'vox ctrl', 'vox-ctrl', 'vox control']) {
-    const at = lower.indexOf(trigger);
-    if (at !== -1 && (pos === null || at < pos)) { pos = at; triggerLen = trigger.length; }
+  const exact = ['voxctrl', 'vox ctrl', 'vox-ctrl', 'vox control', 'hey vox', 'hey, vox', 'hey-vox', 'hey_vox'];
+  for (const trigger of exact) {
+    let from = 0, at;
+    while ((at = lower.indexOf(trigger, from)) !== -1) {
+      const end = at + trigger.length;
+      const okStart = at === 0 || /\s/.test(lower[at - 1]) || isPunct(lower[at - 1]);
+      const okEnd = end === lower.length || /\s/.test(lower[end]) || isPunct(lower[end]);
+      if (okStart && okEnd) {
+        if (pos === null || at < pos) { pos = at; triggerLen = trigger.length; }
+        break;
+      }
+      from = at + 1;
+    }
   }
 
+  // A misheard "vox control" only counts as the first two words, and the first must sound like "vox".
   if (pos === null) {
     const words = lower.split(/\s+/).filter(Boolean);
-    for (const word of words) {
-      const clean = trimMatch(word, isPunct);
-      if (['control', 'ctrl', 'ctl', 'kontrol'].includes(clean) && words.indexOf(word) > 0) {
+    if (words.length >= 2) {
+      const first = trimMatch(words[0], isPunct);
+      const second = trimMatch(words[1], isPunct);
+      const soundsLikeVox = first.length <= 6 && (first.endsWith('x') || first.endsWith('ks') || first.endsWith('cs'));
+      if (soundsLikeVox && ['control', 'ctrl', 'ctl', 'kontrol'].includes(second)) {
         const start = Math.max(lower.indexOf(words[0]), 0);
-        const end = lower.indexOf(word) + word.length;
+        const end = lower.indexOf(words[1], start + words[0].length) + words[1].length;
         pos = start; triggerLen = end - start;
-        break;
       }
     }
   }
@@ -523,9 +537,13 @@ function parseVoiceCommand(text, targets) {
     const words = lower.split(/\s+/).filter(Boolean);
     for (let len = Math.min(2, words.length); len >= 1; len--) {
       const cand = trimMatch(words.slice(0, len).join(' '), isPunct);
-      if (levenshtein(cand, 'voxctrl') <= 2 || levenshtein(cand, 'vox control') <= 3) {
-        const at = lower.indexOf(cand);
-        if (at !== -1) { pos = at; triggerLen = cand.length; break; }
+      const heyVox = words.slice(0, len).map(w => trimMatch(w, isPunct)).filter(Boolean).join(' ');
+      if (levenshtein(cand, 'voxctrl') <= 2 || levenshtein(cand, 'vox control') <= 3
+          || (heyVox && levenshtein(heyVox, 'hey vox') <= 1)) {
+        const at = lower.indexOf(words[0]);
+        const last = words[len - 1];
+        const end = lower.indexOf(last, at) + last.length;
+        if (at !== -1) { pos = at; triggerLen = end - at; break; }
       }
     }
   }

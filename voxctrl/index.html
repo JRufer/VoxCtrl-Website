@@ -7,7 +7,7 @@
   <!-- Primary SEO Meta Tags -->
   <title>VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows</title>
   <meta name="title" content="VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows">
-  <meta name="description" content="VoxCtrl v0.6.5 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
+  <meta name="description" content="VoxCtrl v0.7.4 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
   <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
   <meta name="author" content="JRufer">
   <meta name="theme-color" content="#07090e">
@@ -41,7 +41,7 @@
       <a href="#" class="nav-brand" id="navBrand">
         <img src="assets/app_icon.png" alt="VoxCtrl Logo" class="nav-logo-icon">
         <span>VoxCtrl</span>
-        <span class="nav-version-badge">v0.6.5</span>
+        <span class="nav-version-badge">v0.7.4</span>
       </a>
 
       <nav>
@@ -113,7 +113,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>Download v0.6.5</span>
+            <span>Download v0.7.4</span>
           </a>
 
           <div class="hero-terminal-pill" id="heroQuickSnippet">
@@ -124,7 +124,7 @@
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
               </svg>
             </button>
-            <span id="terminalQuickCmd" style="display:none;">chmod +x VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage &amp;&amp; ./VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage</span>
+            <span id="terminalQuickCmd" style="display:none;">chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage &amp;&amp; ./VoxCtrl-linux-x86_64-vulkan.AppImage</span>
           </div>
 
           <a href="https://github.com/JRufer/VoxCtrl" target="_blank" rel="noopener noreferrer" class="btn-secondary" id="btnHeroDocs">
@@ -185,7 +185,7 @@
           </div>
           <h3 class="feature-card-title">Three engines, all on-device</h3>
           <p class="feature-card-desc">
-            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription. All run on your own CPU or GPU — nothing leaves the machine.
+            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription — with a smaller 1.58-bit <strong>Redux</strong> variant (~420 MB instead of ~665 MB) when memory is tight. All run on your own CPU or GPU — nothing leaves the machine.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">whisper-rs</span>
@@ -224,7 +224,7 @@
           </div>
           <h3 class="feature-card-title">Output Commands, spoken by name</h3>
           <p class="feature-card-desc">
-            Say <em>“VoxCtrl notes, remember to call the plumber”</em> and the text lands in your notes instead of your cursor. Twelve delivery types — inject, file, exec, pipe, socket, dbus, http, webhook, mcp, speak, chat, clipboard — plus the Voice Command Router that picks between them.
+            Say <em>“Hey Vox, notes, remember to call the plumber”</em> and the text lands in your notes instead of your cursor. Twelve delivery types — inject, file, exec, pipe, socket, dbus, http, webhook, mcp, speak, chat, clipboard — plus the Voice Command Router that picks between them.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">12 Delivery Types</span>
@@ -461,7 +461,7 @@
         </div>
         <div class="cmd-rule">
           <h4>The trigger survives bad transcription</h4>
-          <p><code>voxctrl</code>, <code>vox ctrl</code>, <code>vox control</code> all count, any <em>“&lt;word&gt; control”</em> phrase counts, and a leading token within a small edit distance of <code>voxctrl</code> is accepted too.</p>
+          <p><code>hey vox</code>, <code>voxctrl</code>, <code>vox ctrl</code> and <code>vox control</code> all count, as does a misheard <em>“&lt;word&gt; control”</em> when it opens the dictation and the word sounds like <em>vox</em> — <em>“box control”</em>, yes; <em>“take control, say hello”</em>, no — and a leading token within a small edit distance of the trigger is accepted too. Trigger words must stand alone, so <em>“voxelize”</em> never fires.</p>
         </div>
         <div class="cmd-rule">
           <h4>No trigger, no surprise</h4>
@@ -560,7 +560,7 @@
             <span class="target-meta-badge" id="targetBadge">inject</span>
           </h4>
           <p id="targetDesc">
-            Simulates typing directly into the active focused window. Uses native Wayland wtype, X11 xdotool, or clipboard Ctrl+V fallback.
+            Delivers text into the active focused window as a single paste: your whole clipboard is backed up first and restored afterwards, and the shortcut is chosen per window (Ctrl+V, Ctrl+Shift+V in terminals, Shift+Insert in Windows consoles). If a paste can't be done, or on Linux Mint, it types instead.
           </p>
           <div class="target-usecase-box" id="targetUsecase">
             Perfect for hands-free code dictation, emails, slack messages, and editor writing.
@@ -851,7 +851,7 @@ strip_newlines = false</code></pre>
             <span class="set-tab-glyph">⚙</span>
             <span class="set-tab-body">
               <strong>General</strong>
-              <span>Setup wizard · updates · MCP server</span>
+              <span>Setup wizard · signed updates · MCP server</span>
             </span>
           </button>
           <button class="set-tab" data-shot="1" type="button">
@@ -944,7 +944,7 @@ strip_newlines = false</code></pre>
               <h4>Try the awkward parts</h4>
               <p>Punctuation and symbols are the single most valuable test — anything with
                 <code>% ( ) + [ ] { } ^ ~</code> in it. Then a few different apps, all four gesture styles, and a
-                paragraph or two long enough that the app switches from typing to pasting.</p>
+                paragraph or two, and a dictation while something else is on the clipboard to check it comes back afterwards.</p>
             </div>
             <div class="win-card win-card-accent">
               <span class="win-card-num">04</span>
@@ -1018,11 +1018,18 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">RELEASE TIMELINE</div>
         <h2 class="section-title">Everything that landed since v0.3.6.</h2>
         <p class="section-desc">
-          Twenty releases since v0.3.6, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta, a Remote Speech Engine and now on-device dictation cleanup.
+          Twenty-five releases since v0.3.6, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta, a Remote Speech Engine, on-device dictation cleanup and now clipboard-safe pasting.
         </p>
       </div>
 
       <ol class="rel-timeline" id="relTimeline">
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.7.0 – v0.7.4</b><span class="rel-date">23 Sep – 4 Oct 2026</span><span class="rel-tag">Paste, “Hey Vox”, signed updates</span></div>
+            <p>Dictation is now <strong>pasted</strong> rather than typed: VoxCtrl backs up every format on your clipboard, pastes with the right shortcut for the focused window, and restores it — falling back to typing, and always typing on Linux Mint. On Wayland the shortcut can go through the RemoteDesktop portal. <strong>“Hey Vox”</strong> now opens a voice command, trigger matching is stricter so ordinary dictation isn't mistaken for one, and commands are spotted while you are still speaking. Overlays can show a live transcript. Updates are <strong>signed</strong> and verified before they install, the update check is a single button with a change log across versions, and stereo-only microphones now open. Parakeet gained a smaller <strong>Redux</strong> (1.58-bit) download.</p>
+          </div>
+        </li>
         <li class="rel-item rel-item-major">
           <span class="rel-dot"></span>
           <div class="rel-body">
@@ -1210,12 +1217,12 @@ strip_newlines = false</code></pre>
 #    (Vulkan-accelerated, and falls back to the CPU when there is no GPU)
 
 # 2. Make it executable
-chmod +x VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage
+chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
 
 # 3. Run it. The first-run wizard opens, and VoxCtrl registers its own
 #    desktop entry and icon under ~/.local/share — no install step, no
 #    udev rule, no permissions to grant.
-./VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage</code></pre>
+./VoxCtrl-linux-x86_64-vulkan.AppImage</code></pre>
 
             <button class="btn-copy-terminal" data-copy-target="terminalCodeSnippet" id="btnCopyInstall">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1238,7 +1245,7 @@ chmod +x VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage
             </div>
             <div class="req-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>PipeWire or PulseAudio · <code>wtype</code> (Wayland) or <code>xdotool</code> (X11) for typing</span>
+              <span>PipeWire or PulseAudio · <code>wtype</code> or <code>ydotool</code> (Wayland) or <code>xdotool</code> (X11) as keystroke fallbacks</span>
             </div>
             <div class="req-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -1304,7 +1311,7 @@ chmod +x VoxCtrl_0.5.2_amd64-linux-x86_64-vulkan.AppImage
 
       <div class="footer-bottom">
         <div>© 2026 VoxCtrl Project. Created by JRufer. MIT licensed, free and open source.</div>
-        <div>v0.6.5 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
+        <div>v0.7.4 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
       </div>
     </div>
   </footer>

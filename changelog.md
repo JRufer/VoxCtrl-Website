@@ -2,37 +2,31 @@
 
 ## [v0.7.4] - 2026-10-04
 
-Merge pull request #164 from JRufer/development
-Release v0.7.4
-Added support for for Parakeet Redux, A smaller Parakeet model with slightly less accuracy but a smaller memory footprint.
+Add Parakeet Redux (1.58-bit), a smaller Parakeet model with slightly lower accuracy and a smaller memory footprint.
 
 ---
 
-## [v0.7.3] - 2026-10-04
+## [v0.7.3] - 2026-10-03
 
-Merge pull request #162 from JRufer/development
-v0.7.3: paste dictation with full clipboard restore, live transcript for overlays
-
----
-
-## [v0.7.2] - 2026-10-02
-
-Merge pull request #160 from JRufer/ccr-362122fb-ljim8y
-Simplify update check UI; show changelog since current version
+Paste dictation with full clipboard backup and restore, a RemoteDesktop-portal paste shortcut on Wayland, and live transcript text for overlays.
 
 ---
 
-## [v0.7.1] - 2026-09-27
+## [v0.7.2] - 2026-10-01
 
-Merge pull request #159 from JRufer/claude/ecstatic-curie-azrhcw
-Name Print Screen, Menu and media keys as the backends do; repair more legacy key names
+Simplify the update check to a single button and show the change log since your current version.
 
 ---
 
-## [v0.7.0] - 2026-09-24
+## [v0.7.1] - 2026-09-26
 
-Merge pull request #155 from JRufer/development
-v0.7.0: "Hey Vox" trigger, mid-speech command detection, earlier TTS loading
+Sign releases and verify the signature before installing an update; record punctuation, numpad and right-hand modifier keys under their real names; open stereo-only microphones; internal refactors.
+
+---
+
+## [v0.7.0] - 2026-09-23
+
+"Hey Vox" trigger, voice-command detection while you are still speaking, earlier TTS loading, and no S1-mini cleanup for text bound for Speak targets.
 
 ---
 
