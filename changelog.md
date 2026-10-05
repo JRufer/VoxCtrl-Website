@@ -1,5 +1,35 @@
 # Changelog
 
+## [v0.7.4] - 2026-10-04
+
+Add Parakeet Redux (1.58-bit), a smaller Parakeet model with slightly lower accuracy and a smaller memory footprint.
+
+---
+
+## [v0.7.3] - 2026-10-03
+
+Paste dictation with full clipboard backup and restore, a RemoteDesktop-portal paste shortcut on Wayland, and live transcript text for overlays.
+
+---
+
+## [v0.7.2] - 2026-10-01
+
+Simplify the update check to a single button and show the change log since your current version.
+
+---
+
+## [v0.7.1] - 2026-09-26
+
+Sign releases and verify the signature before installing an update; record punctuation, numpad and right-hand modifier keys under their real names; open stereo-only microphones; internal refactors.
+
+---
+
+## [v0.7.0] - 2026-09-23
+
+"Hey Vox" trigger, voice-command detection while you are still speaking, earlier TTS loading, and no S1-mini cleanup for text bound for Speak targets.
+
+---
+
 ## [v0.6.0] - 2026-09-20
 
 Merge pull request #145 from JRufer/development

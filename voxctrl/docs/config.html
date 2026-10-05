@@ -183,7 +183,7 @@
           <tr>
             <td>parakeet.model_size</td>
             <td>"tdt-0.6b-v3"</td>
-            <td>Parakeet model size, INT8 ONNX (only used when backend = "parakeet")</td>
+            <td>Parakeet model size, INT8 ONNX (only used when backend = "parakeet"); <code>"tdt-0.6b-v3-redux"</code> is the smaller 1.58-bit variant (~420 MB)</td>
           </tr>
           <tr>
             <td>parakeet.language</td>
@@ -339,6 +339,21 @@
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>paste_instead_of_typing</td>
+            <td>true</td>
+            <td>Deliver dictation as one paste (clipboard backed up and restored) instead of typing it; falls back to typing. Ignored on Linux Mint, where text is always typed</td>
+          </tr>
+          <tr>
+            <td>paste_shortcut</td>
+            <td>"auto"</td>
+            <td><code>auto</code>, <code>ctrl+v</code>, <code>ctrl+shift+v</code> or <code>shift+insert</code></td>
+          </tr>
+          <tr>
+            <td>early_command_detection</td>
+            <td>true</td>
+            <td>Detect a spoken command while you are still speaking, so its overlay appears and the TTS model starts loading before you release the hotkey</td>
+          </tr>
           <tr>
             <td>remove_fillers</td>
             <td>true</td>
