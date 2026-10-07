@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.2] - 2026-10-07
+
+Merge pull request #168 from JRufer/development
+Finish the 0.8.2 version bump (Cargo.toml was still 0.8.1)
+
+---
+
 ## [v0.8.0] - 2026-10-07
 
 Merge pull request #165 from JRufer/development
