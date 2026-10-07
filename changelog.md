@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.0] - 2026-10-07
+
+Merge pull request #165 from JRufer/development
+v0.8.0: GPU acceleration for every engine, Speed test, accurate release notes
+
+---
+
 ## [v0.7.4] - 2026-10-04
 
 Add Parakeet Redux (1.58-bit), a smaller Parakeet model with slightly lower accuracy and a smaller memory footprint.
