@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.3] - 2026-10-17
+
+Merge pull request #170 from JRufer/bump-0.8.3
+Bump version to 0.8.3
+
+---
+
 ## [v0.8.2] - 2026-10-07
 
 Merge pull request #168 from JRufer/development
