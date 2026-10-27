@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.4] - 2026-10-27
+
+Merge pull request #174 from JRufer/fix/webkitgtk-2.54-transparency
+Fix overlays drawn only in pieces on WebKitGTK 2.54+
+
+---
+
 ## [v0.8.3] - 2026-10-17
 
 Merge pull request #170 from JRufer/bump-0.8.3
