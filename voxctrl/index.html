@@ -7,7 +7,7 @@
   <!-- Primary SEO Meta Tags -->
   <title>VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows</title>
   <meta name="title" content="VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows">
-  <meta name="description" content="VoxCtrl v0.7.4 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
+  <meta name="description" content="VoxCtrl v0.8.2 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
   <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
   <meta name="author" content="JRufer">
   <meta name="theme-color" content="#07090e">
@@ -41,7 +41,7 @@
       <a href="#" class="nav-brand" id="navBrand">
         <img src="assets/app_icon.png" alt="VoxCtrl Logo" class="nav-logo-icon">
         <span>VoxCtrl</span>
-        <span class="nav-version-badge">v0.7.4</span>
+        <span class="nav-version-badge">v0.8.2</span>
       </a>
 
       <nav>
@@ -113,7 +113,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>Download v0.7.4</span>
+            <span>Download v0.8.2</span>
           </a>
 
           <div class="hero-terminal-pill" id="heroQuickSnippet">
@@ -147,7 +147,7 @@
           </div>
           <div class="spec-item">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-            <span>Vulkan GPU Acceleration</span>
+            <span>GPU Acceleration for Every Engine</span>
           </div>
           <div class="spec-item">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line></svg>
@@ -185,13 +185,14 @@
           </div>
           <h3 class="feature-card-title">Three engines, all on-device</h3>
           <p class="feature-card-desc">
-            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription — with a smaller 1.58-bit <strong>Redux</strong> variant (~420 MB instead of ~665 MB) when memory is tight. All run on your own CPU or GPU — nothing leaves the machine.
+            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription — with a smaller 1.58-bit <strong>Redux</strong> variant (~420 MB instead of ~665 MB) when memory is tight. All run on your own CPU or GPU, switched with one <strong>GPU acceleration</strong> checkbox per engine, and a built-in <strong>Speed test</strong> times each one on both and recommends the faster device — nothing leaves the machine.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">whisper-rs</span>
             <span class="feature-tag">Moonshine ONNX</span>
             <span class="feature-tag">Parakeet TDT</span>
             <span class="feature-tag">Vulkan</span>
+            <span class="feature-tag">WebGPU</span>
           </div>
         </div>
 
@@ -889,7 +890,7 @@ strip_newlines = false</code></pre>
 
       <!-- The other nine tabs -->
       <div class="settings-index">
-        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, Remote Speech Engine), model size and download, GPU offloading</span></div>
+        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, Remote Speech Engine), model size and download, a GPU acceleration checkbox per engine, and the Speed test</span></div>
         <div class="set-idx"><b>Post-Processing</b><span>S1-mini dictation cleanup, basic text cleanup (filler words, punctuation, list formatting), custom vocabulary, and snippets</span></div>
         <div class="set-idx"><b>Hotkeys</b><span>Gestures, bindings, and a per-keybind S1-mini override</span></div>
         <div class="set-idx"><b>Visual</b><span>Overlay style, position, and the command trigger overlay</span></div>
@@ -1001,7 +1002,7 @@ strip_newlines = false</code></pre>
               <span>Read the 15-minute test plan</span>
             </a>
             <span class="win-cta-note">
-              One installer now: <code>-windows-x86_64-webgpu.exe</code> puts <strong>Moonshine</strong> on any Direct3D 12 GPU and falls back to the CPU when there isn't one
+              One installer now: <code>-windows-x86_64-webgpu.exe</code> puts <strong>Moonshine</strong> and <strong>Parakeet</strong> on any Direct3D 12 GPU and falls back to the CPU when there isn't one
             </span>
           </div>
         </div>
@@ -1018,11 +1019,18 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">RELEASE TIMELINE</div>
         <h2 class="section-title">Everything that landed since v0.3.6.</h2>
         <p class="section-desc">
-          Twenty-five releases since v0.3.6, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta, a Remote Speech Engine, on-device dictation cleanup and now clipboard-safe pasting.
+          Twenty-eight releases since v0.3.6, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta, a Remote Speech Engine, on-device dictation cleanup, clipboard-safe pasting and now GPU acceleration for every engine.
         </p>
       </div>
 
       <ol class="rel-timeline" id="relTimeline">
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.0 – v0.8.2</b><span class="rel-date">6–7 Oct 2026</span><span class="rel-tag">GPU for every engine, Speed test</span></div>
+            <p><strong>Moonshine and Parakeet can now run on the GPU</strong> through ONNX Runtime’s WebGPU provider (Direct3D 12 on Windows, Vulkan underneath on Linux), and every engine is switched the same way: one <strong>GPU acceleration</strong> checkbox, with a chip beside the engine saying which device it is really using. Both start on the CPU on purpose — measured 5–7× slower on WebGPU on an RTX 4090 — and the new <strong>Speed test</strong> in Settings → Engine times each downloaded engine on CPU and GPU and applies the faster one. S1-mini now genuinely runs on the Vulkan GPU in packaged builds. On Linux the WebGPU build is a second download, <code>-linux-x86_64-vulkan-webgpu.AppImage</code>, because it needs glibc 2.38 or newer; the plain Vulkan AppImage stays for Ubuntu 22.04 and Debian 12. Fixed: that build not starting on Arch-like systems, and whisper.cpp crashing at launch on CPUs without AVX-512 — it is now built for an AVX2 baseline, so CPUs older than Intel Haswell or AMD Zen are no longer supported on Linux.</p>
+          </div>
+        </li>
         <li class="rel-item rel-item-major">
           <span class="rel-dot"></span>
           <div class="rel-body">
@@ -1184,7 +1192,9 @@ strip_newlines = false</code></pre>
         <p class="section-desc">
           As of v0.5.2 there is a <strong>single Linux build</strong>: the Vulkan AppImage accelerates any
           NVIDIA, AMD or Intel GPU through the host driver and falls back to the CPU when there is no Vulkan
-          device — the same file is right whether or not you have a GPU. Run it once and VoxCtrl registers its
+          device — the same file is right whether or not you have a GPU. On a newer distro (glibc 2.38+, such as
+          Ubuntu 24.04 or Arch) the <code>-linux-x86_64-vulkan-webgpu.AppImage</code> also lets Moonshine and
+          Parakeet use the GPU. Run it once and VoxCtrl registers its
           own desktop entry and icon. No <code>libfuse2</code>, no udev rule, no permissions to grant.
         </p>
       </div>
@@ -1311,7 +1321,7 @@ chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
 
       <div class="footer-bottom">
         <div>© 2026 VoxCtrl Project. Created by JRufer. MIT licensed, free and open source.</div>
-        <div>v0.7.4 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
+        <div>v0.8.2 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
       </div>
     </div>
   </footer>
