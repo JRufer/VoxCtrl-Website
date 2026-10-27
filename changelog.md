@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.5] - 2026-10-27
+
+Merge pull request #175 from JRufer/feature/per-app-cleanup-style
+Cleanup styling per app
+
+---
+
 ## [v0.8.4] - 2026-10-27
 
 Merge pull request #174 from JRufer/fix/webkitgtk-2.54-transparency
