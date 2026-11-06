@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.6] - 2026-11-06
+
+Merge pull request #180 from JRufer/fix/appimage-permissions
+Fix Linux AppImage packaging; bump to 0.8.6
+
+---
+
 ## [v0.8.5] - 2026-10-27
 
 Merge pull request #175 from JRufer/feature/per-app-cleanup-style
