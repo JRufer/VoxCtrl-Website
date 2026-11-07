@@ -7,7 +7,7 @@
   <!-- Primary SEO Meta Tags -->
   <title>VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows</title>
   <meta name="title" content="VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows">
-  <meta name="description" content="VoxCtrl v0.7.4 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
+  <meta name="description" content="VoxCtrl v0.8.6 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
   <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
   <meta name="author" content="JRufer">
   <meta name="theme-color" content="#07090e">
@@ -41,7 +41,7 @@
       <a href="#" class="nav-brand" id="navBrand">
         <img src="assets/app_icon.png" alt="VoxCtrl Logo" class="nav-logo-icon">
         <span>VoxCtrl</span>
-        <span class="nav-version-badge">v0.7.4</span>
+        <span class="nav-version-badge">v0.8.6</span>
       </a>
 
       <nav>
@@ -113,7 +113,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>Download v0.7.4</span>
+            <span>Download v0.8.6</span>
           </a>
 
           <div class="hero-terminal-pill" id="heroQuickSnippet">
@@ -185,7 +185,7 @@
           </div>
           <h3 class="feature-card-title">Three engines, all on-device</h3>
           <p class="feature-card-desc">
-            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription — with a smaller 1.58-bit <strong>Redux</strong> variant (~420 MB instead of ~665 MB) when memory is tight. All run on your own CPU or GPU — nothing leaves the machine.
+            whisper.cpp for reference accuracy, Moonshine ONNX for noisy rooms, and NVIDIA <strong>Parakeet TDT 0.6B</strong> for ultra-fast non-autoregressive transcription — with a smaller 1.58-bit <strong>Redux</strong> variant (~420 MB instead of ~665 MB) when memory is tight, or <strong>Phonon-2</strong>, a more accurate English-only retrain (~735 MB). Every engine has its own <strong>GPU acceleration</strong> switch, and a built-in <strong>Speed test</strong> tells you which device is faster on your machine. All run on your own CPU or GPU — nothing leaves the machine.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">whisper-rs</span>
@@ -325,14 +325,14 @@
               <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
             </svg>
           </div>
-          <h3 class="feature-card-title">Self-updating, checksum-verified</h3>
+          <h3 class="feature-card-title">Self-updating, signature-verified</h3>
           <p class="feature-card-desc">
-            VoxCtrl asks GitHub once on launch whether a newer release exists, shows what changed, and — if you agree — downloads the build matching your install, verifies it against the published checksum, replaces itself and restarts. Nothing is replaced until a complete, verified file is on disk. One tick in Settings → General turns the check off.
+            Press <strong>Check for updates</strong> in Settings → General and VoxCtrl asks GitHub whether a newer release exists and shows what changed across versions. If you agree, it downloads the build matching your install, verifies its signature, replaces itself and restarts. Nothing is replaced until a complete, verified file is on disk, and it never checks on its own.
           </p>
           <div class="feature-tag-list">
-            <span class="feature-tag">Checksum verified</span>
+            <span class="feature-tag">Signature verified</span>
             <span class="feature-tag">No identifier sent</span>
-            <span class="feature-tag">Opt-out</span>
+            <span class="feature-tag">Only when you ask</span>
           </div>
         </div>
       </div>
@@ -591,7 +591,7 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">DYNAMIC HUD OVERLAYS</div>
         <h2 class="section-title">Eight animated overlays. Zero visual clutter.</h2>
         <p class="section-desc">
-          VoxCtrl provides instant visual feedback while the microphone is live. Choose your preferred aesthetic, or run silently with tray-only notifications. Every style is also a drop-in <code>index.html</code> + <code>style.css</code> pair in the overlays folder — edit it, and the change shows up on the next dictation with no restart.
+          VoxCtrl provides instant visual feedback while the microphone is live. Choose your preferred aesthetic, or run silently with tray-only notifications. Every style is also a drop-in <code>index.html</code> + <code>style.css</code> pair in the overlays folder — edit it, and the change shows up on the next dictation with no restart. Every style also shows your words as you speak them and swaps in the finished transcript before it closes; switch that off in Settings → Visual Feedback → <strong>Show live transcript in overlay</strong>.
         </p>
       </div>
 
@@ -878,9 +878,8 @@ strip_newlines = false</code></pre>
             <h4 id="settingsCaptionTitle">General</h4>
             <p id="settingsCaptionText">
               Re-run the first-launch wizard whenever you like, hold the single HuggingFace access token every
-              gated voice model shares (Pocket-TTS, Breeze-TTS-2, VoxCPM2), decide whether VoxCtrl asks GitHub for
-              a newer release on startup, and switch the local MCP JSON-RPC server on or off. The socket path is
-              spelled out for both platforms: <code>/tmp/voxctrl-mcp.sock</code> on Linux,
+              gated voice model shares (Pocket-TTS, Breeze-TTS-2, VoxCPM2), check GitHub for a newer release when you ask, and switch the local MCP JSON-RPC server on or off. The socket path is
+              spelled out for both platforms: <code>$XDG_RUNTIME_DIR/voxctrl-mcp.sock</code> on Linux (also reachable as <code>/tmp/voxctrl-mcp.sock</code>),
               <code>\\.\pipe\voxctrl-mcp</code> on Windows.
             </p>
           </div>
@@ -889,10 +888,10 @@ strip_newlines = false</code></pre>
 
       <!-- The other nine tabs -->
       <div class="settings-index">
-        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, Remote Speech Engine), model size and download, GPU offloading</span></div>
-        <div class="set-idx"><b>Post-Processing</b><span>S1-mini dictation cleanup, basic text cleanup (filler words, punctuation, list formatting), custom vocabulary, and snippets</span></div>
+        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, Remote Speech Engine), model size and download, a GPU acceleration switch per engine, and a Speed test</span></div>
+        <div class="set-idx"><b>Post-Processing</b><span>S1-mini dictation cleanup with styling per app, basic text cleanup (filler words, punctuation, list formatting), custom vocabulary, and snippets</span></div>
         <div class="set-idx"><b>Hotkeys</b><span>Gestures, bindings, and a per-keybind S1-mini override</span></div>
-        <div class="set-idx"><b>Visual</b><span>Overlay style, position, and the command trigger overlay</span></div>
+        <div class="set-idx"><b>Visual</b><span>Overlay style, position, live transcript, and the command trigger overlay</span></div>
         <div class="set-idx"><b>Audio</b><span>Input device, VAD, RNNoise suppression</span></div>
         <div class="set-idx"><b>TTS</b><span>Engine, voice downloads, global stop key, and Model Memory</span></div>
         <div class="set-idx"><b>OpenAI API</b><span>Any OpenAI-compatible endpoint for LLM rewriting</span></div>
@@ -1001,7 +1000,7 @@ strip_newlines = false</code></pre>
               <span>Read the 15-minute test plan</span>
             </a>
             <span class="win-cta-note">
-              One installer now: <code>-windows-x86_64-webgpu.exe</code> puts <strong>Moonshine</strong> on any Direct3D 12 GPU and falls back to the CPU when there isn't one
+              One installer now: <code>-windows-x86_64-webgpu.exe</code> puts <strong>Moonshine</strong> and <strong>Parakeet</strong> on any Direct3D 12 GPU and falls back to the CPU when there isn't one
             </span>
           </div>
         </div>
@@ -1018,11 +1017,46 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">RELEASE TIMELINE</div>
         <h2 class="section-title">Everything that landed since v0.3.6.</h2>
         <p class="section-desc">
-          Twenty-five releases since v0.3.6, from the Breeze-TTS-2 engine to a single Linux build, a Windows beta, a Remote Speech Engine, on-device dictation cleanup and now clipboard-safe pasting.
+          Thirty-one releases since v0.3.6, from the Breeze-TTS-2 engine to a Windows beta, a Remote Speech Engine, on-device dictation cleanup, clipboard-safe pasting, and now GPU acceleration for every engine and a private dictation history.
         </p>
       </div>
 
       <ol class="rel-timeline" id="relTimeline">
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.6</b><span class="rel-date">6 Nov 2026</span></div>
+            <p>Less wait between letting go of the key and the text appearing. Releasing now stops any live-text pass at once, the Wayland clipboard backup reads every format together, KDE and GNOME skip a paste attempt that could never work there, and the S1-mini cleanup model loads while you speak. Each dictation logs how long every stage took: timings only, never your words. Linux AppImages build again.</p>
+          </div>
+        </li>
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.5</b><span class="rel-date">27 Oct 2026</span><span class="rel-tag">Dictation history</span></div>
+            <p>A new <strong>History</strong> window, opened from the tray, lists recent dictations to search, copy, type again, read aloud or send to any output target. It lives in memory only by default. <strong>Keep history between restarts</strong> saves it encrypted with your desktop keyring and refuses to save without one, and any target can opt out with <strong>Don't keep in history</strong>. S1-mini cleanup can use a different <strong>style per app</strong>, casual in Slack and formal in email. MCP gains <code>set_target</code> and <code>get_recent_transcripts</code> (off until you allow it), and its socket moved to <code>$XDG_RUNTIME_DIR</code> with the old <code>/tmp</code> path kept as a link. Transcripts are no longer written to the log, and bug reports go to GitHub only.</p>
+          </div>
+        </li>
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.4</b><span class="rel-date">27 Oct 2026</span></div>
+            <p>All eight built-in overlays now show your words as you speak them, each in its own look, with words the engine may still correct drawn dimmer until they settle. Live text no longer freezes after about ten seconds, and overlays draw correctly again on WebKitGTK 2.54 and newer (Arch, CachyOS, Fedora 44).</p>
+          </div>
+        </li>
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.3</b><span class="rel-date">17 Oct 2026</span></div>
+            <p><strong>Phonon-2</strong> arrives as a Parakeet model: English only, about 735 MB, and more accurate than Redux. Recordings longer than 35 seconds are split at the pauses between words so memory stays flat, and model downloads stream to disk and throw away a file that ends short.</p>
+          </div>
+        </li>
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.0 – v0.8.2</b><span class="rel-date">7 Oct 2026</span><span class="rel-tag">GPU for every engine</span></div>
+            <p>Moonshine and Parakeet can run on the GPU too, and every engine now has one <strong>GPU acceleration</strong> switch, with a chip that says which device it is really using. A <strong>Speed test</strong> in Settings → Engine times each engine on the CPU and the GPU and applies the faster one. Linux gains a second build, <code>-linux-x86_64-vulkan-webgpu.AppImage</code>, for distros with glibc 2.38 or newer, and the Windows installer accelerates Parakeet as well as Moonshine. S1-mini now really runs on the GPU in packaged builds. 0.8.1 and 0.8.2 fixed launch crashes in the WebGPU AppImage, and Linux builds now need a CPU with AVX2.</p>
+          </div>
+        </li>
         <li class="rel-item rel-item-major">
           <span class="rel-dot"></span>
           <div class="rel-body">
@@ -1145,6 +1179,10 @@ strip_newlines = false</code></pre>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
               <span><strong>Air-Gapped Operation:</strong> After downloading models, VoxCtrl operates 100% offline. Ambient audio never touches the wire.</span>
             </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span><strong>History That Forgets:</strong> Recent dictations stay in memory and are gone when VoxCtrl quits. Keeping them between restarts is optional and encrypted with your desktop keyring, and transcripts are never written to the log.</span>
+            </li>
           </ul>
         </div>
 
@@ -1180,12 +1218,14 @@ strip_newlines = false</code></pre>
     <div class="container">
       <div class="section-header">
         <div class="mono-tag gold">GET STARTED TODAY</div>
-        <h2 class="section-title">One AppImage. Or the Windows beta.</h2>
+        <h2 class="section-title">Two AppImages. Or the Windows beta.</h2>
         <p class="section-desc">
-          As of v0.5.2 there is a <strong>single Linux build</strong>: the Vulkan AppImage accelerates any
-          NVIDIA, AMD or Intel GPU through the host driver and falls back to the CPU when there is no Vulkan
-          device — the same file is right whether or not you have a GPU. Run it once and VoxCtrl registers its
-          own desktop entry and icon. No <code>libfuse2</code>, no udev rule, no permissions to grant.
+          There are <strong>two Linux builds</strong>. The Vulkan AppImage accelerates whisper.cpp on any
+          NVIDIA, AMD or Intel GPU through the host driver, falls back to the CPU when there is no Vulkan
+          device, and runs on glibc 2.35 or newer. The <strong>Vulkan + WebGPU</strong> AppImage is the same app
+          plus GPU acceleration for Moonshine and Parakeet; it needs glibc 2.38 or newer (Ubuntu 24.04, Fedora 39,
+          Debian 13, Arch), so on Ubuntu 22.04 or Debian 12 use the plain Vulkan one. Run either once and VoxCtrl
+          registers its own desktop entry and icon. No <code>libfuse2</code>, no udev rule, no permissions to grant.
         </p>
       </div>
 
@@ -1212,9 +1252,11 @@ strip_newlines = false</code></pre>
         <!-- Terminal Snippet Box -->
         <div class="terminal-container">
           <div class="terminal-snippet-box">
-            <pre class="terminal-code"><code id="terminalCodeSnippet"># 1. Grab the one Linux build from the latest release
+            <pre class="terminal-code"><code id="terminalCodeSnippet"># 1. Grab a Linux build from the latest release
 #    https://github.com/JRufer/VoxCtrl/releases/latest
-#    (Vulkan-accelerated, and falls back to the CPU when there is no GPU)
+#    -vulkan.AppImage runs on glibc 2.35+; -vulkan-webgpu.AppImage also
+#    puts Moonshine and Parakeet on the GPU (glibc 2.38+). Both fall back
+#    to the CPU when there is no GPU.
 
 # 2. Make it executable
 chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
@@ -1237,7 +1279,7 @@ chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
           <div class="system-requirements-checklist">
             <div class="req-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Linux: glibc 2.35+ (Ubuntu 22.04, Mint 21, Debian 12, Fedora 36, Arch)</span>
+              <span>Linux: glibc 2.35+ (Ubuntu 22.04, Mint 21, Debian 12, Fedora 36, Arch), 2.38+ for the WebGPU build, and a CPU with AVX2</span>
             </div>
             <div class="req-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -1311,7 +1353,7 @@ chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
 
       <div class="footer-bottom">
         <div>© 2026 VoxCtrl Project. Created by JRufer. MIT licensed, free and open source.</div>
-        <div>v0.7.4 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
+        <div>v0.8.6 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
       </div>
     </div>
   </footer>
