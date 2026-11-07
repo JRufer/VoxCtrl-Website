@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.7] - 2026-11-07
+
+Merge pull request #182 from JRufer/fix/overlay-no-compositor
+Hide the idle overlay on desktops without a compositor (#181), bump to 0.8.7
+
+---
+
 ## [v0.8.6] - 2026-11-06
 
 Merge pull request #180 from JRufer/fix/appimage-permissions
