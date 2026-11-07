@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.2.7</span>
+      <span class="nav-version">v0.8.6</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -91,22 +91,20 @@
       <h2>1. Install</h2>
       <p><strong>Linux:</strong> Download the AppImage from <a href="https://github.com/jrufer/voxctrl/releases"
           target="_blank">GitHub Releases</a>, make it executable, and run it:</p>
-      <pre class="code-inline">chmod +x VoxCtrl.AppImage
-./VoxCtrl-x86_64.AppImage</pre>
-      <p>To set up desktop integration and hardware permissions (udev rules, input group, desktop shortcut), run the
-        built-in installer:</p>
-      <pre class="code-inline">./VoxCtrl-x86_64.AppImage --install</pre>
-      <p>You can also launch the AppImage normally — if hardware permissions are missing, a diagnostics window appears
-        automatically with a one-click <strong>Setup System Integration</strong> button that prompts for your password
-        via <code>pkexec</code>.</p>
+      <pre class="code-inline">chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
+./VoxCtrl-linux-x86_64-vulkan.AppImage</pre>
+      <p>That is the whole installation: VoxCtrl writes its own desktop entry and icon on launch. On glibc 2.38 or newer
+        you can use <code>VoxCtrl-linux-x86_64-vulkan-webgpu.AppImage</code> instead, which also puts Moonshine and
+        Parakeet on the GPU. If <code>wtype</code> or <code>xdotool</code> is missing, the setup window offers to
+        install it via <code>pkexec</code>; <code>--install</code> does the same from a terminal.</p>
       <p><strong>Windows:</strong> Download the installer from GitHub Releases and run it. WebView2
         is
         pre-installed on Windows 11; on Windows 10 it auto-downloads on first run.</p>
 
       <h2>2. Permissions (Linux)</h2>
-      <p>Global hotkeys require evdev access. The built-in installer adds you to the <code>input</code> group. <strong>Log
-          out and back in</strong> (or reboot) for the group change to take effect. On Windows, no special permissions
-        are required — hotkeys use Win32 hooks.</p>
+      <p>None to grant. Global hotkeys are registered with your desktop through the XDG GlobalShortcuts portal, so there
+        is no udev rule, no <code>input</code> group and no logout. On Windows, no special permissions are required:
+        hotkeys use Win32 hooks.</p>
 
       <h2>3. Download a model</h2>
       <p>On first launch, voxctrl opens the Settings window. Go to <strong>Settings → Engine</strong> and download a
@@ -187,7 +185,7 @@
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.2.7 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.8.6 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>

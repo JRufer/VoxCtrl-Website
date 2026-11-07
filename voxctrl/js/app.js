@@ -772,7 +772,7 @@ function initCommandLab() {
 const SETTINGS_SHOTS = [
   {
     title: 'General',
-    text: 'Re-run the first-launch wizard whenever you like, hold the single HuggingFace access token every gated voice model shares (Pocket-TTS, Breeze-TTS-2, VoxCPM2), decide whether VoxCtrl asks GitHub for a newer release on startup, and switch the local MCP JSON-RPC server on or off. The socket path is spelled out for both platforms: <code>/tmp/voxctrl-mcp.sock</code> on Linux, <code>\\\\.\\pipe\\voxctrl-mcp</code> on Windows.'
+    text: 'Re-run the first-launch wizard whenever you like, hold the single HuggingFace access token every gated voice model shares (Pocket-TTS, Breeze-TTS-2, VoxCPM2), check GitHub for a newer release when you ask, and switch the local MCP JSON-RPC server on or off. The socket path is spelled out for both platforms: <code>$XDG_RUNTIME_DIR/voxctrl-mcp.sock</code> on Linux (also reachable as <code>/tmp/voxctrl-mcp.sock</code>), <code>\\\\.\\pipe\\voxctrl-mcp</code> on Windows.'
   },
   {
     title: 'Output Commands',
@@ -892,7 +892,7 @@ const targetDetails = {
     name: 'Model Context Protocol Call',
     desc: 'Calls a tool on any local or networked MCP server over a Unix socket or Windows named pipe, performing the full initialize → notifications/initialized → tools/call handshake.',
     usecase: 'Driving a strict third-party MCP server with your voice, or looping speech back through VoxCtrl\'s own speak_text tool.',
-    toml: `[[target]]\nid = "self_speak"\nlabel = "Speech Loopback"\ndelivery = "mcp"\nmcp_path = "/tmp/voxctrl-mcp.sock"\nmcp_tool = "speak_text"\n\n[target.mcp_args]\ntext = "{TEXT}"`
+    toml: `[[target]]\nid = "self_speak"\nlabel = "Speech Loopback"\ndelivery = "mcp"\n# mcp_path left out: VoxCtrl's own server\nmcp_tool = "speak_text"\n\n[target.mcp_args]\ntext = "{TEXT}"`
   },
   command: {
     label: 'command',
@@ -941,9 +941,11 @@ function initTargetTabs() {
 const APPIMAGE = 'VoxCtrl-linux-x86_64-vulkan.AppImage';
 
 const distroSnippets = {
-  appimage: `# 1. Grab the one Linux build from the latest release
+  appimage: `# 1. Grab a Linux build from the latest release
 #    https://github.com/JRufer/VoxCtrl/releases/latest
-#    (Vulkan-accelerated, and falls back to the CPU when there is no GPU)
+#    -vulkan.AppImage runs on glibc 2.35+; -vulkan-webgpu.AppImage also
+#    puts Moonshine and Parakeet on the GPU (glibc 2.38+). Both fall back
+#    to the CPU when there is no GPU.
 
 # 2. Make it executable
 chmod +x ${APPIMAGE}
@@ -985,7 +987,7 @@ chmod +x ${APPIMAGE}
   windows: `# Windows 10 (21H2+) or Windows 11 — EARLY BETA, please report what breaks
 #
 # Download the installer from the latest release:
-#   VoxCtrl-windows-x86_64-webgpu.exe   (Moonshine on any D3D12 GPU,
+#   VoxCtrl-windows-x86_64-webgpu.exe   (Moonshine and Parakeet on any D3D12 GPU,
 #                                        falls back to the CPU otherwise)
 #
 # The installer is not code-signed yet, so SmartScreen will say the

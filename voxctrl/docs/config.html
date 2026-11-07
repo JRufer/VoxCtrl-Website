@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.2.7</span>
+      <span class="nav-version">v0.8.6</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -183,7 +183,15 @@
           <tr>
             <td>parakeet.model_size</td>
             <td>"tdt-0.6b-v3"</td>
-            <td>Parakeet model size, INT8 ONNX (only used when backend = "parakeet"); <code>"tdt-0.6b-v3-redux"</code> is the smaller 1.58-bit variant (~420 MB)</td>
+            <td>Parakeet model size, INT8 ONNX (only used when backend = "parakeet"); <code>"tdt-0.6b-v3-redux"</code> is the smaller 1.58-bit variant (~420 MB), and <code>"phonon-2"</code> is an
+              English-only retrain (~735 MB) that is more accurate than Redux</td>
+          </tr>
+          <tr>
+            <td>moonshine.device / parakeet.device</td>
+            <td>"cpu"</td>
+            <td>"cpu" | "auto" (the GPU, in builds with ONNX Runtime's WebGPU provider). Set by the <strong>GPU
+              acceleration</strong> switch in Settings → Engine; off by default because these engines measured slower on
+              the GPU on some hardware, so try the <strong>Speed test</strong> first</td>
           </tr>
           <tr>
             <td>parakeet.language</td>
@@ -226,6 +234,18 @@
             <td>s1_mini.styling</td>
             <td>"semi-formal"</td>
             <td>"semi-formal" | "formal" | "casual", etc. — text styling passed to S1-mini</td>
+          </tr>
+          <tr>
+            <td>s1_mini.gpu</td>
+            <td>true</td>
+            <td>Run cleanup on the GPU when the helper was built with Vulkan; <code>false</code> forces the CPU</td>
+          </tr>
+          <tr>
+            <td>s1_mini.app_styles</td>
+            <td>[]</td>
+            <td>Styling per app: a list of <code>{ app, styling }</code> rules. The first rule whose <code>app</code>
+              text appears in the focused app's name wins (window class on Linux, program name on Windows); otherwise
+              <code>styling</code> applies</td>
           </tr>
         </tbody>
       </table>
@@ -321,11 +341,6 @@
             <td>false</td>
             <td>Desktop toast notification after text delivery</td>
           </tr>
-          <tr>
-            <td>history_enabled</td>
-            <td>false</td>
-            <td>Enable transcription history tracking</td>
-          </tr>
         </tbody>
       </table>
 
@@ -368,11 +383,6 @@
             <td>auto_format_lists</td>
             <td>true</td>
             <td>Detect "first/second/third" patterns and reformat as a numbered list</td>
-          </tr>
-          <tr>
-            <td>quiet_mode</td>
-            <td>false</td>
-            <td>Suppress overlay notifications during transcription</td>
           </tr>
           <tr>
             <td>custom_vocabulary</td>
@@ -547,6 +557,46 @@
         </tbody>
       </table>
 
+      <h2>history</h2>
+      <p>Dictation history is private by default: it lives in memory and is gone when VoxCtrl quits.</p>
+      <table class="docs-table">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>enabled</td>
+            <td>true</td>
+            <td>Keep recent dictations at all. Off: nothing is recorded, and what was kept is cleared</td>
+          </tr>
+          <tr>
+            <td>persist</td>
+            <td>false</td>
+            <td>Keep history between restarts, encrypted, with the key in your desktop keyring. Turning it off deletes
+              the file and the key</td>
+          </tr>
+          <tr>
+            <td>max_entries</td>
+            <td>50</td>
+            <td>The most dictations kept; older ones are dropped first</td>
+          </tr>
+          <tr>
+            <td>max_age_hours</td>
+            <td>24</td>
+            <td>Dictations older than this are dropped; 0 keeps them until the entry limit pushes them out</td>
+          </tr>
+          <tr>
+            <td>mcp_access</td>
+            <td>false</td>
+            <td>Let MCP clients read recent dictations through <code>get_recent_transcripts</code></td>
+          </tr>
+        </tbody>
+      </table>
+
       <h2>atspi</h2>
       <table class="docs-table">
         <thead>
@@ -577,13 +627,11 @@
 
       <h2>targets.toml</h2>
       <p>Each output destination is a <code>[[target]]</code> block, identified by <code>id</code> and routed to by
-        hotkey bindings. Common fields: <code>label</code>, <code>delivery</code>, <code>append_newline</code>
-        (default true), <code>strip_newlines</code> (default false, inject only), <code>send_on_release</code>
-        (default true), <code>initial_prompt</code> (Whisper context override), and a per-target
-        <code>[target.processing]</code> block that can override any global feature flag
-        (<code>remove_fillers</code>, <code>spoken_punctuation</code>, <code>auto_format_lists</code>,
-        <code>apply_snippets</code>, <code>code_mode</code>, <code>quiet_mode</code>, <code>atspi_context</code>,
-        <code>noise_suppression</code>).</p>
+        hotkey bindings. Common fields: <code>label</code>, <code>delivery</code>, <code>strip_newlines</code> (default false,
+        inject only), <code>skip_history</code> (default false; keeps this target's dictations out of History, for a
+        password manager or a private chat), and a per-target <code>[target.processing]</code> block that can override
+        the global <code>remove_fillers</code>, <code>spoken_punctuation</code>, <code>auto_format_lists</code> and
+        <code>code_mode</code> flags.</p>
       <p>Delivery types: <code>inject</code>, <code>clipboard</code>, <code>file</code> (with
         <code>file_path</code>/<code>file_prefix</code>/<code>file_timestamp</code>/<code>file_mode</code>),
         <code>http</code> (<code>http_url</code>, <code>http_method</code>), <code>webhook</code>
@@ -707,7 +755,7 @@
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.2.7 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.8.6 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>

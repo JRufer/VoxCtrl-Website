@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.2.7</span>
+      <span class="nav-version">v0.8.6</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -164,12 +164,10 @@
         <li><code>remove_fillers</code> — strip filler words (um, uh, hmm, er, ah, ugh, mhm)</li>
         <li><code>spoken_punctuation</code> — convert spoken punctuation ("period" → ., "comma" → ,)</li>
         <li><code>auto_format_lists</code> — convert spoken ordinals into a numbered list</li>
-        <li><code>apply_snippets</code> — expand custom shorthand snippets into full text</li>
         <li><code>code_mode</code> — camelCase / spoken-operator formatting for dictating code</li>
-        <li><code>quiet_mode</code> — suppress overlay/sound feedback for this target</li>
-        <li><code>atspi_context</code> — use AT-SPI2 to read surrounding context for this target</li>
-        <li><code>noise_suppression</code> — enable/disable noise suppression for this target</li>
       </ul>
+      <p>A target can also set <code>skip_history = true</code> to keep its dictations out of History, for a password
+        manager or a private chat. In the target editor it is <strong>Don't keep in history</strong>, under Privacy.</p>
       <div class="note"><span class="icon">ⓘ</span> LLM rewriting (<code>openai_enabled</code>,
         <code>openai_model</code>, <code>openai_mode</code>, <code>openai_prompt</code>,
         <code>openai_system_prompt</code>) is configured per hotkey <em>binding</em> in
@@ -264,7 +262,7 @@
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.2.7 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.8.6 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>

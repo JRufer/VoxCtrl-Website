@@ -1,47 +1,57 @@
-# voxctrl — Intelligent Audio Interface for Linux
+# VoxCtrl — private, on-device voice dictation and Output Command router
 # llms.txt — structured index for AI agent discovery
 # https://llmstxt.org/
 
-> voxctrl is a programmable voice input broker for Linux. It transcribes speech locally using
-> faster-whisper (NVIDIA CUDA), whisper.cpp (AMD/Intel Vulkan), or Moonshine (streaming ONNX, CPU/edge),
-> routes the transcript to
-> named output targets (inject, exec, pipe, socket, file, dbus), applies per-target AI post-processing
-> pipelines via local Ollama models, and exposes a built-in MCP server so any MCP-capable AI agent
-> (Claude, Cursor, Zed) can use the microphone and TTS as first-class tools.
+> VoxCtrl is a voice dictation app and programmable speech gateway for Linux (Wayland and X11),
+> with a Windows build in beta. It transcribes speech on your own machine with whisper.cpp,
+> Moonshine or NVIDIA Parakeet TDT (or an optional OpenAI-compatible remote speech engine you
+> point it at), can clean the text up with the on-device S1-mini model, and delivers it to the
+> focused window or to named output targets. It also runs a local MCP server so MCP-capable
+> agents can use the microphone and text-to-speech as tools.
 
 ## Quick Facts
 
+- Version: 0.8.6 (6 Nov 2026)
 - License: MIT
-- Platform: Linux (Wayland-native; X11 supported)
-- Language: Python, PyQt6
-- Repository: https://github.com/JRufer/voxctrl
-- MCP Server: Unix domain socket at /tmp/voxctrl-mcp.sock (JSON-RPC 2.0)
-- Config: ~/.config/voxctrl/config.json, targets.toml, bindings.toml
+- Platform: Linux (Wayland and X11); Windows 10 21H2+ / Windows 11 in beta
+- Built with: Rust, Tauri, Svelte
+- Repository: https://github.com/JRufer/VoxCtrl
+- Website: https://jrufer.com/voxctrl/
+- Downloads: VoxCtrl-linux-x86_64-vulkan.AppImage (glibc 2.35+),
+  VoxCtrl-linux-x86_64-vulkan-webgpu.AppImage (glibc 2.38+, also GPU for Moonshine and Parakeet),
+  VoxCtrl-windows-x86_64-webgpu.exe
+- MCP server: Unix domain socket at $XDG_RUNTIME_DIR/voxctrl-mcp.sock, also reachable as
+  /tmp/voxctrl-mcp.sock (Linux); named pipe \\.\pipe\voxctrl-mcp (Windows). JSON-RPC 2.0.
+- Config: config.json, targets.toml and bindings.toml in VoxCtrl's config directory
 
 ## Key Capabilities
 
-1. **Local transcription** — faster-whisper, whisper.cpp, or Moonshine; auto-selects backend from GPU/hardware
-2. **Programmable routing** — 7 output target types (inject/clipboard/exec/pipe/socket/file/dbus)
-3. **Per-target AI pipelines** — strip_fillers, ollama_prompt, code_mode, snippets, spoken_punct
-4. **MCP server** — transcribe_voice, speak_text, get_status tools over Unix socket
-5. **Code Mode** — IDE-aware voice dictation; camelCase/snake_case spoken identifier formatting
-6. **AT-SPI2 injection** — direct text insertion into focused widgets; reads context before cursor
-7. **Neural TTS** — Piper on-device speech synthesis; 8 curated English voice models
-8. **Visual overlays** — Voice Card (default), Waveform, Pulse Circle; custom Python plugins
+1. **On-device transcription** — whisper.cpp, Moonshine and Parakeet TDT (including the Redux and
+   English-only Phonon-2 models), each with its own GPU acceleration switch and a built-in Speed test
+2. **Output Commands** — 12 delivery types (inject, clipboard, exec, pipe, socket, file, dbus, http,
+   webhook, mcp, speak, chat) plus a spoken command router
+3. **Dictation cleanup** — S1-mini (Qwen3-0.6B via llama.cpp) on-device, with a different style per app
+4. **Dictation history** — kept in memory only by default; optional encrypted persistence via the desktop keyring
+5. **MCP server** — transcribe_voice, speak_text, get_status, set_target, get_recent_transcripts (opt-in)
+6. **Global hotkeys** — through the XDG GlobalShortcuts portal, so VoxCtrl never reads your keyboard
+7. **Local text-to-speech** — Breeze-TTS-2, VoxCPM2, Pocket-TTS, Piper, Inflect and eSpeak-NG
+8. **Overlays** — eight built-in styles that show live text while you speak; each is an editable
+   index.html + style.css pair
 
 ## MCP Integration
 
 Server name: voxctrl
-Socket: /tmp/voxctrl-mcp.sock
 Protocol: JSON-RPC 2.0, newline-delimited
 
 ### Tools
 
-| Tool               | Signature                           | Description                                                  |
-|--------------------|-------------------------------------|--------------------------------------------------------------|
-| transcribe_voice   | timeout_seconds?: number → string   | Opens mic, returns transcript after VAD silence or timeout   |
-| speak_text         | text: string → "spoken"             | Queues text for Piper TTS; non-blocking                      |
-| get_status         | → {recording: bool, speaking: bool} | Returns current audio I/O state                              |
+| Tool                   | Description                                                                  |
+|------------------------|------------------------------------------------------------------------------|
+| transcribe_voice       | Opens the mic, records the user, returns the transcript                      |
+| speak_text             | Queues text for text-to-speech through the current voice                     |
+| get_status             | Returns whether the mic is open and TTS is playing                           |
+| set_target             | Chooses which output target the next dictations go to; omit the id to list   |
+| get_recent_transcripts | Recent dictations from History; only after the user allows it in History     |
 
 ### Claude Desktop config
 
@@ -58,77 +68,61 @@ Protocol: JSON-RPC 2.0, newline-delimited
 
 ## Configuration Files
 
-### config.json (global settings)
-
-Key options: whisper_model, tts_enabled, tts_voice, mcp_server_enabled, atspi_injection,
-atspi_auto_code_mode, show_overlay, overlay_style, vad_threshold.
-
 ### targets.toml (output destinations)
 
-Each [[target]] entry defines: id, label, delivery, post_processing, and optional [target.ollama].
-Delivery types: inject | clipboard | exec | pipe | socket | file | dbus
+Each [[target]] has id, label, delivery and the fields for that delivery type, plus optional
+strip_newlines, skip_history and a [target.processing] block overriding remove_fillers,
+spoken_punctuation, auto_format_lists and code_mode.
 
 Example:
 ```toml
 [[target]]
-id              = "hermes"
-label           = "Hermes Agent"
-delivery        = "pipe"
-pipe_path       = "/tmp/hermes.in"
-post_processing = "strip_fillers"
-response_pipe   = "/tmp/hermes.out"
-append_newline  = true
+id            = "hermes"
+label         = "Hermes Agent"
+delivery      = "pipe"
+pipe_path     = "/tmp/hermes.in"
+response_pipe = "/tmp/hermes.out"
+
+[target.processing]
+remove_fillers = true
 ```
 
 ### bindings.toml (hotkey gestures)
 
-Each [[binding]] maps keys + gesture to a target ID.
-Gesture types: hold | toggle | double_tap
+Each [[binding]] maps keys and a gesture to one or more targets.
+Gesture types: hold | toggle | double_tap | double_tap_hold
 
 Example:
 ```toml
 [[binding]]
-keys    = ["KEY_LEFTMETA", "KEY_SPACE"]
-gesture = "hold"
-target  = "focused_window"
+id        = "default_hold"
+label     = "Dictate (Hold)"
+keys      = ["KEY_LEFTMETA", "KEY_SPACE"]
+gesture   = "hold"
+target_id = "default"
 ```
 
-## Documentation Sections
+## Documentation
 
-- Installation: https://voxctrl.dev/docs
-- Quickstart: https://voxctrl.dev/docs/quickstart
-- Core Concepts: https://voxctrl.dev/docs/concepts
-- Hotkeys & Gestures: https://voxctrl.dev/docs/hotkeys
-- Routing & Targets: https://voxctrl.dev/docs/routing
-- AT-SPI2 Integration: https://voxctrl.dev/docs/atspi
-- Code Mode: https://voxctrl.dev/docs/code-mode
-- AI Post-Processing: https://voxctrl.dev/docs/ai
-- Voice Output (TTS): https://voxctrl.dev/docs/tts
-- Recording Overlays: https://voxctrl.dev/docs/overlays
-- MCP Server: https://voxctrl.dev/docs/mcp
-- Security: https://voxctrl.dev/docs/security
-- Configuration Reference: https://voxctrl.dev/docs/configuration
-- Tutorials: https://voxctrl.dev/docs/tutorials
-- Architecture: https://voxctrl.dev/docs/architecture
+- Quickstart: https://jrufer.com/voxctrl/docs/quickstart.html
+- Installation: https://jrufer.com/voxctrl/docs/install.html
+- Core Concepts: https://jrufer.com/voxctrl/docs/concepts.html
+- Hotkeys & Gestures: https://jrufer.com/voxctrl/docs/hotkeys.html
+- Routing & Targets: https://jrufer.com/voxctrl/docs/routing.html
+- AT-SPI2 Integration: https://jrufer.com/voxctrl/docs/atspi.html
+- Code Mode: https://jrufer.com/voxctrl/docs/codemode.html
+- AI Post-Processing: https://jrufer.com/voxctrl/docs/ai.html
+- Voice Output (TTS): https://jrufer.com/voxctrl/docs/tts.html
+- Recording Overlays: https://jrufer.com/voxctrl/docs/overlays.html
+- MCP Server: https://jrufer.com/voxctrl/docs/mcp.html
+- DBus Control: https://jrufer.com/voxctrl/docs/dbus.html
+- Configuration Reference: https://jrufer.com/voxctrl/docs/config.html
+- Architecture: https://jrufer.com/voxctrl/docs/architecture.html
+- Privacy: https://github.com/JRufer/VoxCtrl/blob/master/docs/privacy.md
 
-## Hardware Backends
+## Privacy
 
-| Hardware              | Backend           | Acceleration          |
-|-----------------------|-------------------|-----------------------|
-| NVIDIA GPU (CUDA11+)  | faster-whisper    | CUDA                  |
-| AMD GPU (RDNA/GCN)    | whisper.cpp       | Vulkan                |
-| Intel Arc / Iris Xe   | whisper.cpp       | Vulkan                |
-| CPU only              | faster-whisper    | int8 fallback         |
-| Raspberry Pi / Edge   | moonshine         | ONNX int8 (CPU-first) |
-
-## AI Pipeline Stages
-
-strip_fillers | spoken_punct | snippets | ollama_prompt | prepend | append_newline | code_mode
-
-## Security Model
-
-- Unix socket only by default (no network exposure)
-- Zero outbound traffic (all processing is local)
-- Optional microphone confirmation (require_confirmation: true)
-- Tool allowlist: disable individual MCP tools via config
-- Target allowlist: restrict which targets MCP clients can route to
+- No telemetry, no analytics, no automatic crash reporting
+- Network requests happen only when you ask: checking for updates, downloading models or voices,
+  filing a bug report, or targets and engines you configure
+- Transcripts are not written to the log, only word and character counts

@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.2.7</span>
+      <span class="nav-version">v0.8.6</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -108,12 +108,24 @@
             <td>get_status</td>
             <td>Returns whether the mic is open and TTS is playing</td>
           </tr>
+          <tr>
+            <td>set_target</td>
+            <td>Chooses which output target your next dictations go to, as set up in Output Commands. Omit the id to list targets</td>
+          </tr>
+          <tr>
+            <td>get_recent_transcripts</td>
+            <td>Returns recent dictations from History, newest first. Off until you turn on <strong>Let MCP clients read
+              recent dictations</strong> in the History window's privacy settings</td>
+          </tr>
         </tbody>
       </table>
 
       <h2>Transport</h2>
-      <p>Unix domain socket at <code>/tmp/voxctrl-mcp.sock</code> (Linux) or named pipe
-        <code>\\.\pipe\voxctrl-mcp</code> (Windows). Each connection is spawned as its own async <code>tokio</code>
+      <p>Unix domain socket at <code>$XDG_RUNTIME_DIR/voxctrl-mcp.sock</code> (Linux), your private runtime folder, so
+        another account on the machine cannot claim the name first. <code>/tmp/voxctrl-mcp.sock</code> still works as a
+        link to it, which is what the client configs below use, since they cannot expand environment variables. On
+        Windows it is the named pipe
+        <code>\\.\pipe\voxctrl-mcp</code>. Each connection is spawned as its own async <code>tokio</code>
         task. Newline-delimited
         JSON-RPC 2.0 — one JSON object per line, terminated with <code>\n</code>. Follows MCP spec
         <code>2024-11-05</code>.
@@ -211,8 +223,7 @@ id = "my-agent"
 label = "My Agent"
 delivery = "pipe"
 pipe_path = "/tmp/my-agent.in"
-response_pipe = "/tmp/my-agent.out"   # agent writes responses here
-append_newline = true</pre>
+response_pipe = "/tmp/my-agent.out"   # agent writes responses here</pre>
 
       <div class="docs-foot">
         <a href="overlays.html"><small>← previous</small><span>Overlays</span></a>
@@ -261,7 +272,7 @@ append_newline = true</pre>
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.2.7 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.8.6 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>
