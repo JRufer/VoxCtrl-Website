@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.8] - 2026-11-08
+
+Merge pull request #185 from JRufer/aur-packaging
+AUR packages (voxctrl-bin, voxctrl, voxctrl-git) and package-managed install fixes — 0.8.8
+
+---
+
 ## [v0.8.7] - 2026-11-07
 
 Merge pull request #182 from JRufer/fix/overlay-no-compositor
