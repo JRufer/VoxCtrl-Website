@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.9] - 2026-11-10
+
+Merge pull request #188 from JRufer/fix/voxctrl-0.8.9-command-fixes
+Fix the command overlay pill and misheard wake words — 0.8.9 (#187, #186)
+
+---
+
 ## [v0.8.8] - 2026-11-08
 
 Merge pull request #185 from JRufer/aur-packaging
