@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.10] - 2026-11-10
+
+Merge pull request #193 from JRufer/fix/snippets-backend-independent
+0.8.10: snippets on every backend, Whisper snippet triggers, custom Piper voices (#186, #190)
+
+---
+
 ## [v0.8.9] - 2026-11-10
 
 Merge pull request #188 from JRufer/fix/voxctrl-0.8.9-command-fixes
