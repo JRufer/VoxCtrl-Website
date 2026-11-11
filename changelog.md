@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.8.11] - 2026-11-11
+
+Merge pull request #194 from JRufer/fix/hold-cut-short-by-stale-timer
+0.8.11: stop holds being cut short by a stale timeout and by VoxCtrl's own paste
+
+---
+
 ## [v0.8.10] - 2026-11-10
 
 Merge pull request #193 from JRufer/fix/snippets-backend-independent
