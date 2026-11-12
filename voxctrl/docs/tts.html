@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.8.6</span>
+      <span class="nav-version">v0.8.11</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -181,6 +181,11 @@
       </table>
       <p>Voices are downloaded as <code>.tar.gz</code> archives and extracted into the configured voice directory
         (default <code>~/.local/share/voxctrl/piper-voices/</code>).</p>
+      <p>To add your own Piper voice, put both of its files in that folder, the model and its config (for example
+        <code>pl_PL-gosia-medium.onnx</code> and <code>pl_PL-gosia-medium.onnx.json</code>). It shows in the voice picker
+        marked <em>(Custom)</em>; a model without its config is skipped. Playback uses the sample rate in each voice's
+        own config, so it plays at its proper pitch, and the table above is only the fallback for a catalogue voice
+        whose config is missing.</p>
 
       <h2>Pocket-TTS voice catalog</h2>
       <table class="docs-table">
@@ -289,7 +294,7 @@
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.8.6 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.8.11 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>
