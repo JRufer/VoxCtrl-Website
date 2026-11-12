@@ -7,7 +7,7 @@
   <!-- Primary SEO Meta Tags -->
   <title>VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows</title>
   <meta name="title" content="VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows">
-  <meta name="description" content="VoxCtrl v0.8.6 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, and a Windows build is now in early beta.">
+  <meta name="description" content="VoxCtrl v0.8.11 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, Arch users can install it from the AUR, and a Windows build is now in early beta.">
   <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
   <meta name="author" content="JRufer">
   <meta name="theme-color" content="#07090e">
@@ -41,7 +41,7 @@
       <a href="#" class="nav-brand" id="navBrand">
         <img src="assets/app_icon.png" alt="VoxCtrl Logo" class="nav-logo-icon">
         <span>VoxCtrl</span>
-        <span class="nav-version-badge">v0.8.6</span>
+        <span class="nav-version-badge">v0.8.11</span>
       </a>
 
       <nav>
@@ -113,7 +113,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>Download v0.8.6</span>
+            <span>Download v0.8.11</span>
           </a>
 
           <div class="hero-terminal-pill" id="heroQuickSnippet">
@@ -327,12 +327,12 @@
           </div>
           <h3 class="feature-card-title">Self-updating, signature-verified</h3>
           <p class="feature-card-desc">
-            Press <strong>Check for updates</strong> in Settings → General and VoxCtrl asks GitHub whether a newer release exists and shows what changed across versions. If you agree, it downloads the build matching your install, verifies its signature, replaces itself and restarts. Nothing is replaced until a complete, verified file is on disk, and it never checks on its own.
+            Press <strong>Check for updates</strong> in Settings → General or the tray and VoxCtrl asks GitHub whether a newer release exists and shows what changed across versions. If you agree, it downloads the build matching your install, verifies its signature, replaces itself and restarts. Nothing is replaced until a complete, verified file is on disk. <strong>Check for updates automatically</strong> is off until you turn it on; then it looks a minute after launch and once a day, tells you once, and still installs nothing by itself. AUR and <code>.deb</code> installs are left to your package manager.
           </p>
           <div class="feature-tag-list">
             <span class="feature-tag">Signature verified</span>
             <span class="feature-tag">No identifier sent</span>
-            <span class="feature-tag">Only when you ask</span>
+            <span class="feature-tag">Automatic checks opt-in</span>
           </div>
         </div>
       </div>
@@ -461,7 +461,7 @@
         </div>
         <div class="cmd-rule">
           <h4>The trigger survives bad transcription</h4>
-          <p><code>hey vox</code>, <code>voxctrl</code>, <code>vox ctrl</code> and <code>vox control</code> all count, as does a misheard <em>“&lt;word&gt; control”</em> when it opens the dictation and the word sounds like <em>vox</em> — <em>“box control”</em>, yes; <em>“take control, say hello”</em>, no — and a leading token within a small edit distance of the trigger is accepted too. Trigger words must stand alone, so <em>“voxelize”</em> never fires.</p>
+          <p><code>hey vox</code>, <code>voxctrl</code>, <code>vox ctrl</code> and <code>vox control</code> all count, as does a misheard <em>“&lt;word&gt; control”</em> near the start of the dictation when the word sounds like <em>vox</em> — <em>“box control”</em>, yes; <em>“take control, say hello”</em>, no — and a word within a small edit distance of the trigger is accepted too. A misheard trigger may follow up to three lead-in words, so <em>“Okay, hey Fox, notes…”</em> still works, but past the first word the match has to be closer, so <em>“I lost control”</em> stays dictation. Trigger words must stand alone, so <em>“voxelize”</em> never fires.</p>
         </div>
         <div class="cmd-rule">
           <h4>No trigger, no surprise</h4>
@@ -1017,11 +1017,39 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">RELEASE TIMELINE</div>
         <h2 class="section-title">Everything that landed since v0.3.6.</h2>
         <p class="section-desc">
-          Thirty-one releases since v0.3.6, from the Breeze-TTS-2 engine to a Windows beta, a Remote Speech Engine, on-device dictation cleanup, clipboard-safe pasting, and now GPU acceleration for every engine and a private dictation history.
+          Thirty-six releases since v0.3.6, from the Breeze-TTS-2 engine to a Windows beta, a Remote Speech Engine, on-device dictation cleanup, clipboard-safe pasting, GPU acceleration for every engine, a private dictation history, and now packages on the AUR.
         </p>
       </div>
 
       <ol class="rel-timeline" id="relTimeline">
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.11 · v0.8.10</b><span class="rel-date">10 Nov 2026</span></div>
+            <p>Hold-to-talk recordings no longer stop part-way through while the key is still down: a two-minute safety timeout left behind by an earlier dictation could cut off the current one, more often the more you dictated. On KDE, starting the next dictation before the last one appears no longer cuts it short; the finished text waits until you let go. <strong>Snippets</strong> now expand the same on every engine, even where it punctuates between a trigger's words, and the longer of two overlapping triggers always wins. Piper voices you add to the voices folder show up in the picker as <em>(Custom)</em> and play at their own pitch.</p>
+          </div>
+        </li>
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.9</b><span class="rel-date">9 Nov 2026</span></div>
+            <p>A misheard wake word now works behind a lead-in: <em>“Okay, hey Fox, notes…”</em> runs the command instead of typing it out, which was why commands seemed to work on one engine and not another. The voice-command pill shows again on desktops without compositing.</p>
+          </div>
+        </li>
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.8</b><span class="rel-date">8 Nov 2026</span><span class="rel-tag">On the AUR</span></div>
+            <p>On Arch and Arch-based distros, <code>paru -S voxctrl-bin</code> installs VoxCtrl with GPU acceleration for every engine, brings <code>wtype</code> along, and updates with the rest of the system; <code>voxctrl</code> and <code>voxctrl-git</code> build from source. History search now matches every word in any order, takes quoted phrases, highlights matches, filters by target and time, and groups entries by day. <strong>Check for updates automatically</strong> is back as an opt-in: once a day, one notification and a tray item, never on a package-managed install. Every release now ships a <code>SHA256SUMS</code> file.</p>
+          </div>
+        </li>
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.8.7</b><span class="rel-date">7 Nov 2026</span></div>
+            <p>No more black rectangle on desktops without compositing, such as Xfce with compositing turned off: the overlay is shown only while it has something to display.</p>
+          </div>
+        </li>
         <li class="rel-item">
           <span class="rel-dot"></span>
           <div class="rel-body">
@@ -1218,7 +1246,7 @@ strip_newlines = false</code></pre>
     <div class="container">
       <div class="section-header">
         <div class="mono-tag gold">GET STARTED TODAY</div>
-        <h2 class="section-title">Two AppImages. Or the Windows beta.</h2>
+        <h2 class="section-title">Two AppImages, the AUR, or the Windows beta.</h2>
         <p class="section-desc">
           There are <strong>two Linux builds</strong>. The Vulkan AppImage accelerates whisper.cpp on any
           NVIDIA, AMD or Intel GPU through the host driver, falls back to the CPU when there is no Vulkan
@@ -1226,6 +1254,8 @@ strip_newlines = false</code></pre>
           plus GPU acceleration for Moonshine and Parakeet; it needs glibc 2.38 or newer (Ubuntu 24.04, Fedora 39,
           Debian 13, Arch), so on Ubuntu 22.04 or Debian 12 use the plain Vulkan one. Run either once and VoxCtrl
           registers its own desktop entry and icon. No <code>libfuse2</code>, no udev rule, no permissions to grant.
+          On Arch and Arch-based distros, <code>paru -S voxctrl-bin</code> installs it from the AUR instead and
+          pacman keeps it updated.
         </p>
       </div>
 
@@ -1353,7 +1383,7 @@ chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
 
       <div class="footer-bottom">
         <div>© 2026 VoxCtrl Project. Created by JRufer. MIT licensed, free and open source.</div>
-        <div>v0.8.6 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
+        <div>v0.8.11 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
       </div>
     </div>
   </footer>

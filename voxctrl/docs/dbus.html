@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.8.6</span>
+      <span class="nav-version">v0.8.11</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -127,6 +127,12 @@
             <td><code>() → u</code></td>
             <td>Total words dictated this session</td>
           </tr>
+          <tr>
+            <td>CheckForUpdate</td>
+            <td><code>() → s</code></td>
+            <td>Ask GitHub now for a newer release. Returns its version, or <code>""</code> when this is the latest. Runs
+              whatever <code>updates.check_automatically</code> says, since a script calling it is you asking</td>
+          </tr>
         </tbody>
       </table>
 
@@ -149,6 +155,12 @@
             <td>text_injected</td>
             <td><code>(s)</code></td>
             <td>Emitted after text is delivered to a target</td>
+          </tr>
+          <tr>
+            <td>UpdateAvailable</td>
+            <td><code>(s)</code></td>
+            <td>Emitted when a check (manual, automatic or <code>CheckForUpdate</code>) finds a newer release; carries its
+              version. Automatic checks stay quiet about a version you chose to skip</td>
           </tr>
         </tbody>
       </table>
@@ -221,7 +233,7 @@ dbus-send --session --print-reply \
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.8.6 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.8.11 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>

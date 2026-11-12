@@ -11,7 +11,7 @@
 
 ## Quick Facts
 
-- Version: 0.8.6 (6 Nov 2026)
+- Version: 0.8.11 (10 Nov 2026)
 - License: MIT
 - Platform: Linux (Wayland and X11); Windows 10 21H2+ / Windows 11 in beta
 - Built with: Rust, Tauri, Svelte
@@ -19,7 +19,7 @@
 - Website: https://jrufer.com/voxctrl/
 - Downloads: VoxCtrl-linux-x86_64-vulkan.AppImage (glibc 2.35+),
   VoxCtrl-linux-x86_64-vulkan-webgpu.AppImage (glibc 2.38+, also GPU for Moonshine and Parakeet),
-  VoxCtrl-windows-x86_64-webgpu.exe
+  VoxCtrl-windows-x86_64-webgpu.exe; on Arch, the AUR packages voxctrl-bin, voxctrl and voxctrl-git
 - MCP server: Unix domain socket at $XDG_RUNTIME_DIR/voxctrl-mcp.sock, also reachable as
   /tmp/voxctrl-mcp.sock (Linux); named pipe \\.\pipe\voxctrl-mcp (Windows). JSON-RPC 2.0.
 - Config: config.json, targets.toml and bindings.toml in VoxCtrl's config directory
@@ -123,6 +123,7 @@ target_id = "default"
 ## Privacy
 
 - No telemetry, no analytics, no automatic crash reporting
-- Network requests happen only when you ask: checking for updates, downloading models or voices,
-  filing a bug report, or targets and engines you configure
+- Network requests happen only when you ask: checking for updates (automatic daily checks are off
+  unless you turn them on), downloading models or voices, filing a bug report, or targets and
+  engines you configure
 - Transcripts are not written to the log, only word and character counts

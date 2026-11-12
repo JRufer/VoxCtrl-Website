@@ -518,32 +518,41 @@ function parseVoiceCommand(text, targets) {
     }
   }
 
-  // A misheard "vox control" only counts as the first two words, and the first must sound like "vox".
-  if (pos === null) {
-    const words = lower.split(/\s+/).filter(Boolean);
-    if (words.length >= 2) {
-      const first = trimMatch(words[0], isPunct);
-      const second = trimMatch(words[1], isPunct);
-      const soundsLikeVox = first.length <= 6 && (first.endsWith('x') || first.endsWith('ks') || first.endsWith('cs'));
-      if (soundsLikeVox && ['control', 'ctrl', 'ctl', 'kontrol'].includes(second)) {
-        const start = Math.max(lower.indexOf(words[0]), 0);
-        const end = lower.indexOf(words[1], start + words[0].length) + words[1].length;
-        pos = start; triggerLen = end - start;
-      }
+  // A misheard wake word is only looked for near the start: the opening word,
+  // or after up to three lead-in words ("Okay, hey Fox, notes …"), since some
+  // engines write those in. Mirrors MAX_LEAD_IN_WORDS in voxctrl-routing.
+  const words = [];
+  { const re = /\S+/g; let m; while ((m = re.exec(lower)) !== null) words.push([m.index, m[0]]); }
+  const starts = Math.min(words.length, 3 + 1);
+
+  // Misheard "vox control" ("box control", "walks control"): two adjacent words,
+  // the first of which must sound like "vox".
+  for (let skip = 0; skip < starts && pos === null; skip++) {
+    if (skip + 2 > words.length) break;
+    const [firstAt, firstW] = words[skip];
+    const [secondAt, secondW] = words[skip + 1];
+    const first = trimMatch(firstW, isPunct);
+    const second = trimMatch(secondW, isPunct);
+    const soundsLikeVox = first.length <= 6 && (first.endsWith('x') || first.endsWith('ks') || first.endsWith('cs'));
+    if (soundsLikeVox && ['control', 'ctrl', 'ctl', 'kontrol'].includes(second)) {
+      pos = firstAt; triggerLen = secondAt + secondW.length - firstAt;
     }
   }
 
-  if (pos === null) {
-    const words = lower.split(/\s+/).filter(Boolean);
-    for (let len = Math.min(2, words.length); len >= 1; len--) {
-      const cand = trimMatch(words.slice(0, len).join(' '), isPunct);
-      const heyVox = words.slice(0, len).map(w => trimMatch(w, isPunct)).filter(Boolean).join(' ');
-      if (levenshtein(cand, 'voxctrl') <= 2 || levenshtein(cand, 'vox control') <= 3
-          || (heyVox && levenshtein(heyVox, 'hey vox') <= 1)) {
-        const at = lower.indexOf(words[0]);
-        const last = words[len - 1];
-        const end = lower.indexOf(last, at) + last.length;
-        if (at !== -1) { pos = at; triggerLen = end - at; break; }
+  // Fuzzy match on one or two words. Past the first word the match has to be
+  // closer, so "I lost control" stays ordinary dictation.
+  for (let skip = 0; skip < starts && pos === null; skip++) {
+    const [maxVoxctrl, maxVoxControl, maxHeyVox] = skip === 0 ? [2, 3, 1] : [1, 1, 1];
+    for (let len = Math.min(2, words.length - skip); len >= 1; len--) {
+      const span = words.slice(skip, skip + len);
+      const cand = trimMatch(span.map(([, w]) => w).join(' '), isPunct);
+      const heyVox = span.map(([, w]) => trimMatch(w, isPunct)).filter(Boolean).join(' ');
+      if (levenshtein(cand, 'voxctrl') <= maxVoxctrl || levenshtein(cand, 'vox control') <= maxVoxControl
+          || (heyVox && levenshtein(heyVox, 'hey vox') <= maxHeyVox)) {
+        const [at] = span[0];
+        const [lastAt, lastW] = span[len - 1];
+        pos = at; triggerLen = lastAt + lastW.length - at;
+        break;
       }
     }
   }
@@ -975,14 +984,17 @@ chmod +x ${APPIMAGE}
 # libfuse2 is not required: the bundled runtime uses your FUSE 3,
 # and extracts and runs itself when FUSE is unavailable.`,
 
-  arch: `# Arch / CachyOS / EndeavourOS
-sudo pacman -S --needed wtype xdotool
+  arch: `# Arch, Manjaro, EndeavourOS, CachyOS, Garuda — from the AUR
+# voxctrl-bin repackages the release's WebGPU build, so Moonshine,
+# Parakeet and whisper.cpp can all use the GPU. It brings wtype along
+# for typing into windows on Wayland, and updates with paru -Syu.
+paru -S voxctrl-bin      # or: yay -S voxctrl-bin
 
-chmod +x ${APPIMAGE}
-./${APPIMAGE}
+# On X11, add xdotool (an optional dependency pacman won't pull in):
+sudo pacman -S --needed xdotool
 
-# Building from source instead (Vulkan is the standard build):
-# npm install && npx tauri build --features vulkan`,
+# voxctrl builds the same release from source, voxctrl-git builds master.
+# The AppImage works on Arch too, if you'd rather not use a package.`,
 
   windows: `# Windows 10 (21H2+) or Windows 11 — EARLY BETA, please report what breaks
 #
