@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.10] - 2026-11-14
+
+Merge pull request #212 from JRufer/fix/audiocpp-portable-runtime
+Install the portable audio.cpp build; the plain one needs AVX-512 (0.9.10)
+
+---
+
 ## [v0.9.9] - 2026-11-14
 
 Merge pull request #211 from JRufer/fix/tts-helper-death-reason
