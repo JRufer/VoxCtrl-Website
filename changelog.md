@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.7] - 2026-11-14
+
+Merge pull request #208 from JRufer/feature/server-tts
+Run text-to-speech on the server (0.9.7)
+
+---
+
 ## [v0.9.6] - 2026-11-14
 
 Merge pull request #207 from JRufer/fix/cleanup-dialog-position
