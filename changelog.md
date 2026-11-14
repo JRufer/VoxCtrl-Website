@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.6] - 2026-11-14
+
+Merge pull request #207 from JRufer/fix/cleanup-dialog-position
+Fix the Clean up models dialog opening off-centre (0.9.6)
+
+---
+
 ## [v0.9.5] - 2026-11-14
 
 Merge pull request #205 from JRufer/feature/server-llm
