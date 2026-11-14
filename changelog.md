@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.3] - 2026-11-14
+
+Merge pull request #203 from JRufer/feature/model-cleanup
+Clean up models: remove downloaded models no longer in use (0.9.3)
+
+---
+
 ## [v0.9.2] - 2026-11-14
 
 Merge pull request #203 from JRufer/feature/model-cleanup
