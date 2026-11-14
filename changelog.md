@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.8] - 2026-11-14
+
+Merge pull request #210 from JRufer/fix/server-tts-helper-thread
+Fix server TTS losing its audio.cpp helper after a few seconds (0.9.8)
+
+---
+
 ## [v0.9.7] - 2026-11-14
 
 Merge pull request #208 from JRufer/feature/server-tts
