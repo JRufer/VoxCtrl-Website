@@ -11,7 +11,7 @@
 
 ## Quick Facts
 
-- Version: 0.8.11 (10 Nov 2026)
+- Version: 0.9.3 (14 Nov 2026)
 - License: MIT
 - Platform: Linux (Wayland and X11); Windows 10 21H2+ / Windows 11 in beta
 - Built with: Rust, Tauri, Svelte
