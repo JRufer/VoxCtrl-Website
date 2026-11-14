@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.0] - 2026-11-14
+
+Merge pull request #195 from JRufer/feature/client-server
+Add voxctrl-server (client-server, slice 1) and bump to 0.9.0
+
+---
+
 ## [v0.8.11] - 2026-11-11
 
 Merge pull request #194 from JRufer/fix/hold-cut-short-by-stale-timer
