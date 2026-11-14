@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.5] - 2026-11-14
+
+Merge pull request #205 from JRufer/feature/server-llm
+Run S1-mini dictation cleanup on the server (0.9.5)
+
+---
+
 ## [v0.9.3] - 2026-11-14
 
 Merge pull request #203 from JRufer/feature/model-cleanup
