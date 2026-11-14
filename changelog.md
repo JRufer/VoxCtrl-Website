@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.9] - 2026-11-14
+
+Merge pull request #211 from JRufer/fix/tts-helper-death-reason
+Say why the audio.cpp helper died when a TTS request gets no answer (0.9.9)
+
+---
+
 ## [v0.9.8] - 2026-11-14
 
 Merge pull request #210 from JRufer/fix/server-tts-helper-thread
