@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.15] - 2026-11-15
+
+Merge pull request #217 from JRufer/feature/server-encryption
+Encrypted connections to a VoxCtrl server, with pairing codes (0.9.15)
+
+---
+
 ## [v0.9.14] - 2026-11-15
 
 Merge pull request #216 from JRufer/feature/server-settings-panel
