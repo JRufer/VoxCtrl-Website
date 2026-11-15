@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.13] - 2026-11-15
+
+Merge pull request #215 from JRufer/fix/tts-queue-blocking
+Give up stopped server speech, skip abandoned requests, deprioritise synthesis (0.9.13)
+
+---
+
 ## [v0.9.12] - 2026-11-15
 
 Merge pull request #214 from JRufer/fix/server-pocket-voices
