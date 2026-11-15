@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.11] - 2026-11-15
+
+Merge pull request #213 from JRufer/feature/server-voices
+Choose the server's TTS engine and voice from the client; upload own voices (0.9.11)
+
+---
+
 ## [v0.9.10] - 2026-11-14
 
 Merge pull request #212 from JRufer/fix/audiocpp-portable-runtime
