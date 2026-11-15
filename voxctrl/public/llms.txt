@@ -11,7 +11,7 @@
 
 ## Quick Facts
 
-- Version: 0.9.3 (14 Nov 2026)
+- Version: 0.9.15 (14 Nov 2026)
 - License: MIT
 - Platform: Linux (Wayland and X11); Windows 10 21H2+ / Windows 11 in beta
 - Built with: Rust, Tauri, Svelte
@@ -34,9 +34,12 @@
 4. **Dictation history** — kept in memory only by default; optional encrypted persistence via the desktop keyring
 5. **MCP server** — transcribe_voice, speak_text, get_status, set_target, get_recent_transcripts (opt-in)
 6. **Global hotkeys** — through the XDG GlobalShortcuts portal, so VoxCtrl never reads your keyboard
-7. **Local text-to-speech** — Breeze-TTS-2, VoxCPM2, Pocket-TTS, Piper, Inflect and eSpeak-NG
+7. **Local text-to-speech** — Kitten TTS 2, Breeze-TTS-2, VoxCPM2, Pocket-TTS, Piper, Inflect and eSpeak-NG
 8. **Overlays** — eight built-in styles that show live text while you speak; each is an editable
    index.html + style.css pair
+9. **VoxCtrl Server** — voxctrl-server runs speech recognition, and optionally S1-mini cleanup and
+   text-to-speech, on another machine for several VoxCtrl apps; Docker or systemd, optional encryption,
+   pairing codes, and a local fallback engine when it can't be reached
 
 ## MCP Integration
 

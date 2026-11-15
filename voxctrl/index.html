@@ -7,7 +7,7 @@
   <!-- Primary SEO Meta Tags -->
   <title>VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows</title>
   <meta name="title" content="VoxCtrl — Programmable Voice Dictation &amp; Command Broker for Linux &amp; Windows">
-  <meta name="description" content="VoxCtrl v0.9.3 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine, Parakeet TDT and an optional Remote Speech Engine handle transcription, a seven-step setup wizard configures everything on first launch, Arch users can install it from the AUR, and a Windows build is now in early beta.">
+  <meta name="description" content="VoxCtrl v0.9.15 — private, 100% on-device voice dictation and a spoken Output Command router. whisper.cpp, Moonshine and Parakeet TDT handle transcription on your computer or on a VoxCtrl server of your own, a seven-step setup wizard configures everything on first launch, Arch users can install it from the AUR, and a Windows build is now in early beta.">
   <meta name="keywords" content="linux voice dictation, windows voice dictation, speech to text, whisper linux, moonshine onnx, parakeet tdt, voice commands linux, wayland speech to text, rust tauri dictation, mcp server, xdg global shortcuts">
   <meta name="author" content="JRufer">
   <meta name="theme-color" content="#07090e">
@@ -41,7 +41,7 @@
       <a href="#" class="nav-brand" id="navBrand">
         <img src="assets/app_icon.png" alt="VoxCtrl Logo" class="nav-logo-icon">
         <span>VoxCtrl</span>
-        <span class="nav-version-badge">v0.9.3</span>
+        <span class="nav-version-badge">v0.9.15</span>
       </a>
 
       <nav>
@@ -113,7 +113,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>Download v0.9.3</span>
+            <span>Download v0.9.15</span>
           </a>
 
           <div class="hero-terminal-pill" id="heroQuickSnippet">
@@ -246,9 +246,10 @@
           </div>
           <h3 class="feature-card-title">Local Neural TTS Feedback</h3>
           <p class="feature-card-desc">
-            Hear synthesized replies aloud without cloud APIs. Choose from Breeze-TTS-2, Pocket-TTS voice cloning, Piper, Inflect Micro (38MB ONNX), or lightweight eSpeak-NG.
+            Hear synthesized replies aloud without cloud APIs. Choose from <strong>Kitten TTS 2</strong> (multilingual, with voice cloning and expression tags), Breeze-TTS-2, VoxCPM2, Pocket-TTS voice cloning, Piper, Inflect Micro (38MB ONNX), or lightweight eSpeak-NG, or let your VoxCtrl server do the speaking.
           </p>
           <div class="feature-tag-list">
+            <span class="feature-tag">Kitten TTS 2</span>
             <span class="feature-tag">Pocket-TTS Clone</span>
             <span class="feature-tag">Breeze-TTS-2</span>
             <span class="feature-tag">Piper</span>
@@ -333,6 +334,27 @@
             <span class="feature-tag">Signature verified</span>
             <span class="feature-tag">No identifier sent</span>
             <span class="feature-tag">Automatic checks opt-in</span>
+          </div>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+              <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+              <line x1="6" y1="6" x2="6.01" y2="6"></line>
+              <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </svg>
+          </div>
+          <h3 class="feature-card-title">Your own speech server</h3>
+          <p class="feature-card-desc">
+            <code>voxctrl-server</code> runs the models on a desktop or home server so a laptop doesn't have to: speech recognition with whisper.cpp, Moonshine or Parakeet, and, if you turn them on, S1-mini dictation cleanup and text-to-speech, for as many computers as you like. Hotkeys, the microphone, the overlay and typing stay on each computer. It runs headless in Docker or as a systemd service, built from source. Encryption is optional, and a <strong>pairing code</strong> sets up the app in one paste. If the server can't be reached, a local <strong>fallback engine</strong> takes the dictation. <a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/server.md">Server guide</a>.
+          </p>
+          <div class="feature-tag-list">
+            <span class="feature-tag">Docker or systemd</span>
+            <span class="feature-tag">Pairing code</span>
+            <span class="feature-tag">Local fallback</span>
           </div>
         </div>
       </div>
@@ -878,7 +900,7 @@ strip_newlines = false</code></pre>
             <h4 id="settingsCaptionTitle">General</h4>
             <p id="settingsCaptionText">
               Re-run the first-launch wizard whenever you like, hold the single HuggingFace access token every
-              gated voice model shares (Pocket-TTS, Breeze-TTS-2, VoxCPM2), check GitHub for a newer release when you ask, and switch the local MCP JSON-RPC server on or off. The socket path is
+              gated voice model shares (Pocket-TTS, Breeze-TTS-2, VoxCPM2), check GitHub for a newer release when you ask or, if you turn it on, once a day, and switch the local MCP JSON-RPC server on or off. The socket path is
               spelled out for both platforms: <code>$XDG_RUNTIME_DIR/voxctrl-mcp.sock</code> on Linux (also reachable as <code>/tmp/voxctrl-mcp.sock</code>),
               <code>\\.\pipe\voxctrl-mcp</code> on Windows.
             </p>
@@ -888,12 +910,12 @@ strip_newlines = false</code></pre>
 
       <!-- The other nine tabs -->
       <div class="settings-index">
-        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, Remote Speech Engine with a local fallback engine), model size and download, a GPU acceleration switch per engine, a Speed test, and Clean up models</span></div>
+        <div class="set-idx"><b>Engine</b><span>Backend (whisper.cpp, Moonshine, Parakeet TDT, or a Remote Speech Engine such as your VoxCtrl server, set up with a pairing code and backed by a local fallback engine), model size and download, a GPU acceleration switch per engine, a Speed test, and Clean up models</span></div>
         <div class="set-idx"><b>Post-Processing</b><span>S1-mini dictation cleanup with styling per app, basic text cleanup (filler words, punctuation, list formatting), custom vocabulary, and snippets</span></div>
         <div class="set-idx"><b>Hotkeys</b><span>Gestures, bindings, and a per-keybind S1-mini override</span></div>
         <div class="set-idx"><b>Visual</b><span>Overlay style, position, live transcript, and the command trigger overlay</span></div>
         <div class="set-idx"><b>Audio</b><span>Input device, VAD, RNNoise suppression</span></div>
-        <div class="set-idx"><b>TTS</b><span>Engine, voice downloads, global stop key, and Model Memory</span></div>
+        <div class="set-idx"><b>TTS</b><span>Engine (or the VoxCtrl server's engine and voice), voice downloads, global stop key, and Model Memory</span></div>
         <div class="set-idx"><b>OpenAI API</b><span>Any OpenAI-compatible endpoint for LLM rewriting</span></div>
         <div class="set-idx set-idx-new"><b>Bug Report</b><span>Added in v0.5.1, after these screenshots were taken</span></div>
         <div class="set-idx"><b>About</b><span>Version, build, and what this build can put on the GPU</span></div>
@@ -1017,11 +1039,39 @@ strip_newlines = false</code></pre>
         <div class="mono-tag">RELEASE TIMELINE</div>
         <h2 class="section-title">Everything that landed since v0.3.6.</h2>
         <p class="section-desc">
-          Thirty-nine releases since v0.3.6, from the Breeze-TTS-2 engine to a Windows beta, a Remote Speech Engine, on-device dictation cleanup, clipboard-safe pasting, GPU acceleration for every engine, a private dictation history, packages on the AUR, and now a speech server of VoxCtrl's own.
+          Fifty releases since v0.3.6, from the Breeze-TTS-2 engine to a Windows beta, a Remote Speech Engine, on-device dictation cleanup, clipboard-safe pasting, GPU acceleration for every engine, a private dictation history, packages on the AUR, and now a speech server of VoxCtrl's own that can also clean up and speak.
         </p>
       </div>
 
       <ol class="rel-timeline" id="relTimeline">
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.9.15 · v0.9.14</b><span class="rel-date">14 Nov 2026</span><span class="rel-tag">Encrypted server</span></div>
+            <p>A VoxCtrl server can encrypt every connection with a certificate it makes for itself, and <code>voxctrl-server --pairing-code</code> prints one code holding its address, API key and fingerprint. Paste it under <strong>Settings → Engine → Remote Speech Engine</strong> and everything is filled in and tested; a paired app talks only to that certificate. Server setup now lives in that one place: type just the machine's name or IP, <strong>Test Connection</strong> says what the server offers, and <strong>Use the server for text-to-speech</strong> sits beside the cleanup and fallback options. Encryption is off by default and needs both ends on 0.9.15.</p>
+          </div>
+        </li>
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.9.11 – v0.9.13</b><span class="rel-date">14 Nov 2026</span></div>
+            <p>Pick the server's speech engine and voice from the app, and speak with your own cloned voices through it, kept for your computer only. The Docker image moves to Ubuntu 26.04 so the neural voices start there. Stopping a spoken response now cancels it on the server too, and transcription takes priority over speech, so back-to-back responses no longer freeze the overlay or delay the next dictation.</p>
+          </div>
+        </li>
+        <li class="rel-item">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.9.6 – v0.9.10</b><span class="rel-date">14 Nov 2026</span><span class="rel-tag">Speech from the server</span></div>
+            <p>A VoxCtrl server can do the speaking: set the TTS engine to <strong>VoxCtrl server</strong> and the app only plays the audio. Kitten TTS 2, VoxCPM2, Breeze-TTS-2 and Pocket-TTS work again on CPUs without AVX-512, restart by themselves if their helper process stops, and say why when it does.</p>
+          </div>
+        </li>
+        <li class="rel-item rel-item-major">
+          <span class="rel-dot"></span>
+          <div class="rel-body">
+            <div class="rel-head"><b>v0.9.5 · v0.9.4</b><span class="rel-date">14 Nov 2026</span><span class="rel-tag">Kitten TTS 2</span></div>
+            <p><strong>Kitten TTS 2</strong> arrives: a 1.7B-parameter voice model with 38 English voices plus Arabic, Chinese, French, German, Hindi, Italian, Portuguese, Russian and Spanish, voice cloning from a short clip, a <strong>Delivery</strong> setting, and tags like <code>[excited]</code> or <code>&lt;laugh&gt;</code>. It is a 3.3 GB download under the Stellon Labs Community License, which Settings shows before you download. A VoxCtrl server can now run S1-mini dictation cleanup for its clients. Large voice models stream to disk instead of failing on slow connections. 0.9.4 was folded into 0.9.5 and never published on its own.</p>
+          </div>
+        </li>
         <li class="rel-item">
           <span class="rel-dot"></span>
           <div class="rel-body">
@@ -1040,7 +1090,7 @@ strip_newlines = false</code></pre>
           <span class="rel-dot"></span>
           <div class="rel-body">
             <div class="rel-head"><b>v0.9.0</b><span class="rel-date">14 Nov 2026</span><span class="rel-tag">VoxCtrl Server</span></div>
-            <p><code>voxctrl-server</code> runs whisper.cpp, Moonshine or Parakeet on a desktop or home server, headless, in Docker or as a systemd service, and several computers dictate through it with the Remote Speech Engine they already have; hotkeys, microphone, overlay and typing stay on your computer. For now it is built from source and speaks plain HTTP with an API key, so keep it on a network you trust. A <strong>Fallback engine</strong> takes over when the server can't be reached, and the tray shows an amber offline badge. Hotkeys no longer stay switched off after leaving the wizard's shortcut recorder mid-recording.</p>
+            <p><code>voxctrl-server</code> runs whisper.cpp, Moonshine or Parakeet on a desktop or home server, headless, in Docker or as a systemd service, and several computers dictate through it with the Remote Speech Engine they already have; hotkeys, microphone, overlay and typing stay on your computer. It is built from source, and at first spoke plain HTTP with an API key. A <strong>Fallback engine</strong> takes over when the server can't be reached, and the tray shows an amber offline badge. Hotkeys no longer stay switched off after leaving the wizard's shortcut recorder mid-recording.</p>
           </div>
         </li>
         <li class="rel-item">
@@ -1404,7 +1454,7 @@ chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
 
       <div class="footer-bottom">
         <div>© 2026 VoxCtrl Project. Created by JRufer. MIT licensed, free and open source.</div>
-        <div>v0.9.3 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
+        <div>v0.9.15 · Zero Telemetry · 100% On-Device · Linux First, Windows in beta</div>
       </div>
     </div>
   </footer>

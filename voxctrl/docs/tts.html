@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.9.3</span>
+      <span class="nav-version">v0.9.15</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -84,8 +84,10 @@
     <main class="docs-content" id="docsContent">
       <div class="crumbs">AI &amp; VOICE <span>/</span> VOICE OUTPUT</div>
       <h1>Voice output (TTS)</h1>
-      <p class="lede">On-device neural TTS with three engines: Piper (primary, ONNX neural), Pocket-TTS (Kyutai's
-        voice-cloning neural engine), and espeak-ng as a lightweight automatic fallback.</p>
+      <p class="lede">On-device TTS with seven engines: Piper, Pocket-TTS, Breeze-TTS-2, VoxCPM2, Kitten TTS 2,
+        Inflect-Micro-v2 and espeak-ng. Or set the engine to <strong>VoxCtrl server</strong> and let your server do the
+        speaking. Pocket-TTS, Breeze-TTS-2, VoxCPM2 and Kitten TTS 2 run through
+        <a href="https://github.com/0xShug0/audio.cpp">audio.cpp</a>, which VoxCtrl downloads for you.</p>
 
       <h2>Engines</h2>
       <ul>
@@ -93,13 +95,25 @@
           <code>piper</code> binary directly, pipes text to its stdin, and plays the raw 16-bit PCM it returns via
           <code>rodio</code>. This is the default engine.
         </li>
-        <li><strong>Pocket-TTS</strong> — Kyutai's lightweight FlowLM + Mimi-codec model, ported to pure Rust on top
-          of Candle (no Python, no ONNX, no subprocess). Instead of fixed voice embeddings, it clones a voice from a
+        <li><strong>Pocket-TTS</strong> — Kyutai's lightweight FlowLM + Mimi-codec model, run through
+          audio.cpp. Instead of fixed voice embeddings, it clones a voice from a
           short reference audio clip at runtime. VoxCtrl ships a small built-in catalogue of reference clips
           (Alba, Anna, Vera, Charles, Michael) and also supports custom <code>.wav</code> voice clips. It streams
           generated audio frame-by-frame for low perceived latency, and the model can be pre-warmed on startup with
           the <code>prewarm</code> option. Requires a HuggingFace account that has accepted the license for the
           gated <code>kyutai/pocket-tts</code> model, plus a personal access token (<code>hf_token</code>).
+        </li>
+        <li><strong>Kitten TTS 2</strong> — a 1.7B-parameter multilingual model by KittenML: 38 English voices plus
+          Arabic, Chinese, French, German, Hindi, Italian, Portuguese, Russian and Spanish, voice cloning from a
+          1–30 second clip with a <code>.txt</code> transcript beside it, a <strong>Delivery</strong> setting, and
+          emotion tags such as <code>[excited]</code> or <code>&lt;laugh&gt;</code>. A 3.3 GB download; its weights
+          are under the Stellon Labs Community License, not VoxCtrl's MIT license, which Settings shows before you
+          download. Powered by Stellon Labs.
+        </li>
+        <li><strong>VoxCtrl server</strong> — your <a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/server.md">VoxCtrl
+          server</a> synthesizes and this computer only plays the audio, so it loads no TTS model. Pick among the
+          engines the server offers and its voices, or your own cloned voices, which are stored for your computer
+          only. If the server can't be reached, nothing is spoken and the reason is shown.
         </li>
         <li><strong>Espeak-ng</strong> — used automatically if Piper is unavailable or no voice is downloaded.
           Quality is lower, but it's always available as a system package.
@@ -107,10 +121,11 @@
       </ul>
 
       <h2>GPU acceleration</h2>
-      <p>VoxCtrl supports GPU acceleration (CUDA) for the <strong>Piper</strong> engine only — it appends a
-        <code>--cuda</code> flag to the spawned Piper subprocess at runtime. Pocket-TTS (Candle-based) does not
-        currently expose a GPU toggle. If GPU initialization fails, Piper automatically and gracefully falls back to
-        the CPU without crashing.</p>
+      <p><strong>Piper</strong> can use CUDA: VoxCtrl appends a <code>--cuda</code> flag to the spawned Piper
+        subprocess (the app must be built with the <code>cuda</code> feature). <strong>Pocket-TTS</strong>,
+        <strong>Breeze-TTS-2</strong>, <strong>VoxCPM2</strong> and <strong>Kitten TTS 2</strong> each have their own GPU
+        setting, which runs audio.cpp on Vulkan; if no Vulkan device can be opened you get an error rather than a
+        silent fallback, and turning the setting off runs it on the CPU. Inflect-Micro-v2 runs on the CPU.</p>
 
       <h2>Piper voice catalog</h2>
       <table class="docs-table">
@@ -294,7 +309,7 @@
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.9.3 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.9.15 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>
