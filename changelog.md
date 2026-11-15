@@ -1,5 +1,82 @@
 # Changelog
 
+## [v0.9.15] - 2026-11-15
+
+Merge pull request #217 from JRufer/feature/server-encryption
+Encrypted connections to a VoxCtrl server, with pairing codes (0.9.15)
+
+---
+
+## [v0.9.14] - 2026-11-15
+
+Merge pull request #216 from JRufer/feature/server-settings-panel
+Server setup on the Engine tab under Remote Speech Engine (0.9.14)
+
+---
+
+## [v0.9.13] - 2026-11-15
+
+Merge pull request #215 from JRufer/fix/tts-queue-blocking
+Give up stopped server speech, skip abandoned requests, deprioritise synthesis (0.9.13)
+
+---
+
+## [v0.9.12] - 2026-11-15
+
+Merge pull request #214 from JRufer/fix/server-pocket-voices
+Server: fetch all Pocket-TTS voices and offer only the ones present (0.9.12)
+
+---
+
+## [v0.9.11] - 2026-11-15
+
+Merge pull request #213 from JRufer/feature/server-voices
+Choose the server's TTS engine and voice from the client; upload own voices (0.9.11)
+
+---
+
+## [v0.9.10] - 2026-11-14
+
+Merge pull request #212 from JRufer/fix/audiocpp-portable-runtime
+Install the portable audio.cpp build; the plain one needs AVX-512 (0.9.10)
+
+---
+
+## [v0.9.9] - 2026-11-14
+
+Merge pull request #211 from JRufer/fix/tts-helper-death-reason
+Say why the audio.cpp helper died when a TTS request gets no answer (0.9.9)
+
+---
+
+## [v0.9.8] - 2026-11-14
+
+Merge pull request #210 from JRufer/fix/server-tts-helper-thread
+Fix server TTS losing its audio.cpp helper after a few seconds (0.9.8)
+
+---
+
+## [v0.9.7] - 2026-11-14
+
+Merge pull request #208 from JRufer/feature/server-tts
+Run text-to-speech on the server (0.9.7)
+
+---
+
+## [v0.9.6] - 2026-11-14
+
+Merge pull request #207 from JRufer/fix/cleanup-dialog-position
+Fix the Clean up models dialog opening off-centre (0.9.6)
+
+---
+
+## [v0.9.5] - 2026-11-14
+
+Merge pull request #205 from JRufer/feature/server-llm
+Run S1-mini dictation cleanup on the server (0.9.5)
+
+---
+
 ## [v0.9.3] - 2026-11-14
 
 Merge pull request #203 from JRufer/feature/model-cleanup
