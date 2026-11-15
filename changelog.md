@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.12] - 2026-11-15
+
+Merge pull request #214 from JRufer/fix/server-pocket-voices
+Server: fetch all Pocket-TTS voices and offer only the ones present (0.9.12)
+
+---
+
 ## [v0.9.11] - 2026-11-15
 
 Merge pull request #213 from JRufer/feature/server-voices
