@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.17] - 2026-11-15
+
+Merge pull request #219 from JRufer/feature/appimage-server
+Run the server from the AppImage: --server (0.9.17)
+
+---
+
 ## [v0.9.16] - 2026-11-15
 
 Merge pull request #218 from JRufer/feature/server-ai-processing
