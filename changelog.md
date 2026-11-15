@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.16] - 2026-11-15
+
+Merge pull request #218 from JRufer/feature/server-ai-processing
+AI processing through a VoxCtrl server (0.9.16)
+
+---
+
 ## [v0.9.15] - 2026-11-15
 
 Merge pull request #217 from JRufer/feature/server-encryption
