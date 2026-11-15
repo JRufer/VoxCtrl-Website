@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.14] - 2026-11-15
+
+Merge pull request #216 from JRufer/feature/server-settings-panel
+Server setup on the Engine tab under Remote Speech Engine (0.9.14)
+
+---
+
 ## [v0.9.13] - 2026-11-15
 
 Merge pull request #215 from JRufer/fix/tts-queue-blocking
