@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.18] - 2026-11-16
+
+Merge pull request #220 from JRufer/feature/aur-server
+AUR package for the server: voxctrl-server (0.9.18)
+
+---
+
 ## [v0.9.17] - 2026-11-15
 
 Merge pull request #219 from JRufer/feature/appimage-server
