@@ -32,7 +32,7 @@
     <a class="nav-brand" href="/voxctrl/">
       <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
       <span>vox<span class="v">ctr</span></span>
-      <span class="nav-version">v0.9.15</span>
+      <span class="nav-version">v0.9.18</span>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/voxctrl/">Overview</a>
@@ -53,6 +53,7 @@
         <span class="h">Getting started</span>
         <a class="item" href="/voxctrl/docs/quickstart.html"><span class="glyph">&#x2303;</span> Quickstart</a>
         <a class="item" href="/voxctrl/docs/install.html"><span class="glyph">&#x229E;</span> Installation</a>
+        <a class="item" href="/voxctrl/docs/server.html"><span class="glyph">&#x21C4;</span> Server</a>
         <a class="item" href="/voxctrl/docs/concepts.html"><span class="glyph">&#x25C7;</span> Core concepts</a>
       </div>
       <div class="group">
@@ -101,6 +102,11 @@
       <div class="note"><span class="icon">ⓘ</span> Configs written before this feature was renamed from "Ollama" to
         a generic OpenAI-compatible integration used the key <code>ollama</code> (and <code>ollama_*</code> binding
         fields) — those legacy names still work via aliases and load transparently.</div>
+
+      <div class="note"><span class="icon">ⓘ</span> With a <a href="/voxctrl/docs/server.html#ai-processing">VoxCtrl
+        server</a> (0.9.16 or newer at both ends), turn on <strong>Use the VoxCtrl server</strong> under
+        <strong>Settings → OpenAI API</strong> and requests go through the server to the language model set up there.
+        Your prompts are still used; the server's model and API key replace the ones on this page.</div>
 
       <h2>Preset modes</h2>
       <p>The <code>mode</code> field selects a preset. Built-in presets are read-only — selecting one fills the
@@ -214,7 +220,7 @@
       <div class="foot-bottom">
         <div class="left">
           <img src="/voxctrl/assets/favicon.png" alt="" />
-          <span>voxctrl &middot; v0.9.15 &middot; linux &amp; windows</span>
+          <span>voxctrl &middot; v0.9.18 &middot; linux &amp; windows</span>
         </div>
         <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
           only</div>

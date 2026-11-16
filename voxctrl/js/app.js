@@ -996,6 +996,26 @@ sudo pacman -S --needed xdotool
 # voxctrl builds the same release from source, voxctrl-git builds master.
 # The AppImage works on Arch too, if you'd rather not use a package.`,
 
+  server: `# VoxCtrl server — run the models on one machine, dictate from the others.
+# Clients reach it on port 8787. Full guide: docs/server.html
+
+# On a desktop Linux machine: the AppImage is also the server.
+./${APPIMAGE} --server
+# It prints the address, API key and a pairing code. See the code again with:
+./${APPIMAGE} --server --pairing-code
+
+# On a headless Arch box: a system service with no desktop dependencies.
+paru -S voxctrl-server
+sudo systemctl enable --now voxctrl-server
+sudo -u voxctrl -H voxctrl-server --pairing-code
+
+# Anywhere with Docker (builds the image from source on first start):
+git clone https://github.com/JRufer/VoxCtrl.git && cd VoxCtrl/packaging/docker
+cp .env.example .env && docker compose up -d --build
+
+# Then, on each computer you dictate from:
+# Settings > Engine > Backend: Remote Speech Engine > paste the code > Pair`,
+
   windows: `# Windows 10 (21H2+) or Windows 11 — EARLY BETA, please report what breaks
 #
 # Download the installer from the latest release:

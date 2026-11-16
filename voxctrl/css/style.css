@@ -231,10 +231,12 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
   height: 72px;
 }
 
 .nav-brand {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -270,7 +272,7 @@ h1, h2, h3, h4 {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: clamp(18px, 1.7vw, 32px);
   list-style: none;
 }
 
@@ -2628,9 +2630,9 @@ section {
   .win-banner-body { padding: 30px 24px; }
 }
 
-/* Seven nav items no longer fit beside the brand and the CTA well before
+/* Nine nav items no longer fit beside the brand and the CTA well before
    the phone breakpoint, so the drawer takes over earlier. */
-@media (max-width: 1320px) {
+@media (max-width: 1480px) {
   .nav-links { display: none; }
   .nav-links.mobile-open {
     display: flex;
