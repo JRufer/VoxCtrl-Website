@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.20] - 2026-11-17
+
+Merge pull request #223 from JRufer/fix/rc1-hardening-0.9.20
+Dictations first on the server, stalled-connection limits, rustfmt/clippy in CI (0.9.20)
+
+---
+
 ## [v0.9.19] - 2026-11-17
 
 Merge pull request #222 from JRufer/fix/rc1-hardening-0.9.19
