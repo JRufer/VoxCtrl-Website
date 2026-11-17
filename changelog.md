@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.9.19] - 2026-11-17
+
+Merge pull request #222 from JRufer/fix/rc1-hardening-0.9.19
+Hardening ahead of 1.0: encryption by default, version check, log privacy (0.9.19)
+
+---
+
 ## [v0.9.18] - 2026-11-16
 
 Merge pull request #220 from JRufer/feature/aur-server
