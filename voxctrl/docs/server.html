@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VoxCtrl server — voxctrl Docs</title>
+  <meta name="description"
+    content="Run VoxCtrl's speech models on one machine and dictate from the others: the AppImage's --server mode, the voxctrl-server AUR package, or Docker, with pairing codes, encryption and a local fallback." />
+  <link rel="icon" href="/voxctrl/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/voxctrl/css/base.css" />
+  <link rel="stylesheet" href="/voxctrl/css/components.css" />
+  <link rel="stylesheet" href="/voxctrl/css/docs.css" />
+  <link rel="stylesheet" href="/voxctrl/css/responsive.css" />
+</head>
+
+<body>
+
+  <div class="bg-stack">
+    <div class="grid-bg"></div>
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <nav class="nav">
+    <a class="nav-brand" href="/voxctrl/">
+      <img src="/voxctrl/assets/voxctrl.gif" alt="voxctrl" />
+      <span>vox<span class="v">ctr</span></span>
+      <span class="nav-version">v0.9.18</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/voxctrl/">Overview</a>
+      <a class="nav-link is-active" href="/voxctrl/docs/quickstart.html">Documentation</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-tools">
+      <a class="btn-pill" id="gh-star" href="https://github.com/JRufer/voxctrl" target="_blank" rel="noreferrer">
+        <span class="stars">&#9733;</span> <span id="gh-star-count">&#x2026;</span>
+      </a>
+    </div>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="docs-shell">
+    <aside class="docs-side">
+      <div class="group">
+        <span class="h">Getting started</span>
+        <a class="item" href="/voxctrl/docs/quickstart.html"><span class="glyph">&#x2303;</span> Quickstart</a>
+        <a class="item" href="/voxctrl/docs/install.html"><span class="glyph">&#x229E;</span> Installation</a>
+        <a class="item is-active" href="/voxctrl/docs/server.html"><span class="glyph">&#x21C4;</span> Server</a>
+        <a class="item" href="/voxctrl/docs/concepts.html"><span class="glyph">&#x25C7;</span> Core concepts</a>
+      </div>
+      <div class="group">
+        <span class="h">Input &amp; routing</span>
+        <a class="item" href="/voxctrl/docs/hotkeys.html"><span class="glyph">&#x2341;</span> Hotkeys</a>
+        <a class="item" href="/voxctrl/docs/routing.html"><span class="glyph">&#x22B3;</span> Routing &amp;
+          targets</a>
+        <a class="item" href="/voxctrl/docs/atspi.html"><span class="glyph">&#x2237;</span> AT-SPI2</a>
+        <a class="item" href="/voxctrl/docs/codemode.html"><span class="glyph">&#x27E8;/&#x27E9;</span> Code mode</a>
+      </div>
+      <div class="group">
+        <span class="h">AI &amp; voice</span>
+        <a class="item" href="/voxctrl/docs/ai.html"><span class="glyph">&#x2207;</span> AI processing</a>
+        <a class="item" href="/voxctrl/docs/tts.html"><span class="glyph">&#x2295;</span> Voice output</a>
+        <a class="item" href="/voxctrl/docs/overlays.html"><span class="glyph">&#x2C6C;</span> Overlays</a>
+      </div>
+      <div class="group">
+        <span class="h">Integrations</span>
+        <a class="item" href="/voxctrl/docs/mcp.html"><span class="glyph">&#x229E;</span> MCP server</a>
+        <a class="item" href="/voxctrl/docs/dbus.html"><span class="glyph">&#x2234;</span> DBus control</a>
+      </div>
+      <div class="group">
+        <span class="h">Reference</span>
+        <a class="item" href="/voxctrl/docs/config.html"><span class="glyph">&#x2261;</span> Configuration</a>
+        <a class="item" href="/voxctrl/docs/architecture.html"><span class="glyph">&#x25A3;</span> Architecture</a>
+      </div>
+    </aside>
+
+    <main class="docs-content" id="docsContent">
+      <div class="crumbs">GETTING STARTED <span>/</span> SERVER</div>
+      <h1>VoxCtrl server</h1>
+      <p class="lede"><code>voxctrl-server</code> runs VoxCtrl's speech models on one machine so the app on another
+        doesn't have to. The app keeps everything that needs your desktop (hotkeys, the microphone, the overlay,
+        typing the result) and sends the audio to the server to be transcribed. The server can also run dictation
+        cleanup and text-to-speech for its clients, and pass their AI processing on to a language model.</p>
+
+      <p>Use it when a laptop is short on RAM, battery or GPU and a desktop or home server has plenty, when several
+        computers should share one model instead of each loading its own, or when you want a large model without
+        dedicating part of your workstation to it. The server has no window, no tray icon and no audio device: it is
+        one program listening on a network port, <strong>8787</strong> by default.</p>
+
+      <h2>What runs where</h2>
+      <table class="docs-table">
+        <thead>
+          <tr>
+            <th>What</th>
+            <th>Where it runs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hotkeys, microphone, overlay, typing the text</td>
+            <td>Client (the VoxCtrl app)</td>
+          </tr>
+          <tr>
+            <td><strong>Speech recognition</strong> (whisper.cpp, Moonshine, Parakeet)</td>
+            <td><strong>Server</strong></td>
+          </tr>
+          <tr>
+            <td>Filler removal, spoken punctuation, snippets, custom vocabulary</td>
+            <td>Client</td>
+          </tr>
+          <tr>
+            <td><strong>S1-mini dictation cleanup</strong></td>
+            <td>Server, when turned on at both ends; otherwise client</td>
+          </tr>
+          <tr>
+            <td><strong>AI processing</strong> (the OpenAI-compatible LLM step)</td>
+            <td>Through the server to the service it is pointed at, when turned on at both ends; otherwise wherever
+              the client's own OpenAI API settings point</td>
+          </tr>
+          <tr>
+            <td><strong>Text-to-speech</strong></td>
+            <td>Server, when turned on there and the client's TTS engine is <strong>VoxCtrl server</strong>;
+              otherwise client. The audio always plays on the client</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Cleanup, text-to-speech and AI processing are each off until you turn them on at both ends, so a client keeps
+        using its own until then.</p>
+
+      <h2>Choose a way to run it</h2>
+      <table class="docs-table">
+        <thead>
+          <tr>
+            <th>How</th>
+            <th>Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#from-the-appimage">From the VoxCtrl AppImage</a> (<code>--server</code>)</td>
+            <td>A desktop or laptop that has, or can have, the VoxCtrl app. Nothing to build</td>
+          </tr>
+          <tr>
+            <td><a href="#arch-linux-aur">Arch Linux: <code>voxctrl-server</code> from the AUR</a></td>
+            <td>A headless Arch machine. Installs a system service, no desktop dependencies</td>
+          </tr>
+          <tr>
+            <td><a href="#docker">Docker</a></td>
+            <td>A home server or NAS that already runs containers</td>
+          </tr>
+          <tr>
+            <td><a href="#system-service">A system service built from source</a></td>
+            <td>A headless machine on another distribution, without Docker</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The server needs Linux on x86-64, enough memory for the model you pick, and internet access the first time it
+        starts, to download that model. Give it a fixed address on your network (reserve its IP in your router, or use
+        its hostname) so clients keep finding it.</p>
+
+      <h3 id="from-the-appimage">From the AppImage</h3>
+      <p>The VoxCtrl AppImage is also the server (from 0.9.17). Started with <code>--server</code> it runs the same
+        server, with no window, tray icon or microphone:</p>
+      <pre class="code-inline">chmod +x VoxCtrl-linux-x86_64-vulkan.AppImage
+./VoxCtrl-linux-x86_64-vulkan.AppImage --server</pre>
+      <p>The first start downloads the model, then prints the address, the API key and a pairing code. Stop it with
+        Ctrl+C. To see the code again later:</p>
+      <pre class="code-inline">./VoxCtrl-linux-x86_64-vulkan.AppImage --server --pairing-code</pre>
+      <p>Everything after <code>--server</code> is a server option: <code>--server --help</code>,
+        <code>--server --print-config</code>, <code>--server --bind 0.0.0.0:9000</code>. The <code>.deb</code> works the
+        same way: <code>voxctrl --server</code>. Settings go in <code>~/.config/voxctrl/server.toml</code>, which the
+        first start creates, or in environment variables:</p>
+      <pre class="code-inline">VOXCTRL_SERVER_BACKEND=whisper-cpp VOXCTRL_SERVER_MODEL=large-v3-turbo \
+  ./VoxCtrl-linux-x86_64-vulkan.AppImage --server</pre>
+      <p>The server keeps its own settings file but uses the app's model folder, so a model the app already downloaded
+        is not downloaded again, and the GPU build gives the server the same acceleration as the app. App and server
+        can run on one machine at once; each loads its own copy of its model.</p>
+      <div class="note"><span class="icon">ⓘ</span> In server mode the AppImage still loads the desktop libraries it
+        needs as an app (GTK, GLib, GStreamer, Wayland and OpenGL client libraries). Any desktop install has them, and
+        it runs fine over SSH with nobody logged in. A minimal server install usually doesn't, and the AppImage stops
+        with <code>error while loading shared libraries</code>: use the AUR package or Docker there.</div>
+      <p>To start it with the machine, run it as a systemd user service. The unit file is in the repository as
+        <code>packaging/systemd/voxctrl-server-appimage.service</code>; with the AppImage in
+        <code>~/Applications/</code>:</p>
+      <pre class="code-inline">systemctl --user daemon-reload
+systemctl --user enable --now voxctrl-server
+sudo loginctl enable-linger "$USER"     # keep it running when you are logged out</pre>
+      <p>The app's built-in updater updates the file it was started from, so an AppImage used for both the app and the
+        server is updated by the app; restart the service afterwards.</p>
+
+      <h3 id="arch-linux-aur">Arch Linux: the AUR</h3>
+      <p>On Arch and Arch-based systems, <code>voxctrl-server</code> (from 0.9.18) builds the server and installs the
+        systemd service, the <code>voxctrl</code> service user and <code>/var/lib/voxctrl</code>, where settings and
+        models are kept:</p>
+      <pre class="code-inline">paru -S voxctrl-server        # or: yay -S voxctrl-server
+sudo systemctl enable --now voxctrl-server
+sudo journalctl -u voxctrl-server -f      # first start: model download, then the API key
+sudo -u voxctrl -H voxctrl-server --pairing-code</pre>
+      <p>It is built from source on your machine, which takes a while (it compiles whisper.cpp and llama.cpp). It has
+        no desktop dependencies and can be installed next to the <code>voxctrl</code> app packages. whisper.cpp and
+        dictation cleanup use a GPU when a Vulkan driver is installed, and the CPU otherwise. The settings file is
+        <code>/var/lib/voxctrl/.config/voxctrl/server.toml</code>; after an upgrade,
+        <code>sudo systemctl restart voxctrl-server</code>.</p>
+
+      <h3 id="docker">Docker</h3>
+      <p>There is no published image yet, so the image is built from source on your machine. That can take from
+        several minutes to half an hour, and only happens on the first start and after an upgrade.</p>
+      <pre class="code-inline">git clone https://github.com/JRufer/VoxCtrl.git
+cd VoxCtrl/packaging/docker
+cp .env.example .env      # pick the engine, model and port here
+docker compose up -d --build
+docker compose logs -f    # first start: model download, then the API key</pre>
+      <p>The Docker setup defaults to <code>parakeet</code> / <code>tdt-0.6b-v3</code>. Everything the server writes
+        lives in the <code>voxctrl-data</code> volume, which survives <code>docker compose down</code> and upgrades.
+        To print the pairing code: <code>docker exec voxctrl-server voxctrl-server --pairing-code</code>. A container
+        can't tell what address it is reached by, so either type the server's address into the app before pasting the
+        code, or set <code>VOXCTRL_SERVER_PUBLIC_HOST</code> so the code carries it.</p>
+
+      <h3 id="system-service">A system service on other distributions</h3>
+      <p>There is no prebuilt server binary in the releases yet, so this builds from source with Rust, CMake and Clang,
+        then installs the binary and the unit file from <code>packaging/systemd/</code>. The steps, with the build tools
+        for Debian, Arch and Fedora, are in the
+        <a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/server.md#install-as-a-system-service">server
+        guide</a>.</p>
+
+      <h2>Choose a model</h2>
+      <p>The server runs one model at a time, with the same engines and model names as the app. Started with no
+        settings at all it uses <code>whisper-cpp</code> with <code>tiny</code>: enough to check everything works, not
+        what you want to dictate with.</p>
+      <table class="docs-table">
+        <thead>
+          <tr>
+            <th>Engine (<code>backend</code>)</th>
+            <th>Models</th>
+            <th>Approx. memory</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>parakeet</code></td>
+            <td><code>tdt-0.6b-v3</code>, <code>tdt-0.6b-v3-int8</code>, <code>tdt-0.6b-v3-redux</code>, <code>phonon-2</code></td>
+            <td>~665 MB (<code>redux</code> ~420 MB)</td>
+            <td>Fast on a CPU; no GPU needed. A good default for a server</td>
+          </tr>
+          <tr>
+            <td><code>whisper-cpp</code></td>
+            <td><code>tiny</code> to <code>large-v3</code>, <code>large-v3-turbo</code>, and English-only <code>.en</code> variants</td>
+            <td>75 MB to 3.1 GB</td>
+            <td>Widest language coverage. <code>medium</code> and larger are slow without a GPU</td>
+          </tr>
+          <tr>
+            <td><code>moonshine</code></td>
+            <td><code>tiny</code>, <code>base</code></td>
+            <td>~240–530 MB</td>
+            <td>Small and fast on a CPU. English</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Connect the app</h2>
+      <p>On each computer that should use the server:</p>
+      <ul>
+        <li>Open <strong>Settings → Engine</strong> and set <strong>Backend</strong> to <strong>Remote Speech
+            Engine</strong>.</li>
+        <li>Paste the server's <strong>pairing code</strong> (it starts with <code>vxpair_</code> and holds the API key,
+          so treat it like one) and click <strong>Pair</strong>. The endpoint, the API key and, with encryption on, the
+          server's certificate are filled in and the connection is tested.</li>
+        <li>Or set it up by hand: type just the machine's name or IP (<code>192.168.1.50</code> becomes
+          <code>http://192.168.1.50:8787/v1</code>), enter the API key, and click <strong>Test Connection</strong>,
+          which says what the server offers. This doesn't work with encryption on.</li>
+        <li>In the same section, choose a <strong>Fallback engine</strong> and whether to <strong>Run dictation cleanup
+            on the server</strong>, <strong>Use the server for AI processing</strong> and <strong>Use the server for
+            text-to-speech</strong>.</li>
+      </ul>
+      <p>Live text in the overlay works over the server too (VoxCtrl 0.9.2 or newer on the client): the app sends short
+        clips of what you have said so far a few times a second. Vocabulary and snippets still work; the client sends
+        your vocabulary as a hint and applies snippets, punctuation and cleanup to the result itself.</p>
+
+      <h3>When the server can't be reached</h3>
+      <p>With a <strong>Fallback engine</strong> set (Whisper.cpp, Moonshine or Parakeet), the dictation you just made is
+        transcribed on your computer instead, so nothing you said is lost. The fallback model isn't loaded while the
+        server is reachable. The tray icon shows an amber badge with a slash, one notification says the fallback is in
+        use, and every overlay shows a small <strong>OFFLINE</strong> mark. The app checks the server every 15 seconds
+        and goes back to it as soon as it answers. With the fallback set to <strong>None</strong>, each dictation fails
+        with an error until the server is back.</p>
+
+      <h3>Free the disk space your local models used</h3>
+      <p><strong>Settings → Engine → Downloaded Models → Clean up models…</strong> first asks which fallback engine to
+        keep, then lists the speech, cleanup and voice models that are no longer in use, with their sizes, and removes
+        the ones you confirm. Custom voices are never removed, and a removed model can be downloaded again by selecting
+        it.</p>
+
+      <h2>What else the server can do</h2>
+      <h3>Dictation cleanup</h3>
+      <p>S1-mini cleanup can run on the server, so a client loads no language model at all. Turn it on with
+        <code>VOXCTRL_SERVER_CLEANUP=true</code> (Docker) or <code>[cleanup] enabled = true</code> in
+        <code>server.toml</code>, restart, then turn on <strong>Run dictation cleanup on the server</strong> in the app.
+        The server downloads the model (about 470 MB) on that start. Needs 0.9.5 or newer at both ends.</p>
+
+      <h3>Text-to-speech</h3>
+      <p>The server synthesizes and the client plays the audio. You decide on the server which engines exist
+        (<code>VOXCTRL_SERVER_TTS=true</code> and <code>VOXCTRL_SERVER_TTS_ENGINES=kitten_tts_2,piper</code>, or
+        <code>[tts]</code> and <code>[speech]</code> in <code>server.toml</code>); each client then picks an engine and a
+        voice under <strong>Settings → TTS</strong>. Voices you clone in the app are uploaded to the server, kept for your
+        computer only, and removed from the server when you delete them in the app. Nothing a client sends makes the
+        server download anything. Needs 0.9.11 or newer at both ends.</p>
+
+      <h3 id="ai-processing">AI processing</h3>
+      <p>AI processing (a hotkey sending what you dictated to a language model to be rewritten) can go through the
+        server to one OpenAI-compatible service you set up there, such as Ollama or llama.cpp on the server machine, or a
+        hosted provider whose key you'd rather keep off every laptop. The model doesn't run inside
+        <code>voxctrl-server</code>; it passes requests on.</p>
+      <pre class="code-inline"># server.toml
+[llm]
+enabled = true
+endpoint = "http://localhost:11434"
+model = "llama3.2:1b"</pre>
+      <p>Or in Docker, <code>VOXCTRL_SERVER_LLM=true</code>, <code>VOXCTRL_SERVER_LLM_ENDPOINT</code> and
+        <code>VOXCTRL_SERVER_LLM_MODEL</code> (use <code>http://host.docker.internal:11434</code> for a service on the same
+        machine). Then turn on <strong>Use the VoxCtrl server</strong> under <strong>Settings → OpenAI API</strong>, or
+        <strong>Use the server for AI processing</strong> under <strong>Settings → Engine</strong>; <strong>Check the
+          server</strong> shows the model it answers with. Your prompts and which hotkeys use AI processing stay yours;
+        the model is the server's. If the request fails for any reason, the text is typed as you dictated it. Needs 0.9.16
+        or newer at both ends.</p>
+
+      <h2>Security</h2>
+      <ul>
+        <li><strong>Keep the API key on.</strong> Every request must carry it.</li>
+        <li><strong>By default the connection is plain HTTP</strong>, so audio and the key cross the network in the clear.
+          On your own LAN that is usually acceptable; anywhere else, turn on encryption.</li>
+        <li><strong>Encryption</strong>: <code>VOXCTRL_SERVER_TLS=true</code> or <code>[tls] enabled = true</code>. The
+          server makes its own certificate, the pairing code carries its fingerprint, and a paired app accepts that one
+          certificate and never falls back to plain HTTP. Clients set up before have to be paired again. Needs 0.9.15 or
+          newer at both ends.</li>
+        <li><strong>Don't forward the port from the internet</strong>, with or without encryption. For access from outside,
+          use a VPN such as WireGuard or Tailscale, or a reverse proxy that adds HTTPS.</li>
+        <li><strong>The server keeps neither your audio nor your text.</strong> Audio is held in memory for one request,
+          and the log records lengths and timings, never what was said.</li>
+      </ul>
+
+      <h2>Reference</h2>
+      <table class="docs-table">
+        <thead>
+          <tr>
+            <th>Flag</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>-c</code>, <code>--config &lt;PATH&gt;</code></td>
+            <td>Config file to use</td>
+          </tr>
+          <tr>
+            <td><code>-b</code>, <code>--bind &lt;ADDR&gt;</code></td>
+            <td>Address and port to listen on</td>
+          </tr>
+          <tr>
+            <td><code>--print-config</code></td>
+            <td>Print the effective settings and exit</td>
+          </tr>
+          <tr>
+            <td><code>--pairing-code</code></td>
+            <td>Print the code a VoxCtrl app pastes to connect, and exit</td>
+          </tr>
+          <tr>
+            <td><code>--healthcheck</code></td>
+            <td>Exit code 0 if the running server is up. Works with encryption on</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>From the AppImage or the <code>.deb</code>, put <code>--server</code> first. Every setting in
+        <code>server.toml</code> also has a <code>VOXCTRL_SERVER_*</code> environment variable; the full list, the API
+        (<code>/v1/audio/transcriptions</code>, <code>/v1/cleanup</code>, <code>/v1/chat/completions</code>,
+        <code>/v1/audio/speech</code>), GPU builds and troubleshooting are in the
+        <a href="https://github.com/JRufer/VoxCtrl/blob/master/docs/server.md">full server guide</a>.</p>
+
+      <div class="docs-foot">
+        <a href="install.html"><small>← previous</small><span>Installation</span></a>
+        <a href="concepts.html" style="text-align:right;"><small>next →</small><span>Core concepts</span></a>
+      </div>
+    </main>
+
+    <aside class="docs-toc" id="docsToc"></aside>
+  </div>
+
+  <footer class="foot">
+    <div class="shell">
+      <div class="foot-grid">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <img src="/voxctrl/assets/voxctrl.gif" alt="" style="width:32px;height:32px;border-radius:8px;" />
+            <span style="font-weight:700;font-size:18px;">vox<span style="color:var(--cyan-1)">ctr</span></span>
+          </div>
+          <p style="color: var(--txt-2); font-size: 13px; margin-top: 12px; max-width: 280px; line-height: 1.6;">
+            The audio control layer for your AI and automation stack. Native, on-device, MIT-licensed.
+          </p>
+        </div>
+        <div>
+          <h6>Product</h6>
+          <a href="/voxctrl/">Overview</a>
+          <a href="/voxctrl/docs/quickstart.html">Quickstart</a>
+          <a href="/voxctrl/docs/mcp.html">MCP server</a>
+          <a href="/voxctrl/#hardware">Hardware</a>
+          <a href="/voxctrl/#backends">Backends</a>
+        </div>
+        <div>
+          <h6>Docs</h6>
+          <a href="/voxctrl/docs/install.html">Installation</a>
+          <a href="/voxctrl/docs/routing.html">Routing</a>
+          <a href="/voxctrl/docs/atspi.html">AT-SPI2</a>
+          <a href="/voxctrl/docs/overlays.html">Overlays</a>
+        </div>
+        <div>
+          <h6>Open source</h6>
+          <a href="https://github.com/jrufer/voxctrl" target="_blank">GitHub</a>
+          <a href="https://github.com/jrufer/voxctrl/releases" target="_blank">Releases</a>
+          <a href="https://github.com/jrufer/voxctrl/issues" target="_blank">Issues</a>
+          <a href="https://github.com/jrufer/voxctrl/blob/main/LICENSE" target="_blank">MIT License</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <div class="left">
+          <img src="/voxctrl/assets/favicon.png" alt="" />
+          <span>voxctrl &middot; v0.9.18 &middot; linux &amp; windows</span>
+        </div>
+        <div>&#x2C6C; wayland-native &nbsp;&middot;&nbsp; &#x25EF; x11-compat &nbsp;&middot;&nbsp; &lowast; on-device
+          only</div>
+      </div>
+    </div>
+  </footer>
+  <script src="/voxctrl/js/docs.js"></script>
+</body>
+
+</html>
